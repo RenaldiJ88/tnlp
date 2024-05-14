@@ -14,7 +14,7 @@ module.exports = {
         '3xl': '1920px'
       },
       colors: {
-        'black': '#1A1A1A'
+        'black-tnlp': '#1A1A1A'
       },
     },
   },
