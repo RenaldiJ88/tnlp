@@ -1,7 +1,8 @@
+"use client"
 import ProductCard from './ProductCard';
 import data from '../data/products.json';
 import { useState, useEffect } from 'react';
-import { SwiffySlider } from 'swiffy-slider';
+import { swiffyslider } from 'swiffy-slider';
 import "swiffy-slider/css";
 
 const Productos = () => {
@@ -37,35 +38,46 @@ const Productos = () => {
 
     return (
         <>
-            <section>
+            <section className='flex flex-col justify-center'>
                 <div>
                     <h2 className="text-black uppercase font-bold text-3xl text-center">Productos</h2>
                 </div>
-                <div className={`swiffy-slider ${itemShowClass} slider-nav-round slider-nav-visible slider-indicators-outside slider-indicators-round slider-indicators-dark slider-nav-animation slider-nav-animation-fadein slider-item-first-visible`}>
-        <ul className="slider-container py-4">
-          {productosData.map((products, index) => (
-            <div key={index}>
-              <li className="slide-visible">
-                <ProductCard
-                  categoria={products.title}
-                  imgService={products.imgProduct}
-                  descripcion={products.description}
-                  precio={products.price} 
-                />
-              </li>
-            </div>
-          ))}
-        </ul>
-        <button type="button" className="slider-nav" aria-label="Go left"></button>
-        <button type="button" className="slider-nav slider-nav-next" aria-label="Go left"></button>
-        <div className="slider-indicators !static mt-5">
-          <button className="active" aria-label="Go to slide"></button>
-          <button aria-label="Go to slide"></button>
-          <button aria-label="Go to slide"></button>
-          <button aria-label="Go to slide"></button>
-          <button aria-label="Go to slide"></button>
-        </div>
-      </div>
+                <div className={`swiffy-slider ${itemShowClass} 
+                                slider-nav-round 
+                                slider-nav-visible 
+                                slider-indicators-outside 
+                                slider-item-nogap 
+                                slider-indicators-round 
+                                slider-indicators-dark 
+                                slider-nav-animation 
+                                slider-nav-animation-fadein 
+                                slider-item-first-visible
+                                
+                                 border-2 border-blue-500`}>
+                    <ul className="slider-container border-2 border-green-500">
+                        {productosData.map((products, index) => (
+                            <div key={index} className='border-2 border-red-500 flex justify-center'>
+                                <li className="slide-visible">
+                                    <ProductCard
+                                        title={products.title}
+                                        image={products.image}
+                                        description={products.description}
+                                        price={products.price}
+                                    />
+                                </li>
+                            </div>
+                        ))}
+                    </ul>
+                    <button type="button" className="slider-nav" aria-label="Go left"></button>
+                    <button type="button" className="slider-nav slider-nav-next" aria-label="Go left"></button>
+                    <div className="slider-indicators !static mt-5">
+                        <button className="active" aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                    </div>
+                </div>
             </section>
 
         </>
