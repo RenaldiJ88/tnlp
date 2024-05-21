@@ -1,0 +1,47 @@
+{
+    "productos": [
+        {
+            "id": "1",
+            "title": "dell allienware r15",
+            "image":"",
+            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
+            "price": "US$2500"
+        },
+        {
+            "id": "2",
+            "title": "dell allienware r15",
+            "image":"",
+            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
+            "price": "US$2500"
+        },
+        {
+            "id": "3",
+            "title": "dell allienware r15",
+            "image":"",
+            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
+            "price": "US$2500"
+        },
+        {
+            "id": "4",
+            "title": "dell allienware r15",
+            "image":"",
+            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
+            "price": "US$2500"
+        },
+        {
+            "id": "5",
+            "title": "dell allienware r15",
+            "image":"",
+            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
+            "price": "US$2500"
+        },
+        {
+            "id": "6",
+            "title": "dell allienware r15",
+            "image":"",
+            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
+            "price": "US$2500"
+        }
+        
+    ]
+}
