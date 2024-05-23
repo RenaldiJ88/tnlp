@@ -38,34 +38,32 @@ const Productos = () => {
 
     return (
         <>
-            <section className='flex flex-col justify-center'>
+            <section className='flex flex-col justify-center  bg-gradient-to-b from-black via-white to-black'>
                 <div>
-                    <h2 className="text-black uppercase font-bold text-3xl text-center">Productos</h2>
+                    <h2 className="text-black uppercase font-bold text-3xl text-center pt-14">Productos</h2>
                 </div>
                 <div className={`swiffy-slider ${itemShowClass} 
                                 slider-nav-round 
+                                slider-nav-outside
                                 slider-nav-visible 
                                 slider-indicators-outside 
                                 slider-item-nogap 
                                 slider-indicators-round 
                                 slider-indicators-dark 
-                                slider-nav-animation 
-                                slider-nav-animation-fadein 
-                                slider-item-first-visible
-                                
-                                 border-2 border-blue-500`}>
-                    <ul className="slider-container border-2 border-green-500">
+                                slider-nav-animation `}>
+                    <ul className="slider-container">
                         {productosData.map((products, index) => (
-                            <div key={index} className='border-2 border-red-500 flex justify-center'>
-                                <li className="slide-visible">
+                            <li className="slide-visible px-5">
+                                <div key={index} className=' m-12 flex justify-center'>
                                     <ProductCard
                                         title={products.title}
                                         image={products.image}
                                         description={products.description}
                                         price={products.price}
                                     />
-                                </li>
-                            </div>
+                                </div>
+                            </li>
+
                         ))}
                     </ul>
                     <button type="button" className="slider-nav" aria-label="Go left"></button>
@@ -78,7 +76,7 @@ const Productos = () => {
                         <button aria-label="Go to slide"></button>
                     </div>
                 </div>
-            </section>
+            </section >
 
         </>
     )
