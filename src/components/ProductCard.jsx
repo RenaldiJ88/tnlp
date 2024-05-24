@@ -9,7 +9,7 @@ const ProductCard = ({ title, image, description, price }) => {
                     <div className="h-14 content-end ">
                         <p className="text-white text-center font-semibold uppercase text-lg">{title}</p>
                     </div>
-                    <div className="rounded-t-large flex justify-center px-8">
+                    <div className="rounded-t-large flex justify-center px-5">
                         <Image
                             src={`/${image}`}
                             alt={description}
@@ -19,7 +19,7 @@ const ProductCard = ({ title, image, description, price }) => {
                     </div>
 
                     <div className="">
-                        <p className="pt-2 px-8 text-white text-sm font-semibold uppercase">{description}</p>
+                        <p className="pt-2 px-5 text-white text-sm font-semibold uppercase">{description}</p>
                         <p className="py-1 text-white leading-snug text-center font-bold">{price}</p>
                     </div>
                 </article>

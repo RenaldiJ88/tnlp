@@ -12,7 +12,7 @@ const Productos = () => {
     useEffect(() => {
         const handleResize = () => {
             const screenWidth = window.innerWidth;
-            if (screenWidth < 990) {
+            if (screenWidth < 720) {
                 setItemShowClass("slider-item-show2");
             } else if (screenWidth >= 990 && screenWidth < 1280) {
                 setItemShowClass("slider-item-show2");
@@ -38,23 +38,21 @@ const Productos = () => {
 
     return (
         <>
-            <section className='flex flex-col justify-center  bg-gradient-to-b from-black via-white to-black'>
+            <section className='flex flex-col justify-center bg-gradient-to-b from-black via-white to-black'>
                 <div>
                     <h2 className="text-black uppercase font-bold text-3xl text-center pt-14">Productos</h2>
                 </div>
                 <div className={`swiffy-slider ${itemShowClass} 
                                 slider-nav-round 
-                                slider-nav-outside
-                                slider-nav-visible 
-                                slider-indicators-outside 
+                                slider-nav-dark
+                                slider-nav-autohide
                                 slider-item-nogap 
-                                slider-indicators-round 
-                                slider-indicators-dark 
-                                slider-nav-animation `}>
+                                slider-indicators-round  
+                                slider-nav-animation  `}>
                     <ul className="slider-container">
                         {productosData.map((products, index) => (
                             <li className="slide-visible px-5">
-                                <div key={index} className=' m-12 flex justify-center'>
+                                <div key={index} className='m-12 flex justify-center'>
                                     <ProductCard
                                         title={products.title}
                                         image={products.image}
@@ -68,7 +66,8 @@ const Productos = () => {
                     </ul>
                     <button type="button" className="slider-nav" aria-label="Go left"></button>
                     <button type="button" className="slider-nav slider-nav-next" aria-label="Go left"></button>
-                    <div className="slider-indicators !static mt-5">
+
+                    <div className="slider-indicators !static mt-2">
                         <button className="active" aria-label="Go to slide"></button>
                         <button aria-label="Go to slide"></button>
                         <button aria-label="Go to slide"></button>
