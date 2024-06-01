@@ -31,6 +31,7 @@ const Footer = () => {
                                 <FaWhatsapp className="text-xl mr-3 hover:text-green-500" />
                             </Link>
                         </div>
+                        
                         <div id="i_instagram">
                             <Link target='_blank' rel="noopener noreferrer" href={'#'}>
                                 <FaInstagram className="text-xl mr-3 hover:text-red-500" />
