@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      letterSpacing: {
+        wider: '3px', // Agrega una clase personalizada para letter-spacing
+      },
+      fontSize: {
+        'custom-lg': '18px', // Agrega una clase personalizada para font-size
+      },
       fontFamily: {
         'exo': ['Exo 2']
       },
