@@ -1,4 +1,5 @@
 import React from 'react';
+import Servicios from '../components/Servicios';
 import Productos from '../components/Productos';
 import Modelos from '../components/Modelos';
 import Marcas from '../components/Marcas';
@@ -10,7 +11,8 @@ import Footer from '../components/Footer';
 export default function Home() {
   return (
     <main>
-        <title>ASD</title>
+        <titulo>TNLP</titulo>
+          <Servicios />
           <Marcas />
           <Productos />
           <Modelos />
