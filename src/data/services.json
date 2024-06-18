@@ -1,0 +1,22 @@
+{
+    "servicios": [
+      {
+        "id": "limpiezas",
+        "categoria": "Limpiezas",
+        "descripcion": "Servicio profesional de limpieza y mantenimiento de equipos electrónicos por TNLP. Desde 2018, TNLP ofrece limpieza especializada para computadoras y dispositivos electrónicos. Se garantiza un funcionamiento óptimo y una mayor durabilidad de los equipos mediante una limpieza detallada y un mantenimiento regular. ¡Confíe en TNLP para mantener sus dispositivos en perfectas condiciones!",
+        "imgService": "img/servicios/serv-limpiezas-2.png"
+      },
+      {
+        "id": "upgrades",
+        "categoria": "Up Grade",
+        "descripcion": "Servicio especializado en actualizaciones y mejoras de equipos electrónicos por TNLP. Desde 2018, TNLP se dedica a optimizar computadoras y dispositivos electrónicos con las últimas actualizaciones y upgrades disponibles. Se asegura un rendimiento superior y una mayor vida útil de los equipos mediante mejoras constantes y personalizadas. ¡Mantenga sus dispositivos al día con la tecnología más avanzada con TNLP!",
+        "imgService": "img/servicios/serv-upgrade.png"
+      },
+      {
+        "id": "ssoo",
+        "categoria": "Sistemas Operativos",
+        "descripcion": "Profesionales en instalación de sistemas operativos por TNLP. Desde 2018, TNLP se especializa en la instalación y optimización de sistemas operativos para computadoras y dispositivos electrónicos. Garantizamos un rendimiento óptimo y una configuración personalizada para cada equipo. ¡Confíe en TNLP para mantener sus dispositivos actualizados y eficientes con el mejor software disponible!",
+        "imgService": "img/servicios/serv-upgrade-2.png"
+      }      
+    ]
+}
