@@ -12,7 +12,8 @@ const Servicios = () => {
         </p>
         <div className="flex flex-wrap justify-center">
           {serviciosData.map((servicio, index) => (
-            <div key={index} className="my-5 xl:my-16 mx-12">
+servicesChange
+            <div key={index} className="my-5 xl:my-16 mx-8">
               <ServiceCard             
                 title={servicio.categoria}
                 description={servicio.descripcion}
