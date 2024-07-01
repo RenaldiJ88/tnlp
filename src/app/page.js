@@ -16,6 +16,7 @@ export default function Page() {
         <Navbar/>
       </div>
           <Home />
+          <Servicios />
           <Marcas />
           <Productos />
           <Modelos />
