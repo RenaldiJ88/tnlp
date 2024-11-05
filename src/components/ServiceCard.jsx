@@ -12,28 +12,30 @@ const ServiceCard = ({ title, description, imgService }) => {
   };
 
   return (
-    <div className="rounded-lg shadow-lg w-[350px] h-auto bg-gradient-to-b from-gray-200 to-gray-300 overflow-hidden">
+    <div className="rounded-lg shadow-lg w-[300px] h-auto bg-gradient-to-b from-gray-200 to-gray-300 overflow-hidden  ">
       <div className="relative w-full h-[220px]">
         <Image src={`/${imgService}`} alt={title} layout="fill" objectFit="cover" />
       </div>
       <div className="p-4">
-        <h3 className="text-gray-900 text-lg font-bold uppercase">
+        <h3 className="text-gray-900 text-lg font-bold uppercase font-orbitron">
           {title}
         </h3>
-        <p className={`text-gray-700 font-light text-sm transition-all duration-500 ${isExpanded ? 'max-h-full' : 'max-h-20 overflow-hidden'}`}>
+        <p className={`text-gray-700  font-roboto font-semibold text-sm transition-all duration-500 ${isExpanded ? 'max-h-full' : 'max-h-20 overflow-hidden'}`}>
           {description}
         </p>
-        <button onClick={toggleReadMore} className="text-purple-700 text-sm mt-2">
+        <button onClick={toggleReadMore} className="text-[#dd40d5] text-sm mt-2 font-orbitron no-underline hover:underline">
           {isExpanded ? "Ver menos" : "Ver más"}
         </button>
       </div>
-      <div className="bg-purple-900 h-[60px] flex items-center justify-center">
-        <Link target="_blank" rel="noopener noreferrer" href={""}>
-          <p className="text-white text-custom-lg font-light uppercase tracking-wider">
-            Consulta
-          </p>
-        </Link>
+      <div className="bg-black">
+          <Link target="_blank" rel="noopener noreferrer" href={"https://wa.me/5492216767615"}>
+        <div className="bg-[#dd40d5] hover:opacity-80 opacity-60 h-[50px] flex items-center justify-center">
+            <p className="text-black  text-custom-lg  uppercase tracking-wider font-orbitron">
+              Consulta
+            </p>
       </div>
+          </Link>
+        </div>
     </div>
   );
 };

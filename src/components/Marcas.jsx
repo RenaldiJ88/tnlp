@@ -16,7 +16,7 @@ const image6 = '/img/tickers/marcas/Lenovo Blanco.png';
 function Marcas() {
     const images = [ image1, image2, image3, image4, image5, image6 ];
     return (
-        <div className='bg-black-tnlp'>
+        <div className='bg-black-tnlp' id="Marcas">
             <Ticker duration={15} direction={-1} className='flex '>
                 {images.map((item, index) => (
                     <div key={index} className="w-20 md:w-36 mx-10 py-4 my-auto">

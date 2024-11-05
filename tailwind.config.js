@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,7 +14,8 @@ module.exports = {
         'custom-lg': '18px', // Agrega una clase personalizada para font-size
       },
       fontFamily: {
-        'exo': ['Exo 2']
+        orbitron: ["var(--font-orbitron)"],
+        inter: ["var(--font-inter)"],
       },
       screens: {
         '3xl': '1920px'

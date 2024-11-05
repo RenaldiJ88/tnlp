@@ -20,14 +20,14 @@ const Footer = () => {
                             />
                         </Link>
                     </div>
-                    <div id="social_media_i" className="mx-auto my-10 pr-3 md:pr-10 ">
+                    <div id="social_media_i" className="mx-auto my-10 pr-3 md:pr-10 text-sm md:text-md font-roboto">
                         <div className="flex items-center">
-                            <PiMapPinPlusFill className="mr-2 text-blue-500" />
-                            <p>Bueno Aires, La Plata,  calle 56 Nº1621</p>
+                            <PiMapPinPlusFill className="mr-2 text-blue-500 " />
+                            <p>Bueno Aires, La Plata,  Calle 56 Nº 1621</p>
                         </div>
                         <div className="flex items-center">
                             <FaWhatsapp className="mr-2 text-blue-500" />
-                            <p>221 557 9087</p>
+                            <p>221 676 7615</p>
                         </div>
                         <div className="flex items-center">
                             <IoMdMail className="mr-2 text-blue-500" />
@@ -37,17 +37,17 @@ const Footer = () => {
                     <div className='flex mr-4'>
                         <div id="i_facebook">
                             <Link target='_blank' rel="noopener noreferrer" href={'#'}>
-                                <FaFacebookSquare className="text-3xl mr-3 hover:text-blue-500" />
+                                <FaFacebookSquare className="text-2xl md:text-3xl mr-3 hover:text-blue-500" />
                             </Link>
                         </div>
                         <div id="i_whatsapp">
                             <Link target='_blank' rel="noopener noreferrer" href={'#'}>
-                                <FaWhatsapp className="text-3xl mr-3 hover:text-green-500" />
+                                <FaWhatsapp className="text-2xl md:text-3xl mr-3 hover:text-green-500" />
                             </Link>
                         </div>
                         <div id="i_instagram">
                             <Link target='_blank' rel="noopener noreferrer" href={'#'}>
-                                <FaInstagram className="text-3xl mr-3 hover:text-red-500" />
+                                <FaInstagram className="text-2xl md:text-3xl mr-3 hover:text-red-900" />
                             </Link>
                         </div>
                     </div>

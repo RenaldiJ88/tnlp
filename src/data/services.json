@@ -1,22 +1,22 @@
 {
-    "servicios": [
-      {
-        "id": "limpiezas",
-        "categoria": "Limpiezas",
-        "descripcion": "Servicio profesional de limpieza y mantenimiento de equipos electrónicos por TNLP. Desde 2018, TNLP ofrece limpieza especializada para computadoras y dispositivos electrónicos. Se garantiza un funcionamiento óptimo y una mayor durabilidad de los equipos mediante una limpieza detallada y un mantenimiento regular. ¡Confíe en TNLP para mantener sus dispositivos en perfectas condiciones!",
-        "imgService": "img/servicios/serv-limpiezas-2.png"
-      },
-      {
-        "id": "upgrades",
-        "categoria": "Up Grade",
-        "descripcion": "Servicio especializado en actualizaciones y mejoras de equipos electrónicos por TNLP. Desde 2018, TNLP se dedica a optimizar computadoras y dispositivos electrónicos con las últimas actualizaciones y upgrades disponibles. Se asegura un rendimiento superior y una mayor vida útil de los equipos mediante mejoras constantes y personalizadas. ¡Mantenga sus dispositivos al día con la tecnología más avanzada con TNLP!",
-        "imgService": "img/servicios/serv-upgrade.png"
-      },
-      {
-        "id": "ssoo",
-        "categoria": "Sistemas Operativos",
-        "descripcion": "Profesionales en instalación de sistemas operativos por TNLP. Desde 2018, TNLP se especializa en la instalación y optimización de sistemas operativos para computadoras y dispositivos electrónicos. Garantizamos un rendimiento óptimo y una configuración personalizada para cada equipo. ¡Confíe en TNLP para mantener sus dispositivos actualizados y eficientes con el mejor software disponible!",
-        "imgService": "img/servicios/serv-upgrade-2.png"
-      }      
-    ]
-}
+  "servicios": [
+    {
+      "id": 1,
+      "categoria": "Servicios Tecnicos",
+      "descripcion": "En TNLP, somos expertos en la instalación y optimización de sistemas operativos, brindando a cada dispositivo el mejor rendimiento y una configuración personalizada. Mantené tus equipos actualizados y funcionando al máximo, respaldados por el mejor software y el soporte de nuestro equipo. ¡Confiá en TNLP y llevá tu tecnología al siguiente nivel!",
+      "imgService": "img/servicios/servi-tecnico.avif"
+    },
+    {
+      "id": 2,
+      "categoria": "Mantenimiento",
+      "descripcion": "Especialistas en limpieza y mantenimiento de tecnología, incluyendo Play Station, Xbox y computadoras. Nos enfocamos en el cuidado de cada equipo, extendiendo su vida útil y manteniendo un rendimiento óptimo. Con una limpieza profunda y mantenimiento regular, garantizamos que tus dispositivos estén siempre en perfectas condiciones. ¡Dale a tu tecnología el cuidado que merece con TNLP!",
+      "imgService": "img/servicios/servi-mantenimiento.avif"
+    },
+    {
+      "id": 3,
+      "categoria": "Up Grade y Mejoras",
+      "descripcion": "Llevamos el rendimiento de tus equipos al máximo. En TNLP nos especializamos en mejorar y optimizar computadoras y dispositivos, adaptándonos a tus necesidades y presupuesto. Garantizamos un rendimiento superior y la mejor tecnología para tu equipo. ¡Mantené tus dispositivos a la vanguardia con TNLP!",
+      "imgService": "img/servicios/servi-upgrade.avif"
+    }
+  ]
+  }

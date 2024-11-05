@@ -1,4 +1,25 @@
+import { Roboto, Inter, Orbitron} from 'next/font/google'
 import './globals.css'
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  variable: "--font-roboto",
+  weight: ["500"]
+})
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  variable: "--font-orbitron",
+  weight: ["400", "600", "700"]
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: "--font-inter",
+  weight: ["400", "700"]
+})
+
+
 export const metadata = {
   title: "Tu Notebook La Patla",  
 };
@@ -6,7 +27,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={``}>{children}</body>
+      <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>{children}</body>
     </html>
   )
 }

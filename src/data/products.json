@@ -1,39 +1,324 @@
 {
     "productos": [
+                
         {
             "id": "1",
-            "title": "dell allienware r15",
-            "image":"img/productos/prueba.png",
-            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
-            "price": "US$2500"
+            "categoria": "2",
+            "title": "Acer Predetor Helios",
+            "image":"img/products/PREDATOR 14 PHN14-51-98B1.webp",
+            "description": "CORE ULTRA 9 185H 1TB SSD 32GB LPDDR5X 7500MHZ 14.5 3K (3072X1920) 165HZ WIN11 NVIDIA RTX 4070 8192MB ABYSSAL BLACK BACKLIT KEYBOARD",
+            "price": "US$2810"
         },
         {
             "id": "2",
-            "title": "dell allienware r15",
-            "image":"img/productos/prueba.png",
-            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
-            "price": "US$2500"
+            "categoria": "2",
+            "title": "Acer Predetor Helios",
+            "image":"img/products/PREDATOR 16 PHN16-72-99PA.webp",
+            "description": "GAMING CORE I9-14900HX 24 NUCLEOS 1TB SSD 32GB DDR5 5200MHZ 16 FHD+(1920X1200) 165HZ WIN11 NVIDIA RTX 4060 8192MB ABYSSAL BLACK BACKLIT KEYBOARD",
+            "price": "US$2490"
         },
         {
             "id": "3",
-            "title": "dell allienware r15",
-            "image":"img/productos/prueba.png",
-            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
-            "price": "US$2500"
-        },{
+            "categoria": "2",
+            "title": "Acer Predator Triton",
+            "image":"img/products/PREDATOR TRITON NEO 16 PTN16-51-932N GAMING.webp",
+            "description": "CORE ULTRA 9 185H 1TB SSD 32GB LPDDR5X 7500MHZ 16 3.2K (3200X2000) 165HZ WIN11 NVIDIA RTX 4070 8192MB SILVER BACKLIT KEYBOARD",
+            "price": "US$2930"
+        },
+        {
             "id": "4",
-            "title": "dell allienware r15",
-            "image":"img/productos/prueba.png",
-            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
-            "price": "US$2500"
+            "categoria": "2",
+            "title": "Acer Predator Triton",
+            "image":"img/products/predator p516.webp",
+            "description": "I7-12700H 14 NUCLEOS 2TB SSD 16GB RAM DDR5 5200MHZ 16 2.5K (2560X1600) PANTALLA IPS 240HZ WIN11 NVIDIA RTX 3080 16GB STEEL GRAY TECLADO RETROILUMINADO",
+            "price": "US$1940"
         },
         {
             "id": "5",
-            "title": "dell allienware r15",
-            "image":"img/productos/prueba.png",
-            "description": "intel i7 13400g rtx 4070 bgb gdrr6 display full hd (1920*1080) 16 ram ddr5 4800hz bateria litio, 6 celdas",
-            "price": "US$2500"
+            "categoria": "2",
+            "title": "Asus ROG Strix",
+            "image":"img/products/ROG STRIX G614JIR-AS94.webp",
+            "description": "PANTALLA 16 QHD ( 2560 X 1600 ) 240HZ  I9 14900HX 24 CORES 5,8GHZ  SSD 1TB  32GB DDR5 5600MHZ NVIDIA GEFORCE RTX 4070 8GB WIN 11 HOME ECLIPSE GRAY TECLADO RETRO ILUMINADO RGB ",
+            "price": "US$3060"
+        },{
+            "id": "6",
+            "categoria": "2",
+            "title": "Asus ROG Strix",
+            "image":"img/products/ROG 17 G733ZS-DS94.webp",
+            "description": "I9 12900H 14 NÚCLEOS 32GB DDR5 4800MHZ 1TB SSD NVIDIA GEFORCE RTX 3080 8GB 17.3” 2.6K (2560 X 1440) 240HZ IPS QHD DISPLAY PER-KEY RGB TECLADO RETROILUMINADO",
+            "price": "US$2490"
+        },
+        {
+            "id": "7",
+            "categoria": "2",
+            "title": "Asus ROG Zephyrus",
+            "image":"img/products/ROG ZEPHYRUS G16 GU605MZ GAMING.webp",
+            "description": "CORE ULTRA 9 185H 1TB SSD 32GB LPDDR5X  7500MHZ 16 2.6K (2560X1600) 240HZ WIN11 NVIDIA RTX 4080 12GB GDDR6 BACKLIT CHICLET KEYBOARD",
+            "price": "US$4490"
+        },
+        {
+            "id": "8",
+            "categoria": "2",
+            "title": "Asus TUF A15",
+            "image":"img/products/TUF A15 FA507RF-EH71.webp",
+            "description": "15.6” FULL HD ( 1920 X 1080 ) 144HZ AMD RYZEN 7 6800HS 8 CORES 4.7GHZ SSD 512GB  16GB DDR5 5600MHZ NVIDIA GEFORCE RTX 2050 4GB  WIN 11 HOME  MECHA GRAY",
+            "price": "US$1320"
+        },
+        {
+            "id": "9",
+            "categoria": "1",
+            "title": "Asus Vivobook 15",
+            "image":"img/products/VIVOBOOK 15 M1502YA-AB74.webp",
+            "description": "AMD RYZEN 7 7730U 512GB SSD 16GB 15.6 (1920X1080) WIN11 QUIET BLUE BACKLIT KEYBOARD",
+            "price": "US$990"
+        },
+        {
+            "id": "10",
+            "categoria": "1",
+            "title": "Dell inspiron 15",
+            "image":"img/products/INSPIRON 15 3520.webp",
+            "description": "I5 1155G7 12GB RAM 256GB SSD 15.6” FULL HD TOUCHSCREEN",
+            "price": "US$770"
+        },
+        {
+            "id": "11",
+            "categoria": "1",
+            "title": "HP ENVY 16",
+            "image":"img/products/INSPIRON 3525.webp",
+            "description": "AMD RYZEN 5 5500U 6 NUCLEOS 512GB SSD 16GB 15.6 (1920X1080) 120HZ WIN11 PRO",
+            "price": "US$770"
+        },
+        {
+            "id": "12",
+            "categoria": "1",
+            "title": "Dell Latitude 7350",
+            "image":"img/products/LATITUDE 7350 2-IN-1.avif",
+            "description": "2-IN-1 CORE ULTRA 7 155U 512GB 16GB LPDDR5X 7500MHZ 13.3 2.6K (2560X1600) TOUCHSCREEN WIN11 PRO TITAN GRAY BACKLIT KEYBOARD ",
+            "price": "US$1380"
+        },
+        {
+            "id": "13",
+            "categoria": "3",
+            "title": "Dell Precision 7670",
+            "image":"img/products/PRECISION 7670.webp",
+            "description": "PANTALLA 16 WUXGA FHD+  INTEL CORE I7 12850H 16 NUCLEOS 1TB SSD 64GB DDR5 PLACA NVIDIA GEFORCE RTX A3000 12GB WINDOWS 11 PRO GRAY TECLADO RETRO ILUMINADO",
+            "price": "US$2370"
+        },
+        {
+            "id": "14",
+            "categoria": "1",
+            "title": "HP 15-FD0075TG",
+            "image":"img/products/HP 15-FD0075TG.webp",
+            "description": "CORE I5-1335U 3.4GHZ 512GB SSD 16GB 15.6 (1920X1080) BT WIN11 WEBCAM NATURAL SILVER TECLADO RETRO",
+            "price": "US$890"
+        },
+        {
+            "id": "15",
+            "categoria": "1",
+            "title": "HP 17-CN3097",
+            "image":"img/products/HP 17-CN3097.webp",
+            "description": "CORE I7-1355U 1TB+256GB SSD 16GB 17.3 (1920X1080) WIN11 NATURAL SILVER",
+            "price": "US$1040"
+        },
+        {
+            "id": "16",
+            "categoria": "1",
+            "title": "HP ENVY 16",
+            "image":"img/products/255 G10.webp",
+            "description": " AMD RYZEN 7 7730U 8 NÚCLEOS 16GB RAM 512GB SSD 15.6” FULL HD AMD RADEON GRAPHICS WIN11PRO COLOR DARK ASH SILVER",
+            "price": "US$940"
+        },
+        {
+            "id": "17",
+            "categoria": "2",
+            "title": "HP ENVY 17",
+            "image":"img/products/Envy 17-CR1045.webp",
+            "description": "CORE I7-13700H 1TB SSD 16GB 17.3 (1920X1080) TOUCHSCREEN WIN11 NVIDIA RTX 2050 4096MB BACKLIT KEYBOARD",
+            "price": "US$1540"
+        },
+        {
+            "id": "18",
+            "categoria": "1",
+            "title": "HP ENVY X360",
+            "image":"img/products/ENVY X360 16-AD0023.webp",
+            "description": "2-IN-1 AMD RYZEN 7 8840HS 1TB 16GB DDR5 5200MHZ 16 FHD+ (1920X1200) TOUCHSCREEN WIN11 METEOR SILVER BACKLIT KEYBOARD",
+            "price": "US$1380"
+        },
+        {
+            "id": "19",
+            "categoria": "2",
+            "title": "HP OMEN 16",
+            "image":"img/products/omen 16-WF0083.webp",
+            "description": "I9-13900HX 24 NÚCLEOS 32GB RAM DDR5 5600MHZ 1TB SSD GEFORCE RTX 4060 6GB 16.1 FULL HD 165HZ SHADOW BLACK TECLADO RETROILUMINADO",
+            "price": "US$2370"
+        },
+        {
+            "id": "20",
+            "categoria": "1",
+            "title": "HP Pavilion 15",
+            "image":"img/products/HP PAVILION 15-EG3071.webp",
+            "description": "CORE I7-1355U 512GB SSD 16GB 15.6 (1920X1080) WIN11 SILVER BACKLIT KEYBOARD FP READER",
+            "price": "US$1040"
+        },
+        {
+            "id": "21",
+            "categoria": "3",
+            "title": "HP Spectre X360 16",
+            "image":"img/products/spectre x360 16.webp",
+            "description": "2-IN-1 CORE I7-1360P 2TB SSD 16GB 16 4K (3840X2400) TOUCHSCREEN WIN11 INTEL ARC A370M 4096MB NOCTURNE BLUE ALUMINUM BACKLIT KEYBOARD FP READER",
+            "price": "US$1790"
+        },
+        {
+            "id": "22",
+            "categoria": "2",
+            "title": "HP Victus 15",
+            "image":"img/products/VICTUS 15-FB2082WM.webp",
+            "description": "AMD RYZEN 5 8640H 512GB SSD 16GB RAM DDR5 5600MHZ 15.6” FULL HD 144HZ GEFORCE RTX 4050 6GB TECLADO RETROILUMINADO",
+            "price": "US$1260"
+        },
+        {
+            "id": "23",
+            "categoria": "2",
+            "title": "HP Victus 16",
+            "image":"img/products/victus 16-s1023.webp",
+            "description": "AMD RYZEN 7 8845HS 1TB SSD 32GB RAM DDR5 5600MHZ 16.1 FULL HD IPS 144HZ GEFORCE RTX 4070 8GB TECLADO RETROILUMINADO ",
+            "price": "US$2030"
+        },
+        {
+            "id": "24",
+            "categoria": "2",
+            "title": "MSI Cyborg 15",
+            "image":"img/products/CYBORG 15 A13VE-218.webp",
+            "description": "I7-13620H 10 NÚCLEOS 512GB SSD 32GB RAM DDR5 5200MHZ 15.6 FULL HD 144HZ GEFORCE RTX 4050 6GB BLACK BA TECLADO RETROILUMINADO",
+            "price": "US$1790"
+        },
+        {
+            "id": "25",
+            "categoria": "2",
+            "title": "HP Pavilion 15",
+            "image":"img/products/RAIDER GE68 HX 14VGG-287 GAMING.webp",
+            "description": "CORE I9-14900HX 24 NUCLEOS 1TB SSD 32GB DDR5 5200MHZ 16 WUXGA FHD+ (1920X1200) 144HZ IPS WIN11 IR WEBCAM NVIDIA RTX 4070 8192MB BLACK STEELSERIES",
+            "price": "US$2930"
+        },
+        {
+            "id": "26",
+            "categoria": "2",
+            "title": "MSI Sword 15",
+            "image":"img/products/SWORD 15 A12UE-605 I7.webp",
+            "description": "I7-12650H 10 NÚCLEOS 1TB SSD 16GB RAM 15.6 FULL HD 144HZ IPS GEFORCE RTX 3060 6GB BLACK TECLADO RETROILUMINADO",
+            "price": "US$1430"
+        },
+        {
+            "id": "27",
+            "categoria": "1",
+            "title": "Lenovo 15IAU7",
+            "image":"img/products/LENOVO 1 15IAU7.webp",
+            "description": "CORE I5-1235U 512GB SSD 16GB 15.6 (1920X1080) WIN11 S CLOUD GREY",
+            "price": "US$830"
+        },
+        {
+            "id": "28",
+            "categoria": "1",
+            "title": "Lenovo Flex 5",
+            "image":"img/products/Flex 5.webp",
+            "description": "2-IN-1 AMD RYZEN 7 7730U 512GB SSD 16GB 14 FHD+ (1920X1200) TOUCHSCREEN IPS WIN11 ABYSS BLUE BACKLIT KEYBOARD",
+            "price": "US$1210"
+        },
+        {
+            "id": "29",
+            "categoria": "1",
+            "title": "Lenovo Flex 7",
+            "image":"img/products/FLEX 7 14IRU8 2-IN-1.webp",
+            "description": "2-IN-1 CORE I7-1355U 1TB SSD 16GB 14 2.2K (2240X1400) TOUCHSCREEN IPS WIN11 STONE BLUE BACKLIT KEYBOARD DIGITAL PEN",
+            "price": "US$1430"
+        },
+        {
+            "id": "30",
+            "categoria": "1",
+            "title": "Lenovo Ideapad 1 15ALC7",
+            "image":"img/products/IDEAPAD 1 15ALC7.webp",
+            "description": "AMD RYZEN 7 5700U 8 NÚCLEOS 16GB RAM 512GB SSD 15.6” FULL HD TECLADO ESPAÑOL",
+            "price": "US$940"
+        },
+        {
+            "id": "31",
+            "categoria": "1",
+            "title": "Lenovo Ideapad 3 14ITL05",
+            "image":"img/products/IDEAPAD 3 14ITL05.webp",
+            "description": "CORE I5-1135G7 256GB SSD 12GB RAM 14 FULL HD PLATINUM GRAY",
+            "price": "US$720"
+        },
+        {
+            "id": "32",
+            "categoria": "2",
+            "title": "Lenovo Legion 5 16AHP9",
+            "image":"img/products/legion 16AHP9.webp",
+            "description": "AMD RYZEN 7 8845HS 1TB SSD 32GB DDR5 5200MHZ 16 2.6K (2560X1600) 165HZ WIN11 NVIDIA RTX 4070 8192MB LUNA GRAY BACKLIT KEYBOARD",
+            "price": "US$2270"
+        },
+        {
+            "id": "33",
+            "categoria": "1",
+            "title": "Lenovo Yoga Book 9",
+            "image":"img/products/LENOVO YOGA BOOK 9 13IMU9.avif",
+            "description": "CORE ULTRA 7 155U 1TB SSD 16GB LPDDR5X 7500MHZ DUAL 13.3 2.9K (2880X1800) OLED TOUCHSCREEN WIN11 TIDAL TEAL LENOVO 600 BLUETOOTH SILENT MOUSE ",
+            "price": "US$2690"
+        },
+        {
+            "id": "34",
+            "categoria": "2",
+            "title": "Lenovo LOQ 15ARP9",
+            "image":"img/products/LOQ 15ARP9.webp",
+            "description": "AMD RYZEN 7 7435HS 512GB SSD 32GB DDR5 5200MHZ 15.6 (1920X1080) 144HZ WIN11 LUNA GREY NVIDIA RTX 4060 8192MB BACKLIT KEYBOARD",
+            "price": "US$1890"
+        },
+        {
+            "id": "35",
+            "categoria": "2",
+            "title": "Lenovo LOQ 15IAX9",
+            "image":"img/products/LOQ 15IAX9.webp",
+            "description": "I5 12450HX 8 NÚCLEOS 16GB RAM DDR5 4800MHZ 512GB SSD GEFORCE RTX 2050 4GB 15.6” FULL HD TECLADO RETROILUMINADO TECLADO ESPAÑOL",
+            "price": "US$1150"
+        },
+        {
+            "id": "36",
+            "categoria": "2",
+            "title": "Lenovo Slim 7",
+            "image":"img/products/SLIM 7 16IAH7 GAMING.webp",
+            "description": "CORE I7-12700H 14 NUCLEOS 1TB SSD 32GB DDR5 4800MHZ 16 WQXGA 2.6K (2560X1600) TOUCHSCREEN 120HZ WIN11 ARC A370M 4096MB STORM GREY BACKLIT KEYBOARD",
+            "price": "US$1650"
+        },
+        {
+            "id": "37",
+            "categoria": "2",
+            "title": "Lenovo Slim Pro 9",
+            "image":"img/products/Slim_pro9.webp",
+            "description": "I9-13905H 1TB SSD 32GB DDR5 5200MHZ 16 3.2K (3200X2000) 165HZ TOUCHSCREEN WIN11 NVIDIA RTX 4050 6144MB STORM",
+            "price": "US$2270"
+        },
+        {
+            "id": "38",
+            "categoria": "1",
+            "title": "Lenovo Thinkpad T145S",
+            "image":"img/products/THINKPAD T14S.webp",
+            "description": "I7-1365U/32GB DDR4 SSD 512GB/VIDEO INTEL IRIS 14.1 IPS FULLHD+ TACTIL TECLADO RETRO. CARCASA MAGNESIO/WIN11+OFFICE TECLADO ESPAÑOL",
+            "price": "US$1320"
+        },
+        {
+            "id": "39",
+            "categoria": "1",
+            "title": "Lenovo Thinkpad X13",
+            "image":"img/products/thinkpad x13.webp",
+            "description": "I7-1355U 512GB SSD 16GB DDR5 4800MHZ 13.3 FHD+ (1920X1200) TOUCHSCREEN WIN11 PRO BLACK BACKLIT KEYBOARD",
+            "price": "US$1260"
+        },
+        {
+            "id": "40",
+            "categoria": "1",
+            "title": "Lenovo V14 G4",
+            "image":"img/products/v14.webp",
+            "description": "AMD RYZEN 5 7520U 256GB SSD 8GB DDR5 4800MHZ 14 FHD (1920X1080) WIN11 PRO BUSINESS BLACK",
+            "price": "US$660"
         }
-        
     ]
 }

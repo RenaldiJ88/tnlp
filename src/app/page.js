@@ -8,11 +8,12 @@ import Marcas from '../components/Marcas';
 import QuienesSomos from '../components/QuienesSomos';
 import Map from '../components/Map';
 import Footer from '../components/Footer';
+import WhatsAppButton from '../components/WhatsAppButton.jsx';
 
 export default function Page() {
   return (
-    <div>
-      <div className="container absolute left-2/4 z-10 mx-auto -translate-x-2/4 p-4">
+    <div className="bg-black-tnlp">
+      <div className="absolute left-2/4 z-10 w-full -translate-x-2/4">
         <Navbar/>
       </div>
           <Home />
@@ -22,6 +23,7 @@ export default function Page() {
           <Modelos />
           <QuienesSomos />
           <Map />
+          <WhatsAppButton />
           <Footer />
     </div>
   );
