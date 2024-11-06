@@ -3,7 +3,6 @@ import ProductCard from './ProductCard';
 import data from '../data/products-offer.json';
 import { useState, useEffect } from 'react';
 import { swiffyslider } from 'swiffy-slider';
-import "swiffy-slider/css";
 
 const Productos = () => {
     const productosData = data.productosOffer;
@@ -50,8 +49,8 @@ const Productos = () => {
                                 `}>
                     <ul className="slider-container">
                         {productosData.map((products, index) => (
-                            <li className="slide-visible ">
-                                <div key={index} className='my-12 flex justify-center'>
+                            <li key={products.id} className="slide-visible ">
+                                <div  className='my-12 flex justify-center'>
                                     <ProductCard
                                         title={products.title}
                                         image={products.image}

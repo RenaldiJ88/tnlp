@@ -8,14 +8,6 @@
     "price": "US$1790"
 },
 {
-    "id": "2",
-    "categoria": "2",
-    "title": "MSI KATANA 15",
-    "image":"img/products-offer/msi-katana.jpg",
-    "description": "15.6` FULL HD, Intel Core i7-12650GH, MEMORIA RAM 16 GB DDR5,1TB SSD NVme gen 4 pcle, NVIDIA GeForce RTX 4070 8GB",
-    "price": "US$1840"
-},
-{
     "id": "3",
     "categoria": "2",
     "title": "ASUS ROG STRIX G513QY",
