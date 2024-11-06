@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Home = () => {
-    let imgFon ='./img/home/Img-Home.jpg';
+    let imgFon ='./img/home/img-home.jpg';
     return (
     <div className="relative flex flex-col h-screen items-center justify-end pt-16 pb-10 md:pb-12 " >
         <div className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" style={{ backgroundImage: `url(${imgFon})` }}>

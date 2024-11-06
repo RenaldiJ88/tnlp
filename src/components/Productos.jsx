@@ -3,6 +3,7 @@ import ProductCard from './ProductCard';
 import data from '../data/products-offer.json';
 import { useState, useEffect } from 'react';
 import { swiffyslider } from 'swiffy-slider';
+import "swiffy-slider/css";
 
 const Productos = () => {
     const productosData = data.productosOffer;
@@ -12,11 +13,11 @@ const Productos = () => {
         const handleResize = () => {
             const screenWidth = window.innerWidth;
             if (screenWidth < 720) {
-                setItemShowClass("slider-item-show3");
+                setItemShowClass("slider-item-show1");
             } else if (screenWidth >= 990 && screenWidth < 1280) {
-                setItemShowClass("slider-item-show3");
+                setItemShowClass("slider-item-show2");
             } else if (screenWidth >= 1024 && screenWidth < 1920) {
-                setItemShowClass("slider-item-show4");
+                setItemShowClass("slider-item-show3");
             }
         };
         handleResize();
@@ -48,7 +49,7 @@ const Productos = () => {
                                 slider-nav-animation
                                 `}>
                     <ul className="slider-container">
-                        {productosData.map((products, index) => (
+                        {productosData.map((products) => (
                             <li key={products.id} className="slide-visible ">
                                 <div  className='my-12 flex justify-center'>
                                     <ProductCard
