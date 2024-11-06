@@ -16,9 +16,11 @@ export default {
       fontFamily: {
         orbitron: ["var(--font-orbitron)"],
         inter: ["var(--font-inter)"],
+        roboto: ["Roboto Condensed", "sans-serif"]
       },
       screens: {
-        '3xl': '1920px'
+        '3xl': '1920px',
+        'tb': '768px'
       },
       colors: {
         'black-tnlp': '#1A1A1A',

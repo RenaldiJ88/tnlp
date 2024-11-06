@@ -9,7 +9,9 @@ const EquiposGamer = () => {
 
     return (
         <div className='bg-black'>
-            <Navbar />
+            <div className="absolute left-2/4 z-10 w-full -translate-x-2/4">
+                <Navbar/>
+            </div>
             <DetailGamer />
             <WhatsAppButton />
             <Footer />

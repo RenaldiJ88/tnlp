@@ -8,7 +8,9 @@ const EquiposOffice = () => {
 
     return (
         <div className='bg-black'>
+            <div className="absolute left-2/4 z-10 w-full -translate-x-2/4">
             <Navbar />
+            </div>
             <Office />
             <WhatsAppButton />
             <Footer />

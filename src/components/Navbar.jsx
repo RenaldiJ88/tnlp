@@ -43,7 +43,7 @@ const NavLinks = () => {
                             <ul className=''>
                                 <Link href="/#Marcas"><li>Productos en oferta</li></Link>
                                 <li className='mx-auto border-[1px] mt-2 border-white w-20'> </li>
-                                <Link href="/EquiposGamer"><li className='py-2'>Equipos Gamer/Design</li></Link>
+                                <Link href="/EquiposGamer"><li className='py-2'>Equipos Gamer</li></Link>
                                 <li className='mx-auto border-[1px] mb-2 border-white w-20'> </li>
                                 <Link href="/EquiposOffice"><li>Equipos Office</li></Link>
                             </ul>
@@ -68,8 +68,8 @@ const Navbar = () => {
 
 return (
     <>
-        <nav className="opacity-100 gap-1 grid  md:grid-cols-2 bg-black md:bg-transparent">
-            <a className="ml-28" href="/"><img src="../img/Logo.png" alt="" className='w-[140px] h-[140px] mx-auto md:mx-2' /></a>
+        <nav className="opacity-100 gap-1 grid  md:grid-cols-2 bg-transparent">
+            <a className="ml-28" href="/"><img src="../img/Logo.png" alt="" className='w-[150px] h-[150px] lg:w-[180px] xl:h-[180px]   mx-auto md:mx-2' /></a>
             <div className='hidden md:grid'>
                 <NavLinks/>
             </div>

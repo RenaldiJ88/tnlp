@@ -20,7 +20,7 @@ const ServiceCard = ({ title, description, imgService }) => {
         <h3 className="text-gray-900 text-lg font-bold uppercase font-orbitron">
           {title}
         </h3>
-        <p className={`text-gray-700  font-roboto font-semibold text-sm transition-all duration-500 ${isExpanded ? 'max-h-full' : 'max-h-20 overflow-hidden'}`}>
+        <p className={`text-gray-700  font-roboto  font-semibold text-sm transition-all duration-500 ${isExpanded ? 'min-h-[220px]' : 'max-h-20 overflow-hidden'}`}>
           {description}
         </p>
         <button onClick={toggleReadMore} className="text-[#dd40d5] text-sm mt-2 font-orbitron no-underline hover:underline">

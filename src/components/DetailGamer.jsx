@@ -31,15 +31,13 @@ const DetailGamer = () => {
     return (
         <div>
             <section className=' '>
+            <div id="home" className='relative flex flex-col h-screen items-center justify-end pt-16 pb-10 md:pb-12'>
+                    
+                    <div className="absolute top-0 h-full w-full bg-cover bg-center flex items-center flex-col p-5" style={{ backgroundImage: `url(${backgroundImage})` }}>
 
-                <div
-                    id="home"
-                    className="h-screen md:h-[860px] bg-cover bg-center flex items-center flex-col p-5 w-auto "
-                    style={{
-                        backgroundImage: `url(${backgroundImage})`,
-                    }}
-                >
-                    <h2 className="text-white uppercase font-bold text-[27px] md:text-4xl pt-10 mx-auto font-orbitron">Equipos Gamer y Design</h2>
+                    <h2 className=" text-white text-center uppercase font-bold text-[27px] pt-28 xl:pt-36 md:text-4xl font-orbitron">Equipos Gamer y Design</h2>
+                    </div>
+                
                 </div>
             </section>
             <section className='flex flex-col justify-center bg-gradient-to-b from-black-tnlp via-[#cfcfcfbb] to-black-tnlp'>
