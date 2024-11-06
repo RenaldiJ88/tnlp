@@ -1,5 +1,4 @@
 import React from 'react';
-import Imagen from 'next/image';
 
 const Map = () => {
     return (
