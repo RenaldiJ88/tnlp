@@ -20,7 +20,7 @@ const QuienesSomos = () => {
                     que cuentan con soporte técnico continuo para mantener su equipo siempre al máximo. En cada paso, buscamos superar tus expectativas y ser tu aliado tecnológico de confianza.</p>
                     <button className="bg-[#ffffff] opacity-40 py-2 px-4 rounded-xl w-80 text-center mt-3 mx-auto text-black  font-bold border-[#dd40d5] border-2 border-solid hover:text-white hover:bg-[#dd40d5] hover:border-[#ff96fa] font-orbitron">Saber Más</button>
                 </div>
-                <div className="w-auto flex justify-center items-center width-[300px] mx-[15px] md:mr-32 mb-10 rounded-sm ">
+                <div className="w-auto flex justify-center items-center width-[300px] mx-[15px] md:mr-32 my-10 rounded-sm ">
                     <Image 
                     src="/img/quienes-somos/quienes-somos2.avif"
                     width={1024}

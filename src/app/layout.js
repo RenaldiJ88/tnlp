@@ -27,6 +27,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+          <link rel="icon" href="/img/logo.ico" />
+      </head>
       <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>{children}</body>
     </html>
   )

@@ -38,7 +38,7 @@
             "categoria": "2",
             "title": "Asus ROG Strix",
             "image":"img/products/ROG STRIX G614JIR-AS94.webp",
-            "description": "PANTALLA 16 QHD ( 2560 X 1600 ) 240HZ  I9 14900HX 24 CORES 5,8GHZ  SSD 1TB  32GB DDR5 5600MHZ NVIDIA GEFORCE RTX 4070 8GB WIN 11 HOME ECLIPSE GRAY TECLADO RETRO ILUMINADO RGB ",
+            "description": "16 QHD (2560 X 1600) 240HZ I9 14900HX 24 CORES 5,8GHZ SSD 1TB 32GB DDR5 5600MHZ NVIDIA GEFORCE RTX 4070 8GB WIN 11 ECLIPSE GRAY TECLADO RETRO",
             "price": "US$3060"
         },{
             "id": "6",
@@ -77,7 +77,7 @@
             "categoria": "1",
             "title": "Dell inspiron 15",
             "image":"img/products/INSPIRON 15 3520.webp",
-            "description": "I5 1155G7 12GB RAM 256GB SSD 15.6” FULL HD TOUCHSCREEN",
+            "description": "Intel I5 1155G7 12GB RAM DDR4 256GB SSD 15.6” FULL HD TOUCHSCREEN",
             "price": "US$770"
         },
         {
@@ -93,7 +93,7 @@
             "categoria": "1",
             "title": "Dell Latitude 7350",
             "image":"img/products/LATITUDE 7350 2-IN-1.avif",
-            "description": "2-IN-1 CORE ULTRA 7 155U 512GB 16GB LPDDR5X 7500MHZ 13.3 2.6K (2560X1600) TOUCHSCREEN WIN11 PRO TITAN GRAY BACKLIT KEYBOARD ",
+            "description": "2-IN-1 INTEL CORE ULTRA 7 155U 512GB 16GB LPDDR5X 7500MHZ 13.3 2.6K (2560X1600) TOUCHSCREEN WIN11 PRO TITAN GRAY BACKLIT KEYBOARD ",
             "price": "US$1380"
         },
         {
@@ -101,7 +101,7 @@
             "categoria": "3",
             "title": "Dell Precision 7670",
             "image":"img/products/PRECISION 7670.webp",
-            "description": "PANTALLA 16 WUXGA FHD+  INTEL CORE I7 12850H 16 NUCLEOS 1TB SSD 64GB DDR5 PLACA NVIDIA GEFORCE RTX A3000 12GB WINDOWS 11 PRO GRAY TECLADO RETRO ILUMINADO",
+            "description": "16 WUXGA FHD INTEL CORE I7 12850H 16 NUCLEOS 1TB SSD 64GB DDR5 PLACA NVIDIA GEFORCE RTX A3000 12GB WINDOWS 11 PRO GRAY TECLADO RETRO",
             "price": "US$2370"
         },
         {
@@ -109,7 +109,7 @@
             "categoria": "1",
             "title": "HP 15-FD0075TG",
             "image":"img/products/HP 15-FD0075TG.webp",
-            "description": "CORE I5-1335U 3.4GHZ 512GB SSD 16GB 15.6 (1920X1080) BT WIN11 WEBCAM NATURAL SILVER TECLADO RETRO",
+            "description": "INTEL CORE I5-1335U 3.4GHZ 512GB SSD 16GB 15.6 (1920X1080) BT WIN11 WEBCAM NATURAL SILVER TECLADO RETRO",
             "price": "US$890"
         },
         {
@@ -117,7 +117,7 @@
             "categoria": "1",
             "title": "HP 17-CN3097",
             "image":"img/products/HP 17-CN3097.webp",
-            "description": "CORE I7-1355U 1TB+256GB SSD 16GB 17.3 (1920X1080) WIN11 NATURAL SILVER",
+            "description": "INTEL CORE I7-1355U 1TB+256GB SSD 16GB 17.3 (1920X1080) WIN11 NATURAL SILVER",
             "price": "US$1040"
         },
         {
@@ -133,7 +133,7 @@
             "categoria": "2",
             "title": "HP ENVY 17",
             "image":"img/products/Envy 17-CR1045.webp",
-            "description": "CORE I7-13700H 1TB SSD 16GB 17.3 (1920X1080) TOUCHSCREEN WIN11 NVIDIA RTX 2050 4096MB BACKLIT KEYBOARD",
+            "description": "INTEL CORE I7-13700H 1TB SSD 16GB 17.3 (1920X1080) TOUCHSCREEN WIN11 NVIDIA RTX 2050 4096MB BACKLIT KEYBOARD",
             "price": "US$1540"
         },
         {
@@ -149,7 +149,7 @@
             "categoria": "2",
             "title": "HP OMEN 16",
             "image":"img/products/omen 16-WF0083.webp",
-            "description": "I9-13900HX 24 NÚCLEOS 32GB RAM DDR5 5600MHZ 1TB SSD GEFORCE RTX 4060 6GB 16.1 FULL HD 165HZ SHADOW BLACK TECLADO RETROILUMINADO",
+            "description": "INTEL I9-13900HX 24 NÚCLEOS 32GB RAM DDR5 5600MHZ 1TB SSD GEFORCE RTX 4060 6GB 16.1 FULL HD 165HZ SHADOW BLACK TECLADO RETROILUMINADO",
             "price": "US$2370"
         },
         {
@@ -205,7 +205,7 @@
             "categoria": "2",
             "title": "MSI Sword 15",
             "image":"img/products/SWORD 15 A12UE-605 I7.webp",
-            "description": "I7-12650H 10 NÚCLEOS 1TB SSD 16GB RAM 15.6 FULL HD 144HZ IPS GEFORCE RTX 3060 6GB BLACK TECLADO RETROILUMINADO",
+            "description": "INTEL I7-12650H 10 NÚCLEOS 1TB SSD 16GB RAM 15.6 FULL HD 144HZ IPS GEFORCE RTX 3060 6GB BLACK TECLADO RETROILUMINADO",
             "price": "US$1430"
         },
         {
@@ -213,7 +213,7 @@
             "categoria": "1",
             "title": "Lenovo 15IAU7",
             "image":"img/products/LENOVO 1 15IAU7.webp",
-            "description": "CORE I5-1235U 512GB SSD 16GB 15.6 (1920X1080) WIN11 S CLOUD GREY",
+            "description": "INTEL CORE I5-1235U 512GB SSD 16GB 15.6 (1920X1080) WIN11 S CLOUD GREY",
             "price": "US$830"
         },
         {
@@ -229,7 +229,7 @@
             "categoria": "1",
             "title": "Lenovo Flex 7",
             "image":"img/products/FLEX 7 14IRU8 2-IN-1.webp",
-            "description": "2-IN-1 CORE I7-1355U 1TB SSD 16GB 14 2.2K (2240X1400) TOUCHSCREEN IPS WIN11 STONE BLUE BACKLIT KEYBOARD DIGITAL PEN",
+            "description": "2-IN-1 INTEL CORE I7-1355U 1TB SSD 16GB 14 2.2K (2240X1400) TOUCHSCREEN IPS WIN11 STONE BLUE BACKLIT KEYBOARD DIGITAL PEN",
             "price": "US$1430"
         },
         {
@@ -245,7 +245,7 @@
             "categoria": "1",
             "title": "Lenovo Ideapad 3 14ITL05",
             "image":"img/products/IDEAPAD 3 14ITL05.webp",
-            "description": "CORE I5-1135G7 256GB SSD 12GB RAM 14 FULL HD PLATINUM GRAY",
+            "description": "INTEL CORE I5-1135G7 256GB SSD 12GB RAM 14 FULL HD PLATINUM GRAY",
             "price": "US$720"
         },
         {
@@ -293,7 +293,7 @@
             "categoria": "2",
             "title": "Lenovo Slim Pro 9",
             "image":"img/products/Slim_pro9.webp",
-            "description": "I9-13905H 1TB SSD 32GB DDR5 5200MHZ 16 3.2K (3200X2000) 165HZ TOUCHSCREEN WIN11 NVIDIA RTX 4050 6144MB STORM",
+            "description": "INTEL I9-13905H 1TB SSD 32GB DDR5 5200MHZ 16 3.2K (3200X2000) 165HZ TOUCHSCREEN WIN11 NVIDIA RTX 4050 6144MB STORM",
             "price": "US$2270"
         },
         {
@@ -301,7 +301,7 @@
             "categoria": "1",
             "title": "Lenovo Thinkpad T145S",
             "image":"img/products/THINKPAD T14S.webp",
-            "description": "I7-1365U/32GB DDR4 SSD 512GB/VIDEO INTEL IRIS 14.1 IPS FULLHD+ TACTIL TECLADO RETRO. CARCASA MAGNESIO/WIN11+OFFICE TECLADO ESPAÑOL",
+            "description": "INTEL I7-1365U/32GB DDR4 SSD 512GB/VIDEO INTEL IRIS 14.1 IPS FULLHD+ TACTIL TECLADO RETRO. CARCASA MAGNESIO/WIN11+OFFICE TECLADO ESPAÑOL",
             "price": "US$1320"
         },
         {
@@ -309,7 +309,7 @@
             "categoria": "1",
             "title": "Lenovo Thinkpad X13",
             "image":"img/products/thinkpad x13.webp",
-            "description": "I7-1355U 512GB SSD 16GB DDR5 4800MHZ 13.3 FHD+ (1920X1200) TOUCHSCREEN WIN11 PRO BLACK BACKLIT KEYBOARD",
+            "description": "INTEL I7-1355U 512GB SSD 16GB DDR5 4800MHZ 13.3 FHD+ (1920X1200) TOUCHSCREEN WIN11 PRO BLACK BACKLIT KEYBOARD",
             "price": "US$1260"
         },
         {

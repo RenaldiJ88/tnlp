@@ -35,7 +35,7 @@ const DetailGamer = () => {
                     
                     <div className="absolute top-0 h-full w-full bg-cover bg-center flex items-center flex-col p-5" style={{ backgroundImage: `url(${backgroundImage})` }}>
 
-                    <h2 className=" text-white text-center uppercase font-bold text-[27px] pt-28 xl:pt-36 md:text-4xl font-orbitron">Equipos Gamer y Design</h2>
+                    <h2 className=" text-white text-center uppercase font-bold text-[27px] pt-28 lg:pt-20 xl:pt-24 2xl:pt-40 md:text-4xl font-orbitron">Equipos Gamer y Design</h2>
                     </div>
                 
                 </div>

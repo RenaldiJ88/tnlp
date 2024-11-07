@@ -18,7 +18,7 @@ const NavLinks = () => {
     return (
         <>
         <ul className="pt-5 underline-offset-8 md:pt-14  md:pl-0 rounded-xl bg-black md:bg-transparent md:gap-x-3 lg:gap-x-2 xl:text-xl lg:text-lg md:text-sm md:grid md:grid-cols-4 font-orbitron">
-                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5 text-center md:font-bold md:pb-0'><a href="/#Servicios" className="text-white hover:border-b-2">Servicios</a></li>
+                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5 text-center md:font-bold md:pb-0'><Link href="/#Servicios" className="text-white hover:border-b-2">Servicios</Link></li>
                 <div className="md:relative text-center text-white  ">
                     <div className='flex justify-center md:pl-0 pl-4'>
                         <button className="flex items-center" onClick={handleDropdown}>
@@ -42,17 +42,17 @@ const NavLinks = () => {
                         <div className=" mx-auto absolute md:mt-6 bg-black text-white w-full flex-col rounded-md p-5">
                             <ul className=''>
                                 <Link href="/#Marcas"><li>Productos en oferta</li></Link>
-                                <li className='mx-auto border-[1px] mt-2 border-white w-20'> </li>
+                                <li className='mx-auto border-[1px] mt-2 border-white w-10 xl:w-28'> </li>
                                 <Link href="/EquiposGamer"><li className='py-2'>Equipos Gamer</li></Link>
-                                <li className='mx-auto border-[1px] mb-2 border-white w-20'> </li>
+                                <li className='mx-auto border-[1px] mb-2 border-white w-10 xl:w-28'> </li>
                                 <Link href="/EquiposOffice"><li>Equipos Office</li></Link>
                             </ul>
 
                         </div>
                     )}
                 </div>
-                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5  text-center md:font-bold md:pb-0'><a href="/#Map" className="text-white hover:border-b-2">Contacto</a></li>
-                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5  text-center md:font-bold md:pb-0'><a href="/#Nosotros" className="text-white hover:border-b-2">Nosotros</a></li>
+                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5  text-center md:font-bold md:pb-0'><Link href="/#Nosotros" className="text-white hover:border-b-2">Nosotros</Link></li>
+                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5  text-center md:font-bold md:pb-0'><Link href="/#Map" className="text-white hover:border-b-2">Contacto</Link></li>
             </ul>
         </> 
     )
@@ -69,7 +69,7 @@ const Navbar = () => {
 return (
     <>
         <nav className="opacity-100 gap-1 grid  md:grid-cols-2 bg-transparent">
-            <a className="ml-28" href="/"><img src="../img/Logo.png" alt="" className='w-[150px] h-[150px] lg:w-[180px] xl:h-[180px]   mx-auto md:mx-2' /></a>
+            <a className="ml-28" href="/"><img src="../img/logo.png" alt="" className='w-[150px] h-[150px] lg:w-[180px] xl:h-[180px]   mx-auto md:mx-2' /></a>
             <div className='hidden md:grid'>
                 <NavLinks/>
             </div>

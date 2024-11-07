@@ -14,15 +14,15 @@ const image7 = '/img/tickers/modelos/tuf-ticker.png';
 function Modelos() {
     const images = [ image1, image2, image3, image4, image5, image6, image7 ];
     return (
-        <div className='bg-black-tnlp '>
+        <div className='bg-black-tnlp'>
             <Ticker duration={15} direction={1} className='flex my-auto'>
                 {images.map((item, index) => (
                     <div key={index} className="w-36 md:w-52 mx-5 py-4 my-auto">
                         <Image
                             src={item}
                             alt={`Image ${index}`}
-                            width={100}
-                            height={100}
+                            width={125}
+                            height={125}
                             className=''
                             style={{
                                 backgroundColor: item,

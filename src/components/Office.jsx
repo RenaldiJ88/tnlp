@@ -33,7 +33,7 @@ const Office = () => {
             <section className=' '>
                 <div id="home" className='relative flex flex-col h-screen items-center justify-end pt-16 pb-10 md:pb-12'>
                     <div className="absolute top-0 h-full w-full bg-cover bg-center flex items-center flex-col p-5 " style={{backgroundImage: `url(${backgroundImage})` }}>
-                    <h2 className="text-white uppercase font-bold text-[27px] md:text-4xl pt-32  font-orbitron">Equipos Office</h2>
+                    <h2 className="text-white uppercase font-bold text-[27px] md:text-4xl pt-28 md:pt-32 lg:pt-24  font-orbitron">Equipos Office</h2>
                     </div>
                 </div>
             </section>

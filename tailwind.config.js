@@ -19,8 +19,7 @@ export default {
         roboto: ["Roboto Condensed", "sans-serif"]
       },
       screens: {
-        '3xl': '1920px',
-        'tb': '768px'
+        '3xl': '1920px'
       },
       colors: {
         'black-tnlp': '#1A1A1A',
