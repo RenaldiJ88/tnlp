@@ -14,7 +14,7 @@ const Map = () => {
             </div>
             <div className='w-[82%] md:w-[50%] mx-auto my-auto py-10 md:py-0'>
                 <div className='flex flex-row justify-center md:justify-start mr-4'>
-                    <input type="text" className='h-8 mt-2 rounded-md w-[80%] md:w-[60%] md:ml-16 font-roboto' placeholder=" Ingrese su mail para promociones" />
+                    <input type="text" className='h-8 mt-2 rounded-md w-[80%] md:w-[60%] md:ml-16 font-roboto' placeholder="Ingrese su mail para promociones" />
                     <button className="bg-[#ffffff] opacity-40 py-2 px-4 rounded-xl text-black font-bold border-[#dd40d5] border-2 border-solid w-40 text-center  ml-5  hover:text-white hover:bg-[#dd40d5] hover:border-[#ff96fa] font-orbitron">
                         Enviar
                     </button>

@@ -21,14 +21,14 @@ const inter = Inter({
 
 
 export const metadata = {
-  title: "Tu Notebook La Patla",  
+  title: "Tu Notebook La Plata",  
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-          <link rel="icon" href="/img/logo.ico" />
+          <link rel="icon" href="/img/favicon.ico" />
       </head>
       <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>{children}</body>
     </html>
