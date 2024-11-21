@@ -69,7 +69,7 @@ const Navbar = () => {
 return (
     <>
         <nav className="opacity-100 gap-1 grid  md:grid-cols-2 bg-transparent">
-            <a className="ml-28" href="/"><img src="/img/logo.png" alt="" className='w-[150px] h-[150px] lg:w-[180px] xl:h-[180px]   mx-auto md:mx-2' /></a>
+            <a className="ml-28" href="/"><img src="/img/logotnlp.png" alt="" className='w-[140px] h-[140px] lg:w-[180px] xl:h-[180px] mx-auto md:mx-2' /></a>
             <div className='hidden md:grid'>
                 <NavLinks/>
             </div>

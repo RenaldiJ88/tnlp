@@ -14,8 +14,8 @@
     "framer-motion-ticker": "^1.0.19",
     "lucide-react": "^0.378.0",
     "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "swiffy-slider": "^1.6.0"
   },

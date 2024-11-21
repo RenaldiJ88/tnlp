@@ -14,7 +14,7 @@ const ServiceCard = ({ title, description, imgService }) => {
   return (
     <div className="rounded-lg shadow-lg w-[300px] h-auto bg-gradient-to-b from-gray-200 to-gray-300 overflow-hidden  ">
       <div className="relative w-full h-[220px]">
-        <Image src={`/${imgService}`} alt={title} layout="fill" objectFit="cover" />
+        <Image src={`/${imgService}`} alt={title} width={300} height={240}/>
       </div>
       <div className="p-4">
         <h3 className="text-gray-900 text-lg font-bold uppercase font-orbitron">

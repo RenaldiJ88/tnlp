@@ -13,9 +13,9 @@ const Footer = () => {
                     <div id="logo_footer" className="mr-4">
                         <Link href="#home">
                             <Image
-                                src="/img/logo.png"
-                                width={175}
-                                height={175}
+                                src="/img/logotnlp.png"
+                                width={150}
+                                height={150}
                                 alt="Logo-Footer"
                             />
                         </Link>
