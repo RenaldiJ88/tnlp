@@ -22,7 +22,7 @@ const ProductCard = ({ title, image, description, price }) => {
                     </div>
 
                     <div className="">
-                        <p className="pt-5 px-7 mb-3 text-white text-sm text-justify uppercase font-roboto h-[105px]">{description}</p>
+                        <p className="pt-5 px-7 mb-3 text-white text-sm text-justify uppercase font-roboto h-[125px]">{description}</p>
                         <p className="py-1 text-white leading-snug text-center font-bold text-[20px] font-roboto">{price}</p>
                     </div>
                 </article>
