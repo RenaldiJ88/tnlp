@@ -12,7 +12,7 @@ const Servicios = () => {
         </p>
         <div className="flex flex-wrap justify-center  w-full">
           {serviciosData.map((servicio, index) => (
-            <div key={index} className="my-5 md:mx-32">
+            <div key={index} className="my-5 md:mx-10">
               <ServiceCard             
                 title={servicio.categoria}
                 description={servicio.descripcion}

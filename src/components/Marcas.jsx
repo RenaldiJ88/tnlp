@@ -17,9 +17,9 @@ function Marcas() {
     const images = [ image1, image2, image3, image4, image5, image6 ];
     return (
         <div className='bg-black-tnlp' id="Marcas">
-            <Ticker duration={15} direction={-1} className='flex '>
+            <Ticker duration={30} direction={-1} className='flex '>
                 {images.map((item, index) => (
-                    <div key={index} className="w-20 md:w-36 mx-10 py-4 my-auto">
+                    <div key={index} className="w-20 md:w-36 mx-10 pt-4 my-auto">
                         <Image
                             src={item}
                             alt={`Image ${index}`}

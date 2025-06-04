@@ -15,9 +15,9 @@ function Modelos() {
     const images = [ image1, image2, image3, image4, image5, image6, image7 ];
     return (
         <div className='bg-black-tnlp'>
-            <Ticker duration={15} direction={1} className='flex my-auto'>
+            <Ticker duration={35} direction={1} className='flex my-auto'>
                 {images.map((item, index) => (
-                    <div key={index} className="w-36 md:w-52 mx-5 py-4 my-auto">
+                    <div key={index} className="w-36 md:w-52 mx-5 pb-4 my-auto">
                         <Image
                             src={item}
                             alt={`Image ${index}`}

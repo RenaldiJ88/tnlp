@@ -39,12 +39,12 @@ const NavLinks = () => {
                     </div>
 
                     {isDisplayed && (
-                        <div className=" mx-auto absolute md:mt-6 bg-black text-white w-full flex-col rounded-md p-5">
+                        <div className=" mx-auto absolute md:mt-4 bg-black text-white w-full flex-col rounded-md p-5">
                             <ul className=''>
                                 <Link href="/#Marcas"><li>Productos en oferta</li></Link>
-                                <li className='mx-auto border-[1px] mt-2 border-white w-10 xl:w-28'> </li>
+                                <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>
                                 <Link href="/EquiposGamer"><li className='py-2'>Equipos Gamer</li></Link>
-                                <li className='mx-auto border-[1px] mb-2 border-white w-10 xl:w-28'> </li>
+                                <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>
                                 <Link href="/EquiposOffice"><li>Equipos Office</li></Link>
                             </ul>
 

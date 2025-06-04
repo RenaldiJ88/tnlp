@@ -43,20 +43,15 @@ const Footer = () => {
                             <p>tunotebook@gmail.com</p>
                         </div>
                     </div>
-                    <div className='flex md:mr-10 mb-10'>
-                        <div id="i_facebook">
-                            <Link target='_blank' rel="noopener noreferrer" href={'#'}>
-                                <FaFacebookSquare className="text-2xl md:text-3xl mr-3 hover:text-blue-500" />
-                            </Link>
-                        </div>
-                        <div id="i_whatsapp">
-                            <Link target='_blank' rel="noopener noreferrer" href={'#'}>
-                                <FaWhatsapp className="text-2xl md:text-3xl mr-3 hover:text-green-500" />
-                            </Link>
-                        </div>
-                        <div id="i_instagram">
-                            <Link target='_blank' rel="noopener noreferrer" href={'#'}>
+                    <div className='flex items-center md:mr-24 mb-10 mt-14'>
+                        <div id="i_instagram" >
+                            <Link target='_blank' rel="noopener noreferrer" href={'https://www.instagram.com/tunotebooklaplata/'}>
                                 <FaInstagram className="text-2xl md:text-3xl mr-3 hover:text-red-900" />
+                            </Link>
+                        </div>
+                        <div id="i_facebook">
+                            <Link target='_blank' rel="noopener noreferrer" href={'https://www.facebook.com/notebooklp/'}>
+                                <FaFacebookSquare className="text-2xl md:text-3xl mr-3 hover:text-blue-500" />
                             </Link>
                         </div>
                     </div>

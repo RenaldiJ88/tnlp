@@ -19,12 +19,12 @@ const ProductCard = ({ title, image, description, price }) => {
                     </div>
 
                     <div className="">
-                        <p className="pt-2 px-5 text-white text-sm text-center uppercase font-roboto h-[105px]">{description}</p>
-                        <p className="py-2 text-white leading-snug text-center font-bold text-[20px] font-roboto">{price}</p>
+                        <p className="pt-5 px-7 mb-3 text-white text-sm text-justify uppercase font-roboto h-[105px]">{description}</p>
+                        <p className="py-1 text-white leading-snug text-center font-bold text-[20px] font-roboto">{price}</p>
                     </div>
                 </article>
                 <article className="text-center">
-                    <div className="h-10  w-[50%] mx-auto my-3 bg-[#dd40d5] opacity-60 hover:opacity-80 text-black rounded-3xl font-bold uppercase font-orbitron hover:duration-200 ">
+                    <div className="h-10  w-[50%] mx-auto mt-1 mb-5 bg-[#dd40d5] opacity-60 hover:opacity-80 text-black rounded-3xl font-bold uppercase font-orbitron hover:duration-200 ">
                         <Link
                             target="_blank"
                             rel="noopener noreferrer"

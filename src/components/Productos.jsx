@@ -16,8 +16,8 @@ const Productos = () => {
                 setItemShowClass("slider-item-show1");
             } else if (screenWidth >= 990 && screenWidth < 1280) {
                 setItemShowClass("slider-item-show2");
-            } else if (screenWidth >= 1024 && screenWidth < 1920) {
-                setItemShowClass("slider-item-show3");
+            } else if (screenWidth >= 1289) {
+                setItemShowClass("slider-item-show4");
             }
         };
         handleResize();
@@ -38,7 +38,7 @@ const Productos = () => {
         <>
             <section  className='flex flex-col justify-center bg-gradient-to-b from-black-tnlp via-[#cfcfcfbb] to-black-tnlp'>
                 <div id="productos">
-                    <h2 className="text-white uppercase font-bold text-[40px] xl:text-[42px] text-center pt-14 font-orbitron">Productos</h2>
+                    <h2 className="text-white uppercase font-bold text-[40px] xl:text-[42px] text-center pt-10 font-orbitron">Productos</h2>
                 </div>
                 <div className={`swiffy-slider ${itemShowClass}
                                 slider-nav-round 
@@ -67,6 +67,9 @@ const Productos = () => {
 
                     <div className="slider-indicators !static mt-2">
                         <button className="active" aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
+                        <button aria-label="Go to slide"></button>
                         <button aria-label="Go to slide"></button>
                         <button aria-label="Go to slide"></button>
                         <button aria-label="Go to slide"></button>

@@ -3,20 +3,25 @@
     {
       "id": 1,
       "categoria": "Servicios Tecnicos",
-      "descripcion": "En TNLP, somos expertos en la instalación y optimización de sistemas operativos, brindando a cada dispositivo el mejor rendimiento y una configuración personalizada. Mantené tus equipos actualizados y funcionando al máximo, respaldados por el mejor software y el soporte de nuestro equipo. ¡Confiá en TNLP y llevá tu tecnología al siguiente nivel!",
-      "imgService": "img/servicios/servi-tecnico.avif"
+      "descripcion": "Un diagnóstico preciso es clave para encontrar la solución adecuada. En TNLP evaluamos notebooks y PCs con un enfoque técnico especializado, identificando fallas tanto en hardware como en software, para brindarte respuestas concretas. Si tu equipo presenta problemas de rendimiento, errores o fallas de encendido, lo analizamos en detalle y te ofrecemos un presupuesto a medida.          Consulta ahora y obtené un diagnóstico confiable con nuestros especialistas.",
+      "imgService": "img/servicios/servi-tecnico.jpg"
     },
     {
       "id": 2,
       "categoria": "Mantenimiento",
-      "descripcion": "Especialistas en limpieza y mantenimiento de tecnología, incluyendo Play Station, Xbox y computadoras. Nos enfocamos en el cuidado de cada equipo, extendiendo su vida útil y manteniendo un rendimiento óptimo. Con una limpieza profunda y mantenimiento regular, garantizamos que tus dispositivos estén siempre en perfectas condiciones. ¡Dale a tu tecnología el cuidado que merece con TNLP!",
-      "imgService": "img/servicios/servi-mantenimiento.avif"
+      "descripcion": "Es fundamental para evitar fallas y mantener el rendimiento de tu dispositivo. En TNLP realizamos limpiezas profundas, reemplazo de pasta y pads térmicos; un control técnico de componentes para asegurar una correcta disipación de calor y estabilidad operativa. El polvo acumulado y el desgaste afectan silenciosamente la eficiencia de tu PC o consola. Ya sea para uso gaming, renderizado, hogar u oficina, nuestro servicio de mantenimiento prolonga la vida útil y mejora su rendimiento desde el interior.",
+      "imgService": "img/servicios/servi-mantenimiento.jpg"
     },
     {
       "id": 3,
       "categoria": "Up Grade y Mejoras",
-      "descripcion": "Llevamos el rendimiento de tus equipos al máximo. En TNLP nos especializamos en mejorar y optimizar computadoras y dispositivos, adaptándonos a tus necesidades y presupuesto. Garantizamos un rendimiento superior y la mejor tecnología para tu equipo. ¡Mantené tus dispositivos a la vanguardia con TNLP!",
-      "imgService": "img/servicios/servi-upgrade.avif"
+      "descripcion": "Si tu equipo ya no rinde como antes, en TNLP analizamos su configuración actual y proponemos mejoras efectivas. Desde ampliar la memoria RAM o instalar un disco solido SSD, hasta optimizar el sistema operativo, cada mejora se realiza con precisión técnica y adaptada a tus necesidades. Renová tu equipo sin necesidad de cambiarlo. Consultá ahora y llevá tu equipo al siguiente nivel con mejoras personalizadas.",
+      "imgService": "img/servicios/servi-upgrade.jpg"
+    },{
+      "id": 4,
+      "categoria": "Reparaciones",
+      "descripcion": "Cada componente cumple un rol clave en el funcionamiento de tu notebook o PC. En TNLP diagnosticamos y reparamos fallas en pantallas, teclados, placas madre, conectores, ventiladores y más. Si tu equipo sufrió un golpe, derrame o dejó de encender, lo restauramos con procedimientos técnicos y repuestos adecuados. Escribinos ahora y restaura tu equipo con profesionales.",
+      "imgService": "img/servicios/servi-rep.jpeg"
     }
   ]
   }

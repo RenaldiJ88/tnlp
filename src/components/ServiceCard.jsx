@@ -12,15 +12,15 @@ const ServiceCard = ({ title, description, imgService }) => {
   };
 
   return (
-    <div className="rounded-lg shadow-lg w-[300px] h-auto bg-gradient-to-b from-gray-200 to-gray-300 overflow-hidden  ">
-      <div className="relative w-full h-[220px]">
-        <Image src={`/${imgService}`} alt={title} width={300} height={240}/>
+    <div className="rounded-lg shadow-lg w-[350px] h-auto bg-gradient-to-b from-gray-200 to-gray-300 overflow-hidden  ">
+      <div className="relative w-full h-[220px] mb-5">
+        <Image src={`/${imgService}`} alt={title} width={350} height={240}/>
       </div>
       <div className="p-4">
-        <h3 className="text-gray-900 text-lg font-bold uppercase font-orbitron">
+        <h3 className="text-gray-900 text-xl font-bold uppercase font-orbitron pb-3 text-center">
           {title}
         </h3>
-        <p className={`text-gray-700  font-roboto  font-semibold text-sm transition-all duration-500 ${isExpanded ? 'min-h-[240px]' : 'max-h-20 overflow-hidden'}`}>
+        <p className={`text-gray-700 text-justify  font-roboto  font-semibold text-sm transition-all duration-500 ${isExpanded ? 'min-h-[240px]' : 'max-h-20 overflow-hidden'}`}>
           {description}
         </p>
         <button onClick={toggleReadMore} className="text-[#dd40d5] text-sm mt-2 font-orbitron no-underline hover:underline">
