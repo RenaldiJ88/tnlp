@@ -17,7 +17,7 @@ const QuienesSomos = () => {
                 </div>
                 <div className="w-auto flex justify-center items-center width-[300px] mx-[15px] md:mr-32 my-10 rounded-sm ">
                     <Image 
-                    src="/img/quienes-somos/quienes-somos2.avif"
+                    src="/img/quienes-somos/quienes-somos2.jpeg"
                     width={1024}
                     height={1500}
                     alt="Foto-QuienesSomos"
