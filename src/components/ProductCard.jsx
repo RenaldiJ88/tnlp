@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import useWhatsAppLink from "../hooks/useWhatsAppLink"; // Ajusta la ruta si es necesario
+
 const ProductCard = ({ title, image, description, price }) => {
+    const getWhatsAppLink = useWhatsAppLink(title, price); // Usa el custom hook
     return (
         <>
             <section className="rounded-3xl bg-black-tnlp w-[300px] h-auto ">
@@ -28,7 +31,7 @@ const ProductCard = ({ title, image, description, price }) => {
                         <Link
                             target="_blank"
                             rel="noopener noreferrer"
-                            href={"https://wa.me/5492216767615"}
+                            href={getWhatsAppLink()} // Usa la función del hook aquí
                         >
                         <p className="pt-2">Comprar</p>
                         </Link>
