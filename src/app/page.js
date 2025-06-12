@@ -6,9 +6,11 @@ import Productos from '../components/Productos';
 import Modelos from '../components/Modelos';
 import Marcas from '../components/Marcas';
 import QuienesSomos from '../components/QuienesSomos';
+import Faq from '../components/Faq.jsx';
+import PorqueEleginos from '../components/PorqueEleginos'
 import Map from '../components/Map';
-import Footer from '../components/Footer';
 import WhatsAppButton from '../components/WhatsAppButton.jsx';
+import Footer from '../components/Footer';
 
 export default function Page() {
   return (
@@ -22,8 +24,9 @@ export default function Page() {
           <Productos />
           <Modelos />
           <QuienesSomos />
+          <Faq/>
           <Map />
-          <WhatsAppButton />
+          <WhatsAppButton /> 
           <Footer />
     </div>
   );

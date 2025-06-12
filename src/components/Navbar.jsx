@@ -17,7 +17,7 @@ const NavLinks = () => {
     }
     return (
         <>
-        <ul className="pt-5 underline-offset-8 md:pt-14  md:pl-0 rounded-xl bg-black md:bg-transparent md:gap-x-3 lg:gap-x-2 xl:text-xl lg:text-lg md:text-sm md:grid md:grid-cols-4 font-orbitron">
+        <ul className="pt-5 underline-offset-8 md:pt-14  md:pl-0 rounded-xl bg-black md:bg-transparent md:gap-x-3 lg:gap-x-2 xl:text-xl lg:text-lg md:text-sm md:grid md:grid-cols-5 font-orbitron">
                 <li className='text-lg md:text-sm lg:text-lg font-bold pb-5 text-center md:font-bold md:pb-0'><Link href="/#Servicios" className="text-white hover:border-b-2">Servicios</Link></li>
                 <div className="md:relative text-center text-white  ">
                     <div className='flex justify-center md:pl-0 pl-4'>
@@ -53,6 +53,7 @@ const NavLinks = () => {
                 </div>
                 <li className='text-lg md:text-sm lg:text-lg font-bold pb-5  text-center md:font-bold md:pb-0'><Link href="/#Nosotros" className="text-white hover:border-b-2">Nosotros</Link></li>
                 <li className='text-lg md:text-sm lg:text-lg font-bold pb-5  text-center md:font-bold md:pb-0'><Link href="/#Map" className="text-white hover:border-b-2">Contacto</Link></li>
+                <li className='text-lg md:text-sm lg:text-lg font-bold pb-5 text-center md:font-bold md:pb-0'><Link href="/#Faq" className="text-white hover:border-b-2">FAQ</Link></li>
             </ul>
         </> 
     )
