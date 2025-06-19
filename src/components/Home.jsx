@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Home = () => {
-    let imgFon ='./img/home/img-home.jpg';
+    let imgFon ='./img/home/Img-home.jpg';
     return (
     <div className="relative flex flex-col h-screen items-center justify-end pt-16 pb-10 md:pb-12 " >
-        <div className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" style={{ backgroundImage: `url(${imgFon})` }}>
+        <div className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full " style={{ backgroundImage: `linear-gradient(to bottom, transparent 80%, #1A1A1A 98%), url(${imgFon})` }}>
         <div className=" container pt-[15%] md:pt-[25%] lg:pt-[35%] xl:pt-[15%] 2xl:pt-[25%] 3xl:pt-[20%]  2xl:pl-0 mx-auto flex-col bg-opacity-50 items-center relative">
                 <h1 className=" flex justify-center text-center text-[45px] sm:text-[55px] md:text-[50px]  xl:text-[60px] 2xl:text-[75px] 3xl:text-[85px] font-orbitron mt-20  w-full">
                     <span className=" bg-clip-text text-white">
