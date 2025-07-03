@@ -9,15 +9,15 @@ const ProductCard = ({ title, image, description, price }) => {
         <>
             <section className="rounded-3xl bg-black-tnlp w-[300px] h-auto ">
                 <article className="">
-                    <div className="h-14 content-end ">
+                    <div className="h-16 content-end ">
                         <p className="text-white text-center font-semibold uppercase text-lg font-orbitron py-3">{title}</p>
                     </div>
                     <div className="rounded-t-large flex justify-center px-5 h-[200px] bg-white rounded-xl mx-3">
                         <Image
                             src={`/${image}`}
                             alt={description}
-                            width={250}
-                            height={150}
+                            width={210}
+                            height={160}
                         />
                     </div>
 
