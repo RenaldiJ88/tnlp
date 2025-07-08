@@ -1,9 +1,9 @@
 "use client";
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Brain } from 'lucide-react'; // <-- Importamos Brain
+import { motion } from "framer-motion"; // <-- Importamos motion
 
 // Datos de las FAQs
-// Se extrajeron de la información proporcionada por el usuario
 const faqData = [
     {
         id: 1,
@@ -52,11 +52,39 @@ const faqData = [
     }
 ];
 
+// --- NUEVAS VARIANTES DE ANIMACIÓN ---
+// Variantes para el título principal de FAQs
+const titleVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
+
+// Variantes para el contenedor de la lista de FAQs (para escalonar la aparición)
+const containerFaqItemsVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1 // Cada FaqItem aparecerá con un retraso de 0.1s
+        }
+    }
+};
+
+// Variantes para cada FaqItem individual
+const itemFaqVariants = {
+    hidden: { opacity: 0, y: 30 }, // Un desplazamiento más pequeño para ítems de lista
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+
 // Componente para un solo item de FAQ
-// Maneja su propio estado de apertura/cierre
-function FaqItem({ question, answer, isOpen, onToggle }) {
+function FaqItem({ question, answer, isOpen, onToggle, variants }) { // <-- Recibe las variants
     return (
-        <div className="border-b border-gray-700 py-6">
+        // motion.div para animar cada ítem de FAQ
+        <motion.div 
+            className="border-b border-gray-700 py-6"
+            variants={variants} // Aplicamos las variants recibidas
+        >
             <dt>
                 <button
                     onClick={onToggle}
@@ -73,54 +101,69 @@ function FaqItem({ question, answer, isOpen, onToggle }) {
                     </span>
                 </button>
             </dt>
-            {isOpen && (
-                <dd className="mt-4 pr-12">
-                    {/* Usamos whitespace-pre-line para respetar los saltos de línea en las respuestas */}
-                    <p className="text-base leading-relaxed text-gray-300 whitespace-pre-line">{answer}</p>
-                </dd>
-            )}
-        </div>
+            {/* Animación de apertura/cierre de la respuesta. Similar a ServiceCard "Ver más" */}
+            <motion.dd 
+                initial={{ height: 0, opacity: 0 }} // Inicia colapsada y transparente
+                animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }} // Anima a auto/0 y opacidad
+                transition={{ duration: 0.5, ease: "easeOut" }} // Transición más rápida para click
+                className="mt-4 pr-12 overflow-hidden" // Oculta el desbordamiento durante la animación
+            >
+                <p className="text-base leading-relaxed text-gray-300 whitespace-pre-line">{answer}</p>
+            </motion.dd>
+        </motion.div>
     );
 }
 
 // Componente principal de la página de FAQs
 export default function FaqPage() {
-    // Estado para rastrear qué pregunta está actualmente abierta
-    // Solo una pregunta puede estar abierta a la vez
     const [openFaqId, setOpenFaqId] = useState(null);
 
-    // Función para manejar el clic en una pregunta
     const handleToggle = (id) => {
-        // Si la pregunta clickeada ya está abierta, la cerramos (null)
-        // Si no, la abrimos estableciendo su id
         setOpenFaqId(openFaqId === id ? null : id);
     };
 
     return (
         <div className="bg-black-tnlp text-white min-h-screen py-12 px-4 sm:px-6 lg:px-8" id='Faq'>
             <div className="mx-auto max-w-3xl">
-                {/* Título y subtítulo de la sección de FAQs */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 sm:text-5xl lg:text-6xl font-orbitron">
-                        🧠 TNLP – FAQs Institucionales
+                {/* Animamos el título principal de la sección de FAQs */}
+                <motion.div
+                    className="text-center mb-12"
+                    variants={titleVariants} // Aplicamos las variantes del título
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.5 }} // Se anima al 50% visible, una sola vez
+                >
+                    {/* Añadimos el icono Brain y el título */}
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl font-orbitron">
+                        <Brain size={56} className="inline-block mr-4 text-purple-400 align-middle" /> {/* Icono de cerebro */}
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                             TNLP – FAQs Institucionales
+                        </span>
                     </h1>
                     <p className="mt-4 text-xl text-gray-300">
                         Nuestra visión, nuestros valores y por qué hacemos lo que hacemos.
                     </p>
-                </div>
+                </motion.div>
 
-                {/* Lista de preguntas y respuestas */}
-                <dl className="space-y-2">
+                {/* Lista de preguntas y respuestas animada */}
+                <motion.dl 
+                    className="space-y-2"
+                    variants={containerFaqItemsVariants} // Aplicamos las variantes del contenedor para el stagger
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }} // Se anima al 20% visible, una sola vez
+                >
                     {faqData.map((faq) => (
                         <FaqItem
                             key={faq.id}
                             question={faq.question}
                             answer={faq.answer}
-                            isOpen={openFaqId === faq.id} // La pregunta está abierta si su id coincide con openFaqId
-                            onToggle={() => handleToggle(faq.id)} // Pasa la función para manejar el clic
+                            isOpen={openFaqId === faq.id}
+                            onToggle={() => handleToggle(faq.id)}
+                            variants={itemFaqVariants} // Pasamos las variantes a cada FaqItem
                         />
                     ))}
-                </dl>
+                </motion.dl>
             </div>
         </div>
     );

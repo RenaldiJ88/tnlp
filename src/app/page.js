@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 
 export default function Page() {
   return (
-    <div className="bg-black-tnlp">
+    <div className="bg-black-tnlp ">
       <div className="absolute left-2/4 z-10 w-full -translate-x-2/4">
         <Navbar/>
       </div>

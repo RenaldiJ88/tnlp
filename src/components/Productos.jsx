@@ -4,6 +4,7 @@ import data from '../data/products-offer.json';
 import { useState, useEffect } from 'react';
 import { swiffyslider } from 'swiffy-slider';
 import "swiffy-slider/css";
+import { motion } from "framer-motion"; // <-- Importamos motion
 
 const Productos = () => {
     const productosData = data.productosOffer;
@@ -34,23 +35,69 @@ const Productos = () => {
         }
     }, []);
 
+    // --- NUEVAS VARIANTES DE ANIMACIÓN ---
+    // Variantes para el título "Productos"
+    const titleVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+    };
+
+    // Variantes para el contenedor del slider (para escalonar la aparición de ProductCard)
+    const containerCardsVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15 // Cada ProductCard aparecerá con un retraso de 0.15s
+            }
+        }
+    };
+
+    // Variantes para cada ProductCard individual
+    const itemCardVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    };
+
     return (
         <>
             <section  className='flex flex-col justify-center bg-gradient-to-b from-black-tnlp via-[#cfcfcfbb] to-black-tnlp'>
                 <div id="productos">
-                    <h2 className="text-white uppercase font-bold text-[40px] xl:text-[42px] text-center pt-10 font-orbitron">Productos</h2>
+                    {/* Animamos el título "Productos" */}
+                    <motion.h2 
+                        className="text-white uppercase font-bold text-[40px] xl:text-[42px] text-center pt-10 font-orbitron"
+                        variants={titleVariants} // Aplicamos las variantes del título
+                        initial="hidden"          // Estado inicial: oculto
+                        whileInView="visible"     // Animar a 'visible' cuando esté en la vista
+                        viewport={{ once: true, amount: 0.5 }} // Una vez y cuando el 50% del elemento esté visible
+                    >
+                        Productos
+                    </motion.h2>
                 </div>
-                <div className={`swiffy-slider ${itemShowClass}
+                
+                {/* Animamos el contenedor del slider para escalonar las ProductCard */}
+                <motion.div 
+                    className={`swiffy-slider ${itemShowClass}
                                 slider-nav-round 
                                 slider-nav-dark
                                 slider-nav-autohide
                                 slider-item-nogap 
                                 slider-indicators-round  
                                 slider-nav-animation
-                                `}>
+                                `}
+                    variants={containerCardsVariants} // Aplicamos las variantes del contenedor
+                    initial="hidden"
+                    whileInView="visible" // Animar a 'visible' cuando esté en la vista
+                    viewport={{ once: true, amount: 0.2 }} // Una vez y cuando el 20% del elemento esté visible
+                >
                     <ul className="slider-container">
                         {productosData.map((products) => (
-                            <li key={products.id} className="slide-visible ">
+                            // Envolvemos cada li con motion.li y aplicamos las variantes del item
+                            <motion.li 
+                                key={products.id} 
+                                className="slide-visible"
+                                variants={itemCardVariants} // Aplicamos las variantes de la tarjeta individual
+                            >
                                 <div  className='my-12 flex justify-center'>
                                     <ProductCard
                                         title={products.title}
@@ -59,7 +106,7 @@ const Productos = () => {
                                         price={products.price}
                                     />
                                 </div>
-                            </li>
+                            </motion.li>
                         ))}
                     </ul>
                     <button type="button" className="slider-nav" aria-label="Go left"></button>
@@ -75,9 +122,8 @@ const Productos = () => {
                         <button aria-label="Go to slide"></button>
                         <button aria-label="Go to slide"></button>
                     </div>
-                </div>
+                </motion.div>
             </section >
-
         </>
     )
 }
