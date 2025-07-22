@@ -65,9 +65,7 @@ const Office = () => {
     return (
         <div>
             <section className=''>
-                {/* --- CABECERA PRINCIPAL (REPLICADA DE DETAILGAMER.JSX) --- */}
-                {/* justify-end para empujar el contenido hacia abajo. pt/pb para márgenes en los extremos. */}
-                <div ref={heroSectionRef} className='relative flex flex-col h-screen items-center justify-end pt-16 pb-10 md:pb-12 overflow-hidden'> 
+                <div ref={heroSectionRef} className='relative flex flex-col md:h-screen items-center justify-end pt-16 pb-10 md:pb-12 overflow-hidden'> 
                     
                     {/* Background image con parallax */}
                     <motion.div 
@@ -80,7 +78,7 @@ const Office = () => {
 
                     {/* --- CONTENIDO DE LA CABECERA (título, laptops, logos) - REPLICADO DE DETAILGAMER.JSX --- */}
                     {/* El pt-24 es la compensación clave para el Navbar. */}
-                    <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl pt-24"> 
+                    <div className="relative z-10  flex-col items-center justify-center w-full max-w-5xl pt-24"> 
                         {/* Título */}
                         <motion.h2 
                             className="text-white text-center uppercase font-bold text-[27px] md:text-4xl lg:text-5xl font-orbitron" 
@@ -92,7 +90,7 @@ const Office = () => {
                         </motion.h2>
 
                         {/* --- CONTENEDOR DE LOS GRUPOS LAPTOP + LOGO --- */}
-                        <div className="flex justify-center items-end w-full space-x-8 lg:space-x-16 gap-x-40"> 
+                        <div className="flex flex-col sm:flex-row justify-center items-center w-full space-x-8 lg:space-x-16 gap-x-40"> 
                             {/* Grupo Laptop 1 (izquierda) + Logo AMD */}
                             <motion.div 
                                 variants={laptopGroupVariants} 
