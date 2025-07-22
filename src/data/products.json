@@ -65,14 +65,6 @@
             "price": "US$1480"
         },
         {
-            "id": "9",
-            "categoria": "2",
-            "title": "Lenovo LOQ 15ARP9",
-            "image": "img/products/Lenovo LOQ 15ARP9.webp",
-            "description": "AMD Ryzen™️ 7 7435HS 512GB SSD 16GB 15.6\" FHD (1920x1080) 144Hz WIN11 NVIDIA®️ RTX 4070 8GB LUNA GREY Backlit Keyboard",
-            "price": "US$1590"
-        },
-        {
             "id": "10",
             "categoria": "2",
             "title": "HP VICTUS 16-S1023",

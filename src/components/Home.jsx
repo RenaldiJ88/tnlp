@@ -44,7 +44,9 @@ const Home = () => {
     const yBackground = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]); 
 
     return (
-    <div className="relative flex flex-col h-screen items-center justify-end pt-16 pb-10 md:pb-12 " >
+    // ¡CAMBIO CLAVE AQUÍ!: Cambiado pt-16 a pt-20 para compensar la altura del Navbar fijo.
+    // Esto asegura que tu contenido inicie justo debajo del Navbar.
+    <div className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12 " >
         {/* Contenedor del fondo con la imagen de galaxia, el linear-gradient y el efecto parallax */}
         <motion.div 
             className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
@@ -56,7 +58,7 @@ const Home = () => {
         >
             {/* Contenedor del texto (h1 y p) con animaciones de entrada. Eliminado bg-opacity-50. */}
             <motion.div 
-                className="container pt-[15%] md:pt-[25%] lg:pt-[35%] xl:pt-[15%] 2xl:pt-[25%] 3xl:pt-[20%]  2xl:pl-0 mx-auto flex-col items-center relative" // ¡bg-opacity-50 eliminado!
+                className="container pt-[15%] md:pt-[25%] lg:pt-[35%] xl:pt-[15%] 2xl:pt-[25%] 3xl:pt-[20%]  2xl:pl-0 mx-auto flex-col items-center relative" // ¡bg-opacity-50 eliminado!
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -100,23 +102,23 @@ const Home = () => {
 
         {/* Contenedor del botón "Comprar Ahora" con animación de entrada y espaciado inferior ajustado */}
         <motion.div 
-            className="relative flex justify-center place-items-end mb-5" // Espaciado inferior ajustado a mb-10
+            className="relative flex justify-center place-items-end mb-5"
             variants={buttonVariants}
             initial="hidden"
             animate="visible"
         >
             <button className="bg-[#FFFFFF] opacity-40 text-black font-bold py-2 px-4 lg:py-3 lg:px-9 lg:text-xl border-[#dd40d5] border-2 border-solid rounded-xl font-orbitron 
-                   transition-all duration-300 ease-in-out // Transición suave para los efectos hover
-                   hover:text-white hover:bg-transparent // Efectos de hover de texto y fondo
-                   hover:scale-105 // Nuevo: Escala sutilmente al pasar el ratón (quitado hover:w/h)
-                   hover:shadow-lg hover:shadow-[#dd40d5] // Nuevo: Aumenta la sombra y le da un color
+                    transition-all duration-300 ease-in-out // Transición suave para los efectos hover
+                    hover:text-white hover:bg-transparent // Efectos de hover de texto y fondo
+                    hover:scale-105 // Nuevo: Escala sutilmente al pasar el ratón (quitado hover:w/h)
+                    hover:shadow-lg hover:shadow-[#dd40d5] // Nuevo: Aumenta la sombra y le da un color
                 ">
                 <Link
                     target='_blank' 
                     rel="noopener noreferrer"
                     href={"https://wa.me/5492216767615"}>Comprar Ahora</Link>
             </button>
-        </motion.div>    
+        </motion.div>    
     </div>
 )
 }
