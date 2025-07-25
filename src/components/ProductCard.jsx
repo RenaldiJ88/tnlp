@@ -39,7 +39,7 @@ const ProductCard = ({ title, image, description, price }) => {
 
             <div className="mt-auto">
                 <p className="font-orbitron text-white text-xl font-bold">
-                    ${price}
+                    {price}
                 </p>
             </div>
 
