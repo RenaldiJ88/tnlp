@@ -1,45 +1,58 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import useWhatsAppLink from "../hooks/useWhatsAppLink"; // Ajusta la ruta si es necesario
+// ProductCard.jsx
+"use client"; 
+
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { getWhatsAppLink } from "../hooks/whatsappUtils"; 
 
 const ProductCard = ({ title, image, description, price }) => {
-    const getWhatsAppLink = useWhatsAppLink(title, price); // Usa el custom hook
+    const whatsAppLink = getWhatsAppLink(title, price); 
+
     return (
-        <>
-            <section className="rounded-3xl bg-black-tnlp w-[300px] h-auto ">
-                <article className="">
-                    <div className="h-16 content-end ">
-                        <p className="text-white text-center font-semibold uppercase text-lg font-orbitron py-3">{title}</p>
-                    </div>
-                    <div className="rounded-t-large flex justify-center px-5 h-[200px] bg-white rounded-xl mx-3">
-                        <Image
-                            src={`/${image}`}
-                            alt={description}
-                            width={210}
-                            height={160}
-                        />
-                    </div>
+        <div className="relative border-2 border-solid border-[#dd40d5] rounded-xl flex flex-col justify-between items-center bg-[#1F1F1F]
+                    w-full max-w-xs mx-auto p-3 
+                    md:w-80 md:p-5 
+                    hover:shadow-lg hover:shadow-[#dd40d5] transition-all duration-300 ease-in-out">
 
-                    <div className="">
-                        <p className="pt-5 px-7 mb-3 text-white text-sm text-justify uppercase font-roboto h-[125px]">{description}</p>
-                        <p className="py-1 text-white leading-snug text-center font-bold text-[20px] font-roboto">{price}</p>
-                    </div>
-                </article>
-                <article className="text-center">
-                    <div className="h-10  w-[50%] mx-auto mt-1 mb-5 bg-[#dd40d5] opacity-60 hover:opacity-80 text-black rounded-3xl font-bold uppercase font-orbitron hover:duration-200 ">
-                        <Link
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href={getWhatsAppLink()} // Usa la función del hook aquí
-                        >
-                        <p className="pt-2">Comprar</p>
-                        </Link>
-                    </div>
-                </article>
-            </section>
-        </>
-    )
-}
+            <div className="text-center mb-3"> 
+                <h3 className="font-orbitron text-white text-lg font-bold">
+                    {title}
+                </h3>
+            </div>
 
-export default ProductCard
+            <div className="relative w-full h-40 mb-3 flex-shrink-0">
+                <Image
+                    src={`/${image}`} 
+                    alt={title}
+                    layout="fill" 
+                    objectFit="contain" 
+                    className="rounded-md"
+                />
+            </div>
+
+            <div className="flex-grow flex flex-col justify-start mb-3 overflow-hidden">
+                <p className="font-roboto text-sm text-center line-clamp-3 text-[#d6d6d6]">
+                    {description}
+                </p>
+            </div>
+
+            <div className="mt-auto">
+                <p className="font-orbitron text-white text-xl font-bold">
+                    ${price}
+                </p>
+            </div>
+
+            <Link 
+                href={whatsAppLink} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="mt-4 px-6 py-2 bg-[#dd40d5] text-white font-bold rounded-full hover:bg-white hover:text-[#dd40d5] transition-all duration-300 ease-in-out"
+            >
+                Comprar
+            </Link>
+        </div>
+    );
+};
+
+export default ProductCard;

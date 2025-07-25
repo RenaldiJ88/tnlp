@@ -130,26 +130,26 @@ const DetailGamer = () => {
                     variants={containerCardsVariants} 
                     initial="hidden" 
                     whileInView="visible" 
-                    viewport={{ once: true, amount: 0.2 }} 
+                    viewport={{ once: true, amount: 0.05 }} 
                 >
                     <ul className="flex flex-wrap justify-center px-10">
                         {productosData.map((product, index) => {
                             if (product.categoria === '2' || product.categoria === '3') {
                                 return (
-                                    <motion.li 
-                                        key={index} 
-                                        className="px-5"
-                                        variants={itemCardVariants}
-                                    >
-                                        <div className='w-80 m-12 flex '>
-                                            <ProductCard
-                                                title={product.title}
-                                                image={product.image}
-                                                description={product.description}
-                                                price={product.price}
-                                            />
-                                        </div>
-                                    </motion.li>
+                                                                    <motion.li 
+                                    key={index} 
+                                    className="px-5"
+                                    variants={itemCardVariants}
+                                >
+                                    <div className='w-80 m-12 flex '>
+                                        <ProductCard
+                                            title={product.title}
+                                            image={product.image}
+                                            description={product.description}
+                                            price={product.price}
+                                        />
+                                    </div>
+                                </motion.li>
                                 );
                             } else {
                                 return null;
