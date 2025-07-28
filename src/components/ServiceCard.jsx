@@ -4,10 +4,12 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion"; 
+import { useRouter } from "next/navigation";
 
 // Las itemVariants ya no se definen aquí, se definen en Servicios.jsx
 
-const ServiceCard = ({ title, description, imgService }) => {
+const ServiceCard = ({ title, description, imgService, serviceId }) => {
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
   const contentRef = useRef(null); 
   
@@ -20,6 +22,10 @@ const ServiceCard = ({ title, description, imgService }) => {
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleCardClick = () => {
+    router.push(`/servicios/${serviceId}`);
   };
 
   // useEffect para medir la altura real del contenido expandido
@@ -39,6 +45,7 @@ const ServiceCard = ({ title, description, imgService }) => {
                    hover:shadow-xl hover:shadow-[#dd40d5] 
                    cursor-pointer 
                   "
+        onClick={handleCardClick}
     >
       <div className="relative w-full h-[220px] mb-5">
         <Image src={`/${imgService}`} alt={title} width={350} height={240}/>
@@ -63,11 +70,11 @@ const ServiceCard = ({ title, description, imgService }) => {
           </p>
         </motion.div>
 
-        <button onClick={toggleReadMore} className="text-[#dd40d5] text-sm mt-2 font-orbitron no-underline hover:underline">
+        <button onClick={(e) => { e.stopPropagation(); toggleReadMore(); }} className="text-[#dd40d5] text-sm mt-2 font-orbitron no-underline hover:underline">
           {isExpanded ? "Ver menos" : "Ver más"}
         </button>
       </div>
-      <div className="bg-black">
+      <div className="bg-black" onClick={(e) => e.stopPropagation()}>
           <Link target="_blank" rel="noopener noreferrer" href={"https://wa.me/5492216767615"}>
         <div className="bg-[#dd40d5] hover:opacity-80 opacity-60 h-[50px] flex items-center justify-center">
             <p className="text-black font-bold uppercase tracking-wider font-orbitron">
