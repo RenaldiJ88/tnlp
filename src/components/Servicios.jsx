@@ -61,6 +61,7 @@ const Servicios = () => {
                 title={servicio.categoria}
                 description={servicio.descripcion}
                 imgService={servicio.imgService}
+                serviceId={servicio.id}
               />
             </motion.div>
           ))}
