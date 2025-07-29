@@ -85,19 +85,19 @@ const ServiceDetailPage = () => {
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Profesionalismo</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Profesionalismo</h4>
                 <p className="text-gray-300 text-sm">Técnicos especializados con años de experiencia</p>
               </div>
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Calidad garantizada</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Calidad garantizada</h4>
                 <p className="text-gray-300 text-sm">Trabajamos con los mejores estándares de calidad</p>
               </div>
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Precios competitivos</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Precios competitivos</h4>
                 <p className="text-gray-300 text-sm">Ofrecemos los mejores precios del mercado</p>
               </div>
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Atención personalizada</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Atención personalizada</h4>
                 <p className="text-gray-300 text-sm">Cada cliente recibe un trato personalizado</p>
               </div>
             </div>

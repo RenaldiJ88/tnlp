@@ -80,7 +80,7 @@ const SearchBar = ({ searchText, onSearchChange, onClearSearch }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        💡 Prueba buscar: "Intel i7", "RTX 4060", "16GB RAM", "15.6 pulgadas"
+        Prueba buscar: &quot;Intel i7&quot;, &quot;RTX 4060&quot;, &quot;16GB RAM&quot;, &quot;15.6 pulgadas&quot;
       </motion.div>
 
       {/* Sugerencias rápidas */}

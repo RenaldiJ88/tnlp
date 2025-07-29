@@ -18,7 +18,7 @@ const ProductCard = ({ title, image, description, price, isOffer = false }) => {
             {/* Etiqueta de oferta */}
             {isOffer && (
                 <div className="absolute top-2 right-2 z-10 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
-                    🔥 OFERTA
+                    OFERTA
                 </div>
             )}
 
