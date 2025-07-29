@@ -5,6 +5,9 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/Footer';
+import WhatsAppButton from '../../../components/WhatsAppButton';
 import servicesData from '../../../data/services.json';
 
 const ServiceDetailPage = () => {
@@ -16,19 +19,26 @@ const ServiceDetailPage = () => {
   
   if (!service) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Servicio no encontrado</h1>
-          <Link href="/#Servicios" className="text-[#dd40d5] hover:underline">
-            Volver a servicios
-          </Link>
+      <div className="bg-black-tnlp">
+        <Navbar />
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white mb-4">Servicio no encontrado</h1>
+            <Link href="/#Servicios" className="text-[#dd40d5] hover:underline">
+              Volver a servicios
+            </Link>
+          </div>
         </div>
+        <WhatsAppButton />
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+    <div className="bg-black-tnlp">
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
       {/* Header con imagen grande */}
       <div className="relative w-full h-[400px] md:h-[500px]">
         <Image 
@@ -75,19 +85,19 @@ const ServiceDetailPage = () => {
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Profesionalismo</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Profesionalismo</h4>
                 <p className="text-gray-300 text-sm">Técnicos especializados con años de experiencia</p>
               </div>
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Calidad garantizada</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Calidad garantizada</h4>
                 <p className="text-gray-300 text-sm">Trabajamos con los mejores estándares de calidad</p>
               </div>
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Precios competitivos</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Precios competitivos</h4>
                 <p className="text-gray-300 text-sm">Ofrecemos los mejores precios del mercado</p>
               </div>
               <div className="bg-gray-700 p-4 rounded-lg">
-                <h4 className="text-[#dd40d5] font-semibold mb-2">✓ Atención personalizada</h4>
+                <h4 className="text-[#dd40d5] font-semibold mb-2">• Atención personalizada</h4>
                 <p className="text-gray-300 text-sm">Cada cliente recibe un trato personalizado</p>
               </div>
             </div>
@@ -112,6 +122,9 @@ const ServiceDetailPage = () => {
           </div>
         </motion.div>
       </div>
+      </div>
+      <WhatsAppButton />
+      <Footer />
     </div>
   );
 };

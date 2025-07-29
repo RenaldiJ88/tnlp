@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getWhatsAppLink } from "../hooks/whatsappUtils"; 
 
-const ProductCard = ({ title, image, description, price }) => {
+const ProductCard = ({ title, image, description, price, isOffer = false }) => {
     const whatsAppLink = getWhatsAppLink(title, price); 
 
     return (
@@ -14,6 +14,13 @@ const ProductCard = ({ title, image, description, price }) => {
                     w-full max-w-xs mx-auto p-3 
                     md:w-80 md:p-5 
                     hover:shadow-lg hover:shadow-[#dd40d5] transition-all duration-300 ease-in-out">
+
+            {/* Etiqueta de oferta */}
+            {isOffer && (
+                <div className="absolute top-2 right-2 z-10 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
+                    OFERTA
+                </div>
+            )}
 
             <div className="text-center mb-3"> 
                 <h3 className="font-orbitron text-white text-lg font-bold">

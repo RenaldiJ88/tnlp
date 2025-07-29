@@ -16,21 +16,21 @@ const itemsPorQueElegirnos = [
         // Usamos el ícono Shield para "Comprometidos con Tu Seguridad"
         // Se le aplica un color esmeralda y un tamaño de 48px
         icon: <Shield size={48} className="text-emerald-500" />,
-        title: "🛡️ Comprometidos con Tu Seguridad 🛡️",
+        title: "Comprometidos con Tu Seguridad",
         description: "Tu tranquilidad es nuestra prioridad. Nos dedicamos a proteger tus datos y tu inversión."
     },
     {
         // Usamos el ícono Gem para "Identidad y Calidad"
         // Se le aplica un color violeta y un tamaño de 48px
         icon: <Gem size={48} className="text-violet-500" />,
-        title: "✨ Identidad y Calidad ✨",
+        title: "Identidad y Calidad",
         description: "Ofrecemos productos y servicios que reflejan nuestra pasión por la calidad y la innovación."
     },
     {
         // Usamos el ícono Laptop para "Notebooks NUEVAS seleccionadas"
         // Se le aplica un color rosa y un tamaño de 48px
         icon: <Laptop size={48} className="text-rose-500" />,
-        title: "💻 Notebooks NUEVAS seleccionadas ⚡️",
+        title: "Notebooks NUEVAS seleccionadas",
         description: "Solo las mejores marcas y modelos, cuidadosamente seleccionados para ti."
     }
 ];

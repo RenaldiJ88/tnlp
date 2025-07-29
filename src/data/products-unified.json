@@ -6,7 +6,8 @@
             "title": "Lenovo LOQ 15IAX9E",
             "image": "img/products/vivobook 15 M15.webp",
             "description": "Core i5-12450HX 512GB SSD 8GB 15.6\" FHD (1920x1080) 144Hz WIN11 NVIDIA®️ RTX 20504096MB LUNA GRAY Backlit Keyboard",
-            "price": "US$900"
+            "price": "US$900",
+            "isOffer": 0
         },
         {
             "id": "2",
@@ -14,7 +15,8 @@
             "title": "HP VICTUS 15-FB2063DX",
             "image": "img/products/victus15fb20.webp",
             "description": "RYZEN 5 7535HS 8GB 512GB SSD RX6550 4GB 15.6\" FHD WIN 11",
-            "price": "US$920"
+            "price": "US$920",
+            "isOffer": 0
         },
         {
             "id": "3",
@@ -22,7 +24,8 @@
             "title": "HP VICTUS 15-FA2701WM",
             "image": "img/products/HP VICTUS 15-FA2701WM.jpg",
             "description": "INTEL CORE I5-1342H 16GB 512GB SSD 15.6\" FHD RTX 4050 8GB WIN 11 MICA Silver",
-            "price": "US$1100"
+            "price": "US$1100",
+            "isOffer": 0
         },
         {
             "id": "4",
@@ -30,7 +33,8 @@
             "title": "HP Victus 15-fa0033dx",
             "image": "img/products/HP Victus 15-fa0033dx.webp",
             "description": "Intel Core i5-12450H 8GB RAM Memory 512GB SSD NVIDIA GeForce RTX 3050 4GB 15.6\" FHD Led 144Hz",
-            "price": "US$1120"
+            "price": "US$1120",
+            "isOffer": 0
         },
         {
             "id": "5",
@@ -38,7 +42,8 @@
             "title": "MSI Thin (2025)",
             "image": "img/products/MSI Thin2025.webp",
             "description": "Intel Core i5 -13420H 16GB DDR4 512GB SSD NVIDIA GeForce RTX 4060 8GB 15.6\" FHD 144Hz Gray (2025)",
-            "price": "US$1230"
+            "price": "US$1230",
+            "isOffer": 0
         },
         {
             "id": "6",
@@ -46,7 +51,8 @@
             "title": "Asus TUF FA506NCR-WH71",
             "image": "img/products/Asus TUF FA506NCR-WH71.webp",
             "description": "AMD Ryzen 7 7435HS 512GB SSD 8GB 15.6\" FHD (1920x1080) 144HZ WIN11 NVIDIA RTX3050 4GB GRAPHITE BLACK Backlit Keyboard",
-            "price": "US$1250"
+            "price": "US$1250",
+            "isOffer": 0
         },
         {
             "id": "7",
@@ -54,7 +60,8 @@
             "title": "HP VICTUS 15-fa11633dx",
             "image": "img/products/HP VICTUS 15-fa11633dx.webp",
             "description": "CORE i7- 12650H 512GB 16GB 15.6\" FHD NVIDIA GeForce RTX 4050 6GB Win 11",
-            "price": "US$1460"
+            "price": "US$1460",
+            "isOffer": 0
         },
         {
             "id": "8",
@@ -62,7 +69,8 @@
             "title": "ASUS VIVOBOOK K3605VU-WS96",
             "image": "img/products/ASUS VIVOBOOK K3605VU-WS96.webp",
             "description": "CORE i9-13900H 1TB SSD 16GB 16\" (1920x200) WIN 11 NVIDIA RTX 4050 SILVER",
-            "price": "US$1480"
+            "price": "US$1480",
+            "isOffer": 0
         },
         {
             "id": "10",
@@ -70,7 +78,8 @@
             "title": "HP VICTUS 16-S1023",
             "image": "img/products/HP VICTUS 16-S1023.jpg",
             "description": "AMD RYZEN 7 8845HS 512GB SSD 16 GB 16.1\" FHD (1920X1080) 144HZ WIN 11 NVIDIA RTX 4070 8GB",
-            "price": "US$1600"
+            "price": "US$1600",
+            "isOffer": 0
         },
         {
             "id": "11",
@@ -78,7 +87,8 @@
             "title": "MSI Sword 16HX",
             "image": "img/products/MSI Sword 16HX.webp",
             "description": "Intel Core i7-14650HX 16GB Ram Memory 1TB SSD Nvidia GeForce RTX 4060, 8GB 16\" FHD+ (1920 X 1200) 144Hz IPS 16:10 Screen Windows 11",
-            "price": "US$1620"
+            "price": "US$1620",
+            "isOffer": 0
         },
         {
             "id": "12",
@@ -86,7 +96,8 @@
             "title": "MSI Thin A15 B8VF-270US",
             "image": "img/products/MSI Thin A15 B8VF-270US.webp",
             "description": "AMD Ryzen 9 8945HS 16GB 1TB NVIDIA GeForce RTX 4060 8GB 15,6\" (1920X1080) WIN 11",
-            "price": "US$1650"
+            "price": "US$1650",
+            "isOffer": 0
         },
         {
             "id": "13",
@@ -94,7 +105,8 @@
             "title": "MSI BRAVO 15 C7VFKP",
             "image": "img/products/MSI BRAVO 15 C7VFKP.jpg",
             "description": "AMD Ryzen 9 7940HS 1TB SSD 16GB 15.6\" FHD (1920x1080) 144HZ IPS WIN11 NVIDIA RTX 4060 8GB - ALUMINUM BLACK Backlit Keyboard",
-            "price": "US$1710"
+            "price": "US$1710",
+            "isOffer": 0
         },
         {
             "id": "15",
@@ -102,7 +114,8 @@
             "title": "LENOVO LEGION 5 16IRX9",
             "image": "img/products/LENOVO LEGION 5 16IRX9.webp",
             "description": "INTEL CORE I9-14900HX 5.8 GHZ 32GB DDR5 1TB SSD 16\" WQXGA (2560X1600) 165Hz NVIDIA RTX 4060 8GB WEBCAM BLUETOOTH WINDOWS 11 COLOR LUNA GRAY",
-            "price": "US$2090"
+            "price": "US$2090",
+            "isOffer": 0
         },
         {
             "id": "16",
@@ -110,7 +123,8 @@
             "title": "ASUS Vivobook E1504GA-WS36",
             "image": "img/products/office/ASUS Vivobook E1504GA-WS36.jpg",
             "description": "Core i3-N305 128GB USF 8GB 15.6\" FHD (1920x1080) WIN11 BLACK",
-            "price": "US$550"
+            "price": "US$550",
+            "isOffer": 0
         },
         {
             "id": "17",
@@ -118,7 +132,8 @@
             "title": "ACER Aspire 3 A314-36P",
             "image": "img/products/office/ACER Aspire 3 A314-36P.webp",
             "description": "14\" FHD Led Intel Core i3-N305 8gb Ram DDR5 128GB SSD Windows 11 Home",
-            "price": "US$570"
+            "price": "US$570",
+            "isOffer": 0
         },
         {
             "id": "18",
@@ -126,7 +141,8 @@
             "title": "ACER Aspire Go AG15-31P",
             "image": "img/products/office/ACER Aspire Go AG15-31P.webp",
             "description": "Intel i3-N305 8gb Ram DDR5 128GB SSD 15,6\" FHD Windows 11 Home Pure Silver",
-            "price": "US$580"
+            "price": "US$580",
+            "isOffer": 0
         },
         {
             "id": "19",
@@ -134,7 +150,8 @@
             "title": "ASUS Vivobook Go E1504GA-WB31",
             "image": "img/products/office/ASUS Vivobook Go E1504GA-WB31.jpg",
             "description": "Intel Core i3-N305 8gb Ram DDR4 128gb UFS 15,6\" Fhd Windows 11 Home Mixed Black",
-            "price": "US$610"
+            "price": "US$610",
+            "isOffer": 0
         },
         {
             "id": "20",
@@ -142,7 +159,8 @@
             "title": "HP 15-fc0043la",
             "image": "img/products/office/HP 15-fc0043la.webp",
             "description": "AMD Ryzen 3-7320U 8gb Ram DDR5 512GB SSD 15,6\" FHD Windows 11 Home GOLD Teclado Español 🇪🇸",
-            "price": "US$770"
+            "price": "US$770",
+            "isOffer": 0
         },
         {
             "id": "21",
@@ -150,7 +168,8 @@
             "title": "HP 255 G10",
             "image": "img/products/office/HP 255 G10.webp",
             "description": "AMD Ryzen 7 7730U 512GB SSD 16GB 15.6\" FHD (1920X1080) Win 11",
-            "price": "US$880"
+            "price": "US$880",
+            "isOffer": 0
         },
         {
             "id": "22",
@@ -158,7 +177,8 @@
             "title": "DELL Inspiron 15 i3530",
             "image": "img/products/office/DELL Inspiron 15 i3530.webp",
             "description": "Intel Core i5-1335U 16gb Ram 512GB SSD 15,6\" Fhd Touch Windows 11 Home Carbon Black",
-            "price": "US$920"
+            "price": "US$920",
+            "isOffer": 0
         },
         {
             "id": "23",
@@ -166,7 +186,8 @@
             "title": "LENOVO SLIM 3 15ABR8",
             "image": "img/products/office/LENOVO SLIM 3 15ABR8.webp",
             "description": "AMD RYZEN 7 7730U 512GB SSD 16GB 15.6\" FHD (1920*1080) TouchScreen WIN 11",
-            "price": "US$930"
+            "price": "US$930",
+            "isOffer": 0
         },
         {
             "id": "24",
@@ -174,7 +195,8 @@
             "title": "Dell Inspiron 15 3535-A813BLK",
             "image": "img/products/office/Dell Inspiron 15 3535-A813BLK.webp",
             "description": "AMD Ryzen 7 7730U 512GB SSD 16GB 15.6\" FHD Win11 Carbon Black",
-            "price": "US$950"
+            "price": "US$950",
+            "isOffer": 0
         },
         {
             "id": "25",
@@ -182,7 +204,8 @@
             "title": "Lenovo IdeaPad 1 82R400DTUS",
             "image": "img/products/office/Lenovo IdeaPad 1 82R400DTUS.webp",
             "description": "AMD Ryzen 7 5700U 16gb Ram 512GB SSD 15,6\" Fhd Windows 11 Home",
-            "price": "US$960"
+            "price": "US$960",
+            "isOffer": 0
         },
         {
             "id": "26",
@@ -190,7 +213,8 @@
             "title": "HP Envy 14-es1013dx",
             "image": "img/products/office/HP Envy 14-es1013dx.webp",
             "description": "Intel Core 5 120U 8gb Ram 512gb SSD 14\" FHD 2-en-1 x360° Windows 11 Natural Silver",
-            "price": "US$990"
+            "price": "US$990",
+            "isOffer": 0
         },
         {
             "id": "27",
@@ -198,7 +222,8 @@
             "title": "DELL Inspiron 15 i3535",
             "image": "img/products/office/DELL Inspiron 15 i3535.webp",
             "description": "AMD Ryzen 7 7730U 16gb Ram 512GB SSD 15,6\" Fhd Touch Windows 11 Home Carbon Black",
-            "price": "US$1090"
+            "price": "US$1090",
+            "isOffer": 0
         },
         {
             "id": "28",
@@ -206,7 +231,8 @@
             "title": "HP 15-fc0013la",
             "image": "img/products/office/HP 15-fc0013la.webp",
             "description": "AMD Ryzen 7-7730U 16gb Ram DDR4 512GB SSD 15,6\" FHD Windows 11 Home Silver TECLADO ESPAÑOL",
-            "price": "US$1120"
+            "price": "US$1120",
+            "isOffer": 0
         },
         {
             "id": "31",
@@ -214,7 +240,8 @@
             "title": "ASUS Vivobook S S5506MA-WS76",
             "image": "img/products/office/ASUS Vivobook S S5506MA-WS76.webp",
             "description": "Intel Core Ultra 7-155H 16gb Ram( DDR5 1TB SSD 15,6\" 3K Oled 120Hz Windows 11 Home Mist Blue",
-            "price": "US$1250"
+            "price": "US$1250",
+            "isOffer": 0
         },
         {
             "id": "32",
@@ -222,7 +249,8 @@
             "title": "Asus VivoBook F1404ZA-TS52 SLIM",
             "image": "img/products/office/Asus VivoBook F1404ZA-TS52 SLIM.webp",
             "description": "Core™️ i5-1235U 512GB SSD 8GB 14\" FHD (1920x1080) WIN11 QUIET BLUE",
-            "price": "US$740"
+            "price": "US$740",
+            "isOffer": 0
         },
         {
             "id": "33",
@@ -230,7 +258,8 @@
             "title": "Asus VivoBook F1404ZA-TS52 SLIM",
             "image": "img/products/office/Asus VivoBook F1404ZA-TS52 SLIM.webp",
             "description": "Intel Core i5-1235U 512GB SSD 8GB 14\" FHD (1920x1080) WIN11 QUIET BLUE",
-            "price": "US$720"
+            "price": "US$720",
+            "isOffer": 0
         },
         {
             "id": "34",
@@ -238,7 +267,8 @@
             "title": "Asus VivoBook F1504ZA-SB76T",
             "image": "img/products/office/Asus VivoBook F1504ZA-SB76T.webp",
             "description": "Intel Core i7-1255U 512GB SSD 16GB 15.6\" (1920x1080) TOUCHSCREEN WIN 11 SILVER",
-            "price": "US$1020"
+            "price": "US$1020",
+            "isOffer": 0
         },
         {
             "id": "35",
@@ -246,7 +276,8 @@
             "title": "Lenovo IdeaPad 1 82VG00TYUS",
             "image": "img/products/office/Lenovo IdeaPad 1 82VG00TYUS.jpg",
             "description": "AMD Ryzen 5 7520U 8gb Ram 256GB SSD 15,6\" Fhd Touch Windows 11 Home Abyss Blue",
-            "price": "US$750"
+            "price": "US$750",
+            "isOffer": 0
         },
         {
             "id": "36",
@@ -254,71 +285,116 @@
             "title": "Lenovo 1 15IAU7",
             "image": "img/products/office/Lenovo 1 15IAU7.webp",
             "description": "Intel Core i5-1235U 256GB SSD 8GB 15.6\" FHD (1920x1080) WIN11 BLUE",
-            "price": "US$740"
+            "price": "US$740",
+            "isOffer": 0
         },
         {
             "id": "37",
             "categoria": "1",
             "title": "Acer Aspire 15 A315-24P-R2AG",
             "image": "img/products/office/Acer Aspire 15 A315-24P-R2AG.jpg",
-            "description": "15.6” FHD / Ryzen 5 7520U / 8GB / 512GB SSD / Win 11 Home / Silver",
-            "price": "US$620"
+            "description": "15.6 FHD / Ryzen 5 7520U / 8GB / 512GB SSD / Win 11 Home / Silver",
+            "price": "US$620",
+            "isOffer": 0
         },
         {
             "id": "38",
             "categoria": "1",
             "title": "Dell Inspiron 15 i3530-7837BLK-PUS",
             "image": "img/products/office/dell Inspiron 15 i35307837BLK-PUS.webp",
-            "description": "15.6” FHD Touch Screen / i7-1355U / 16GB / 1TB SSD / Iris Xe / Win 11 / Negro",
-            "price": "US$960"
+            "description": "15.6 FHD Touch Screen / i7-1355U / 16GB / 1TB SSD / Iris Xe / Win 11 / Negro",
+            "price": "US$960",
+            "isOffer": 0
         },
         {
             "id": "39",
             "categoria": "1",
             "title": "Dell Inspiron 15 I3530-5067BLK-PUS",
             "image": "img/products/office/dell Inspiron 15 i35307837BLK-PUS.webp",
-            "description": "15.6” FHD Touch Screen / i5-1335U / 16GB / 512GB SSD / Xe Graphics / Win 11 / Negro",
-            "price": "US$700"
+            "description": "15.6 FHD Touch Screen / i5-1335U / 16GB / 512GB SSD / Xe Graphics / Win 11 / Negro",
+            "price": "US$700",
+            "isOffer": 0
         },
         {
             "id": "40",
             "categoria": "1",
             "title": "Lenovo Ideapad Slim 3 15AMN8",
             "image": "img/products/office/Lenovo Ideapad Slim 3 15AMN8.webp",
-            "description": "15,6” FHD - RYZEN 5 7520U 2.8GHz - 8/256GB SSD - WIN 11 HOME - ARTIC GREY",
-            "price": "US$570"
+            "description": "15,6 FHD - RYZEN 5 7520U 2.8GHz - 8/256GB SSD - WIN 11 HOME - ARTIC GREY",
+            "price": "US$570",
+            "isOffer": 0
         },
         {
             "id": "41",
             "categoria": "1",
             "title": "Lenovo Ideapad 1 15ALC7",
             "image": "img/products/office/Lenovo Ideapad 1 15ALC7.webp",
-            "description": "15.6” FHDAMD RYZEN 7 5700U 1,8 GHZ- 16/512GB SSD - WINDOWS 11 -CLOUD GRAY",
-            "price": "US$760"
+            "description": "15.6 FHDAMD RYZEN 7 5700U 1,8 GHZ- 16/512GB SSD - WINDOWS 11 -CLOUD GRAY",
+            "price": "US$760",
+            "isOffer": 0
         },
         {
             "id": "42",
             "categoria": "2",
             "title": "Lenovo LOQ 83LK001US 15IAX9E",
             "image": "img/products/Lenovo LOQ 83LK001US 15IAX9E.jpg",
-            "description": "15.6” FHD 144Hz / i5-12450HX / 8GB / 512GB SSD / RTX 2050 / Win 11 / Luna Grey",
-            "price": "US$880"
+            "description": "15.6 FHD 144Hz / i5-12450HX / 8GB / 512GB SSD / RTX 2050 / Win 11 / Luna Grey",
+            "price": "US$880",
+            "isOffer": 0
         },
         {
             "id": "43",
             "categoria": "2",
             "title": "Lenovo LOQ 5ARP9",
             "image": "img/products/Lenovo LOQ 83LK001US 15IAX9E.jpg",
-            "description": "15.6” FHD 144Hz / Ryzen 7 7435HS / 16GB / 512GB SSD / RTX 4070 8GB / Win 11 / Luna Grey",
-            "price": "US$1430"
+            "description": "15.6 FHD 144Hz / Ryzen 7 7435HS / 16GB / 512GB SSD / RTX 4070 8GB / Win 11 / Luna Grey",
+            "price": "US$1430",
+            "isOffer": 0
         },
         {
             "id": "44",
             "categoria": "1",
             "title": "HP 14-EM0085CL",
             "image": "img/products/office/HP 14-EM0085CL.webp",
-            "description": "14” HD / Ryzen 7 7730U / 16GB / 1TB SSD / Win 11 / Silver",
-            "price": "US$790"
+            "description": "14 HD / Ryzen 7 7730U / 16GB / 1TB SSD / Win 11 / Silver",
+            "price": "US$790",
+            "isOffer": 0
+        },
+        {
+            "id": "101",
+            "categoria": "2",
+            "title": "HP OMEN 16",
+            "image": "img/products-offer/hp-omen.jpg",
+            "description": "16.1` FULL HD IPS LED, Intel Core i7-1362OH, 1TB SSD pcle Nvme M.2, MEMORIA RAM 16GB ddr5(2x8), NVIDIA GeForce RTX 4050 6GB,",
+            "price": "US$1790",
+            "isOffer": 1
+        },
+        {
+            "id": "102",
+            "categoria": "2",
+            "title": "MSI KATANA 15",
+            "image": "img/products-offer/msi-katana.jpg",
+            "description": "15.6` FULL HD, Intel Core i7-12650GH, MEMORIA RAM 16 GB DDR5,1TB SSD NVme gen 4 pcle, NVIDIA GeForce RTX 4070 8GB",
+            "price": "US$1840",
+            "isOffer": 1
+        },
+        {
+            "id": "103",
+            "categoria": "2",
+            "title": "ASUS ROG STRIX G513QY",
+            "image": "img/products-offer/asustog-g15-nuestra.png",
+            "description": "15,6` QHD (2560x1440)165HZ, RYZEN 9-5980HX, MEMORIA RAM 16GB(MAX 32), 512SSD NVme Pcle M.2, RX6800M 12GB 6DDR6, Windows 11",
+            "price": "US$1780",
+            "isOffer": 1
+        },
+        {
+            "id": "104",
+            "categoria": "2",
+            "title": "MSI Bravo 15",
+            "image": "img/products-offer/msi-bravo.webp",
+            "description": "15,6` Full HD IPS 144hz, Ryzen 5 7535HS, memoria ram 8gb DDR5, 512SSD NVme Pcle M.2, NVIDIA GeForce RTX 4050 6GB, Windows 11",
+            "price": "US$1890",
+            "isOffer": 1
         }
     ]
-}
+} 

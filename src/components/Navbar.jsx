@@ -48,6 +48,10 @@ const NavLinks = ({ isProductsDropdownOpen, setProductsDropdownOpen, closeMobile
                         <div className="mx-auto absolute md:mt-4 bg-black text-white w-full flex-col rounded-md p-5 z-50">
                             <ul>
                                 <li className='py-2'>
+                                    <a onClick={() => handleNavLinkClick('/productos')} className="cursor-pointer text-[#dd40d5] font-bold">🔍 Todos los productos</a>
+                                </li>
+                                <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>
+                                <li className='py-2'>
                                     <Link href="/#Marcas" onClick={closeMobileMenu}>Productos en oferta</Link>
                                 </li>
                                 <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>

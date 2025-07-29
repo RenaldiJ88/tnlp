@@ -1,13 +1,14 @@
 "use client"
 import ProductCard from './ProductCard';
-import data from '../data/products-offer.json';
+import data from '../data/products-unified.json';
 import { useState, useEffect } from 'react';
 import { swiffyslider } from 'swiffy-slider';
 import "swiffy-slider/css";
 import { motion } from "framer-motion"; // <-- Importamos motion
 
 const Productos = () => {
-    const productosData = data.productosOffer;
+    // Filtrar solo productos en oferta (isOffer === 1)
+    const productosData = data.productos.filter(producto => producto.isOffer === 1);
     const [itemShowClass, setItemShowClass] = useState("slider-item-show3");
 
     useEffect(() => {
@@ -104,6 +105,7 @@ const Productos = () => {
                                         image={products.image}
                                         description={products.description}
                                         price={products.price}
+                                        isOffer={products.isOffer === 1}
                                     />
                                 </div>
                             </motion.li>
