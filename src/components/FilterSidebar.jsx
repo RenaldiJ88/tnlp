@@ -12,7 +12,7 @@ const FilterSidebar = ({
 }) => {
   
   const FilterSection = ({ title, children }) => (
-    <div className="mb-6 pt-20">
+    <div className="mb-6">
       <h3 className="text-white font-bold mb-3 font-orbitron text-sm uppercase tracking-wider">
         {title}
       </h3>
@@ -82,7 +82,7 @@ const FilterSidebar = ({
           className="lg:hidden text-gray-400 hover:text-white"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -96,7 +96,7 @@ const FilterSidebar = ({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          🗑️ Limpiar todos los filtros
+          Limpiar todos los filtros
         </motion.button>
       )}
 
@@ -114,14 +114,14 @@ const FilterSidebar = ({
           currentValue={filters.category} 
           onChange={(value) => onFilterChange('category', value)}
         >
-          💼 Equipos Office
+          Equipos Office
         </FilterOption>
         <FilterOption 
           value="gamer" 
           currentValue={filters.category} 
           onChange={(value) => onFilterChange('category', value)}
         >
-          🎮 Equipos Gamer
+          Equipos Gamer
         </FilterOption>
       </FilterSection>
 
@@ -141,7 +141,7 @@ const FilterSidebar = ({
             currentValue={filters.processorBrand} 
             onChange={(value) => onFilterChange('processorBrand', value)}
           >
-            {brand === "Intel" ? "🔵" : "🔴"} {brand}
+            {brand === "Intel" ? "Intel" : "AMD"} - {brand}
           </FilterOption>
         ))}
       </FilterSection>
@@ -162,7 +162,7 @@ const FilterSidebar = ({
             currentValue={filters.ram} 
             onChange={(value) => onFilterChange('ram', value)}
           >
-            {ram}GB RAM {ram >= 16 ? "⚡" : ""}
+            {ram}GB RAM {ram >= 16 ? "(Recomendado)" : ""}
           </FilterOption>
         ))}
       </FilterSection>
@@ -181,21 +181,21 @@ const FilterSidebar = ({
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
         >
-          📱 14&quot; (Portátil)
+          14 pulgadas (Portátil)
         </FilterOption>
         <FilterOption 
           value="15.6" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
         >
-          💻 15.6&quot; (Estándar)
+          15.6 pulgadas (Estándar)
         </FilterOption>
         <FilterOption 
           value="16+" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
         >
-          🖥️ 16&quot;+ (Pantalla grande)
+          16+ pulgadas (Pantalla grande)
         </FilterOption>
       </FilterSection>
 
@@ -213,14 +213,14 @@ const FilterSidebar = ({
           currentValue={filters.graphicsType} 
           onChange={(value) => onFilterChange('graphicsType', value)}
         >
-          📊 Gráfica Integrada
+          Gráfica Integrada
         </FilterOption>
         <FilterOption 
           value="dedicated" 
           currentValue={filters.graphicsType} 
           onChange={(value) => onFilterChange('graphicsType', value)}
         >
-          🎮 Gráfica Dedicada
+          Gráfica Dedicada
         </FilterOption>
       </FilterSection>
 
@@ -240,7 +240,7 @@ const FilterSidebar = ({
             currentValue={filters.priceRange} 
             onChange={(value) => onFilterChange('priceRange', value)}
           >
-            💲 {range.label}
+            {range.label}
           </FilterOption>
         ))}
       </FilterSection>
@@ -259,21 +259,21 @@ const FilterSidebar = ({
           currentValue={filters.isOffer} 
           onChange={(value) => onFilterChange('isOffer', value)}
         >
-          🔥 Solo productos en oferta
+          Solo productos en oferta
         </FilterOption>
         <FilterOption 
           value="false" 
           currentValue={filters.isOffer} 
           onChange={(value) => onFilterChange('isOffer', value)}
         >
-          📦 Productos regulares
+          Productos regulares
         </FilterOption>
       </FilterSection>
 
       {/* Footer informativo */}
       <div className="mt-8 p-4 bg-gray-700 rounded-lg">
         <p className="text-xs text-gray-300 font-roboto text-center">
-          💡 Los filtros se aplican automáticamente. 
+          Los filtros se aplican automáticamente. 
           Combina múltiples filtros para encontrar exactamente lo que buscas.
         </p>
       </div>
