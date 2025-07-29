@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import ProductCard from './ProductCard';
-import data from '../data/products.json'; // Asumo que `products.json` contiene todos los productos
+import data from '../data/products-unified.json'; // Archivo unificado con todos los productos
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -153,6 +153,7 @@ const Office = () => {
                                                 image={product.image}
                                                 description={product.description}
                                                 price={product.price}
+                                                isOffer={product.isOffer === 1}
                                             />
                                         </div>
                                     </motion.li>

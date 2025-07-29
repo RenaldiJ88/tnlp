@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import ProductCard from './ProductCard';
-import data from '../data/products.json';
+import data from '../data/products-unified.json';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -147,6 +147,7 @@ const DetailGamer = () => {
                                             image={product.image}
                                             description={product.description}
                                             price={product.price}
+                                            isOffer={product.isOffer === 1}
                                         />
                                     </div>
                                 </motion.li>
