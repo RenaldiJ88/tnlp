@@ -141,7 +141,7 @@ const FilterSidebar = ({
             currentValue={filters.processorBrand} 
             onChange={(value) => onFilterChange('processorBrand', value)}
           >
-            {brand === 'Intel' ? '🔵' : '🔴'} {brand}
+            {brand === "Intel" ? "🔵" : "🔴"} {brand}
           </FilterOption>
         ))}
       </FilterSection>
@@ -162,7 +162,7 @@ const FilterSidebar = ({
             currentValue={filters.ram} 
             onChange={(value) => onFilterChange('ram', value)}
           >
-            {ram}GB RAM {ram >= 16 ? '⚡' : ''}
+            {ram}GB RAM {ram >= 16 ? "⚡" : ""}
           </FilterOption>
         ))}
       </FilterSection>
@@ -181,21 +181,21 @@ const FilterSidebar = ({
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
         >
-          📱 14" (Portátil)
+          📱 14&quot; (Portátil)
         </FilterOption>
         <FilterOption 
           value="15.6" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
         >
-          💻 15.6" (Estándar)
+          💻 15.6&quot; (Estándar)
         </FilterOption>
         <FilterOption 
           value="16+" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
         >
-          🖥️ 16"+ (Pantalla grande)
+          🖥️ 16&quot;+ (Pantalla grande)
         </FilterOption>
       </FilterSection>
 
