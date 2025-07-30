@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -12,6 +12,7 @@ import servicesData from '../../../data/services.json';
 
 const ServiceDetailPage = () => {
   const params = useParams();
+  const router = useRouter();
   const serviceId = parseInt(params.id);
   
   // Buscar el servicio por ID
@@ -113,12 +114,15 @@ const ServiceDetailPage = () => {
             >
               Consultar por WhatsApp
             </Link>
-            <Link 
-              href="/#Servicios"
+            <button 
+              onClick={() => {
+                // Forzar navegación completa para cargar todas las imágenes
+                window.location.href = '/#Servicios';
+              }}
               className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-300 font-orbitron uppercase tracking-wider"
             >
               Ver todos los servicios
-            </Link>
+            </button>
           </div>
         </motion.div>
       </div>

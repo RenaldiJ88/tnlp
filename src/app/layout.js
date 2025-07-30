@@ -1,5 +1,7 @@
 import { Roboto, Inter, Orbitron} from 'next/font/google'
 import './globals.css'
+import { GoogleAnalytics } from '../components/Analytics'
+import { MicrosoftClarity } from '../components/Clarity'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -26,11 +28,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
           <link rel="icon" href="/img/favicon.ico" />
       </head>
-      <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>{children}</body>
+      <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>
+        <GoogleAnalytics />
+        <MicrosoftClarity />
+        {children}
+      </body>
     </html>
   )
 }
