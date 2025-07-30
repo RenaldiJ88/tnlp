@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    let imgFon ='./img/home/img-home.jpg'; // Variable para la imagen de fondo
+    const imgFon = '/img/home/img-home.jpg'; // Variable para la imagen de fondo
 
     // 1. Variantes de animación para el contenedor del texto (h1 y p)
     const containerVariants = {

@@ -5,7 +5,25 @@ import { motion } from 'framer-motion';
 
 const SearchBar = ({ searchText, onSearchChange, onClearSearch }) => {
   const handleChange = (e) => {
-    onSearchChange(e.target.value);
+    const searchValue = e.target.value;
+    onSearchChange(searchValue);
+    
+    // Track búsqueda si tiene más de 3 caracteres
+    if (searchValue.length > 3 && typeof window !== 'undefined') {
+      // Google Analytics
+      if (window.gtag) {
+        window.gtag('event', 'search', {
+          search_term: searchValue,
+          results_count: 0,
+          event_category: 'site_search'
+        });
+      }
+      
+      // Microsoft Clarity
+      if (window.clarity) {
+        window.clarity('event', 'product_search', { term: searchValue });
+      }
+    }
   };
 
   const handleClear = () => {
