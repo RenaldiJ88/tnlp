@@ -149,7 +149,7 @@ const Footer = () => {
                     >
                         <h3 className="text-lg font-semibold mb-4 uppercase tracking-wider">Seguínos</h3>
                         <div className='flex justify-center md:justify-center space-x-4'>
-                            <a target='_blank' rel="noopener noreferrer" href={'https://www.instagram.com/tunotebooklaplata/'} aria-label="Instagram">
+                            <a target='_blank' rel="noopener noreferrer" href={'https://www.instagram.com/tunotebooklp/'} aria-label="Instagram">
                                 <InstagramIcon className="text-3xl text-gray-300 hover:text-pink-500 transition-colors duration-300 w-7 h-7" />
                             </a>
                             <a target='_blank' rel="noopener noreferrer" href={'https://www.facebook.com/notebooklp/'} aria-label="Facebook">
