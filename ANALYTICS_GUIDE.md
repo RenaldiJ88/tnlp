@@ -155,7 +155,7 @@ Ve a **Informes > Engagement > Eventos**
 - **Bounce rate >80%**: Problema serio de UX
 - **Tiempo en página <10 segundos**: Contenido no relevante
 - **0 eventos WhatsApp en 24h**: Botón roto o poco visible
-- **Rage clicks frecuentes**: Elementos confusos
+- **Rage clicks frecuentes**: Elementos confusos.
 
 ### ✅ Buenas señales:
 - **Usuarios recurrentes >30%**: Buena experiencia
