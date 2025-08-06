@@ -2,27 +2,13 @@
 
 import React from 'react';
 import { FaWhatsapp } from "react-icons/fa";
+import { analytics } from '../hooks/useAnalytics';
 
 const WhatsAppButton = () => {
     const phoneNumber = "+542216767615"; // Reemplaza con tu número de teléfono
 
     const handleWhatsAppClick = () => {
-        // Analytics tracking
-        if (typeof window !== 'undefined') {
-            // Google Analytics
-            if (window.gtag) {
-                window.gtag('event', 'whatsapp_click', {
-                    product_name: 'Floating Button',
-                    event_category: 'engagement',
-                    event_label: 'WhatsApp Contact'
-                });
-            }
-            
-            // Microsoft Clarity
-            if (window.clarity) {
-                window.clarity('event', 'whatsapp_click', { location: 'floating_button' });
-            }
-        }
+        analytics.whatsappClick('floating_button', 'general_inquiry');
     };
 
     return (
