@@ -59,9 +59,11 @@ const ProductCard = ({ title, image, description, price, isOffer = false }) => {
                 <Image
                     src={`/${image}`} 
                     alt={title}
-                    layout="fill" 
-                    objectFit="contain" 
-                    className="rounded-md"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="rounded-md object-contain"
+                    quality={75}
+                    loading="lazy"
                 />
             </div>
 

@@ -20,15 +20,13 @@ function Modelos() {
                     <div key={index} className="w-36 md:w-52 mx-5 pb-4 my-auto">
                         <Image
                             src={item}
-                            alt={`Image ${index}`}
+                            alt={`Modelo ${index + 1}`}
                             width={125}
                             height={125}
-                            className=''
-                            style={{
-                                backgroundColor: item,
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
+                            className="w-full h-auto object-contain"
+                            sizes="(max-width: 768px) 100vw, 200px"
+                            quality={70}
+                            loading="lazy"
                         />
                     </div>
 

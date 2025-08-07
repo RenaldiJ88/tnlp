@@ -87,7 +87,10 @@ const QuienesSomos = () => {
                         width={1024}
                         height={1500}
                         alt="Foto-QuienesSomos"
-                        className='my-auto rounded-3xl'
+                        className="my-auto rounded-3xl w-full h-auto"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 1024px"
+                        quality={85}
+                        loading="lazy"
                     />
                 </motion.div>
             </div>

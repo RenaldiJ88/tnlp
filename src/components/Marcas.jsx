@@ -22,15 +22,13 @@ function Marcas() {
                     <div key={index} className="w-20 md:w-36 mx-10 pt-4 my-auto">
                         <Image
                             src={item}
-                            alt={`Image ${index}`}
+                            alt={`Marca ${index + 1}`}
                             width={100}
                             height={100}
-                            className=''
-                            style={{
-                                backgroundColor: item,
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
+                            className="w-full h-auto object-contain"
+                            sizes="(max-width: 768px) 100vw, 150px"
+                            quality={70}
+                            loading="lazy"
                         />
                     </div>
 

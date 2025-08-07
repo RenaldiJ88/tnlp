@@ -1,0 +1,13 @@
+{
+  "clientes": [
+    {
+      "id": 1,
+      "nombre": "Juan Perez",
+      "telefono": "221656215",
+      "direccion": "7 N1621",
+      "documento": "33309822",
+      "fechaRegistro": "2025-08-07",
+      "ordenes": []
+    }
+  ]
+}

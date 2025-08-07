@@ -70,7 +70,16 @@ const ServiceCard = ({ title, description, imgService, serviceId }) => {
         onClick={handleCardClick}
     >
       <div className="relative w-full h-[220px] mb-5">
-        <Image src={`/${imgService}`} alt={title} width={350} height={240}/>
+        <Image 
+          src={`/${imgService}`} 
+          alt={title} 
+          width={350} 
+          height={240}
+          className="w-full h-full object-cover rounded-t-lg"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 350px"
+          priority={false}
+          quality={75}
+        />
       </div>
       <div className="p-4">
         <h3 className="text-gray-900 text-xl font-bold uppercase font-orbitron pb-3 text-center">

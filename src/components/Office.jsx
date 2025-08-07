@@ -100,10 +100,28 @@ const Office = () => {
                             >
                                 <motion.div variants={singleLaptopVariants}>
                                     {/* Imagen de laptop de Office 1 */}
-                                    <Image src={laptopOffice1} width={550} height={343} alt="Office Laptop 1" className="rounded-lg" /> 
+                                    <Image 
+                                      src={laptopOffice1} 
+                                      width={550} 
+                                      height={343} 
+                                      alt="Office Laptop 1" 
+                                      className="rounded-lg w-full h-auto" 
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
+                                      quality={80}
+                                      loading="lazy"
+                                    /> 
                                 </motion.div>
                                 <motion.div variants={singleLogoVariants} className=""> 
-                                    <Image src={amdLogo} width={120} height={120} alt="AMD Logo" className='' /> 
+                                    <Image 
+                                      src={amdLogo} 
+                                      width={120} 
+                                      height={120} 
+                                      alt="AMD Logo" 
+                                      className="w-auto h-auto" 
+                                      sizes="120px"
+                                      quality={85}
+                                      loading="lazy"
+                                    /> 
                                 </motion.div>
                             </motion.div>
 
@@ -117,10 +135,28 @@ const Office = () => {
                             >
                                 <motion.div variants={singleLaptopVariants}>
                                     {/* Imagen de laptop de Office 2 */}
-                                    <Image src={laptopOffice2} width={550} height={343} alt="Office Laptop 2" className="rounded-lg" />
+                                    <Image 
+                                      src={laptopOffice2} 
+                                      width={550} 
+                                      height={343} 
+                                      alt="Office Laptop 2" 
+                                      className="rounded-lg w-full h-auto" 
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
+                                      quality={80}
+                                      loading="lazy"
+                                    />
                                 </motion.div>
                                 <motion.div variants={singleLogoVariants} className=""> 
-                                    <Image src={intelLogo} width={120} height={120} alt="Intel Logo" className='' /> 
+                                    <Image 
+                                      src={intelLogo} 
+                                      width={120} 
+                                      height={120} 
+                                      alt="Intel Logo" 
+                                      className="w-auto h-auto" 
+                                      sizes="120px"
+                                      quality={85}
+                                      loading="lazy"
+                                    /> 
                                 </motion.div>
                             </motion.div>
                         </div>
