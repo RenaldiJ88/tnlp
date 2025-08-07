@@ -25,6 +25,28 @@ const ServiceCard = ({ title, description, imgService, serviceId }) => {
   };
 
   const handleCardClick = () => {
+    // Tracking para navegación a servicios
+    if (typeof window !== 'undefined') {
+      // Google Analytics
+      if (window.gtag) {
+        window.gtag('event', 'view_service', {
+          service_name: title,
+          service_id: serviceId,
+          event_category: 'services',
+          event_label: 'Service Detail View'
+        });
+      }
+      
+      // Microsoft Clarity
+      if (window.clarity) {
+        window.clarity('event', 'service_click', { 
+          service: title, 
+          service_id: serviceId,
+          source: 'service_card'
+        });
+      }
+    }
+    
     router.push(`/servicios/${serviceId}`);
   };
 
@@ -48,7 +70,16 @@ const ServiceCard = ({ title, description, imgService, serviceId }) => {
         onClick={handleCardClick}
     >
       <div className="relative w-full h-[220px] mb-5">
-        <Image src={`/${imgService}`} alt={title} width={350} height={240}/>
+        <Image 
+          src={`/${imgService}`} 
+          alt={title} 
+          width={350} 
+          height={240}
+          className="w-full h-full object-cover rounded-t-lg"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 350px"
+          priority={false}
+          quality={75}
+        />
       </div>
       <div className="p-4">
         <h3 className="text-gray-900 text-xl font-bold uppercase font-orbitron pb-3 text-center">
@@ -75,7 +106,34 @@ const ServiceCard = ({ title, description, imgService, serviceId }) => {
         </button>
       </div>
       <div className="bg-black" onClick={(e) => e.stopPropagation()}>
-          <Link target="_blank" rel="noopener noreferrer" href={"https://wa.me/5492216767615"}>
+          <Link 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            href={"https://wa.me/5492216767615"}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (typeof window !== 'undefined') {
+                // Google Analytics
+                if (window.gtag) {
+                  window.gtag('event', 'whatsapp_service_inquiry', {
+                    service_name: title,
+                    service_id: serviceId,
+                    event_category: 'engagement',
+                    event_label: 'Service WhatsApp Contact'
+                  });
+                }
+                
+                // Microsoft Clarity
+                if (window.clarity) {
+                  window.clarity('event', 'service_inquiry', { 
+                    service: title, 
+                    service_id: serviceId,
+                    source: 'service_card'
+                  });
+                }
+              }
+            }}
+          >
         <div className="bg-[#dd40d5] hover:opacity-80 opacity-60 h-[50px] flex items-center justify-center">
             <p className="text-black font-bold uppercase tracking-wider font-orbitron">
               Consulta

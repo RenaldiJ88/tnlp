@@ -2,14 +2,17 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useAnalytics } from '../hooks/useAnalytics';
 
 const FilterSidebar = ({ 
   filters, 
   filterOptions, 
   onFilterChange, 
   onClearFilters, 
-  onClose 
+  onClose,
+  resultsCount = 0 
 }) => {
+  const { trackFilter } = useAnalytics();
   
   const FilterSection = ({ title, children }) => (
     <div className="mb-6">
@@ -22,7 +25,7 @@ const FilterSidebar = ({
     </div>
   );
 
-  const FilterOption = ({ value, currentValue, onChange, children, count = null }) => (
+  const FilterOption = ({ value, currentValue, onChange, children, count = null, filterType = '' }) => (
     <label className="flex items-center justify-between cursor-pointer group">
       <div className="flex items-center">
         <input
@@ -30,7 +33,11 @@ const FilterSidebar = ({
           name={`filter-${Math.random()}`}
           value={value}
           checked={currentValue === value}
-          onChange={() => onChange(value)}
+          onChange={() => {
+            onChange(value);
+            // Track filter usage
+            trackFilter(filterType, value, resultsCount);
+          }}
           className="sr-only"
         />
         <div className={`
@@ -90,7 +97,11 @@ const FilterSidebar = ({
       {/* Botón limpiar filtros */}
       {getActiveFiltersCount() > 0 && (
         <motion.button
-          onClick={onClearFilters}
+          onClick={() => {
+            onClearFilters();
+            // Track clear filters action
+            trackFilter('clear_all', 'reset', resultsCount);
+          }}
           className="w-full mb-6 bg-gray-700 hover:bg-red-600 text-white py-2 px-4 rounded-lg 
                      transition-colors duration-200 font-roboto text-sm"
           whileHover={{ scale: 1.02 }}
@@ -106,6 +117,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.category} 
           onChange={(value) => onFilterChange('category', value)}
+          filterType="category"
         >
           Todos los equipos
         </FilterOption>
@@ -113,6 +125,7 @@ const FilterSidebar = ({
           value="office" 
           currentValue={filters.category} 
           onChange={(value) => onFilterChange('category', value)}
+          filterType="category"
         >
           Equipos Office
         </FilterOption>
@@ -120,6 +133,7 @@ const FilterSidebar = ({
           value="gamer" 
           currentValue={filters.category} 
           onChange={(value) => onFilterChange('category', value)}
+          filterType="category"
         >
           Equipos Gamer
         </FilterOption>
@@ -131,6 +145,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.processorBrand} 
           onChange={(value) => onFilterChange('processorBrand', value)}
+          filterType="processorBrand"
         >
           Todas las marcas
         </FilterOption>
@@ -140,6 +155,7 @@ const FilterSidebar = ({
             value={brand} 
             currentValue={filters.processorBrand} 
             onChange={(value) => onFilterChange('processorBrand', value)}
+            filterType="processorBrand"
           >
             {brand === "Intel" ? "Intel" : "AMD"} - {brand}
           </FilterOption>
@@ -152,6 +168,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.ram} 
           onChange={(value) => onFilterChange('ram', value)}
+          filterType="ram"
         >
           Cualquier cantidad
         </FilterOption>
@@ -161,6 +178,7 @@ const FilterSidebar = ({
             value={ram.toString()} 
             currentValue={filters.ram} 
             onChange={(value) => onFilterChange('ram', value)}
+            filterType="ram"
           >
             {ram}GB RAM {ram >= 16 ? "(Recomendado)" : ""}
           </FilterOption>
@@ -173,6 +191,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
+          filterType="screenSize"
         >
           Cualquier tamaño
         </FilterOption>
@@ -180,6 +199,7 @@ const FilterSidebar = ({
           value="14" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
+          filterType="screenSize"
         >
           14 pulgadas (Portátil)
         </FilterOption>
@@ -187,6 +207,7 @@ const FilterSidebar = ({
           value="15.6" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
+          filterType="screenSize"
         >
           15.6 pulgadas (Estándar)
         </FilterOption>
@@ -194,6 +215,7 @@ const FilterSidebar = ({
           value="16+" 
           currentValue={filters.screenSize} 
           onChange={(value) => onFilterChange('screenSize', value)}
+          filterType="screenSize"
         >
           16+ pulgadas (Pantalla grande)
         </FilterOption>
@@ -205,6 +227,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.graphicsType} 
           onChange={(value) => onFilterChange('graphicsType', value)}
+          filterType="graphicsType"
         >
           Cualquier tipo
         </FilterOption>
@@ -212,6 +235,7 @@ const FilterSidebar = ({
           value="integrated" 
           currentValue={filters.graphicsType} 
           onChange={(value) => onFilterChange('graphicsType', value)}
+          filterType="graphicsType"
         >
           Gráfica Integrada
         </FilterOption>
@@ -219,6 +243,7 @@ const FilterSidebar = ({
           value="dedicated" 
           currentValue={filters.graphicsType} 
           onChange={(value) => onFilterChange('graphicsType', value)}
+          filterType="graphicsType"
         >
           Gráfica Dedicada
         </FilterOption>
@@ -230,6 +255,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.priceRange} 
           onChange={(value) => onFilterChange('priceRange', value)}
+          filterType="priceRange"
         >
           Cualquier precio
         </FilterOption>
@@ -239,6 +265,7 @@ const FilterSidebar = ({
             value={range.value} 
             currentValue={filters.priceRange} 
             onChange={(value) => onFilterChange('priceRange', value)}
+            filterType="priceRange"
           >
             {range.label}
           </FilterOption>
@@ -251,6 +278,7 @@ const FilterSidebar = ({
           value="all" 
           currentValue={filters.isOffer} 
           onChange={(value) => onFilterChange('isOffer', value)}
+          filterType="isOffer"
         >
           Todos los productos
         </FilterOption>
@@ -258,6 +286,7 @@ const FilterSidebar = ({
           value="true" 
           currentValue={filters.isOffer} 
           onChange={(value) => onFilterChange('isOffer', value)}
+          filterType="isOffer"
         >
           Solo productos en oferta
         </FilterOption>
@@ -265,6 +294,7 @@ const FilterSidebar = ({
           value="false" 
           currentValue={filters.isOffer} 
           onChange={(value) => onFilterChange('isOffer', value)}
+          filterType="isOffer"
         >
           Productos regulares
         </FilterOption>

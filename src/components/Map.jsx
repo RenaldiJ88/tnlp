@@ -2,8 +2,19 @@
 
 import React from 'react';
 import { motion } from "framer-motion"; // <-- Importamos motion
+import { useAnalytics } from '../hooks/useAnalytics';
 
 const Map = () => {
+    const { trackEvent } = useAnalytics();
+
+    const handleFormSubmit = () => {
+        trackEvent('form_submit', {
+            form_name: 'newsletter_subscription',
+            form_location: 'map_section',
+            event_category: 'engagement',
+            clarity_event: 'newsletter_signup'
+        });
+    };
 
     // --- VARIANTES DE ANIMACIÓN ---
     // Variantes para el iframe del mapa
@@ -51,12 +62,15 @@ const Map = () => {
                     <input type="text" className='h-8 mt-2 rounded-md w-[80%] md:w-[60%] md:ml-16 font-roboto' placeholder="Ingrese su mail para promociones" />
                     
                     {/* Botón "Enviar" - Unificado con el diseño de los otros botones */}
-                    <button className="bg-[#FFFFFF] opacity-40 text-black font-bold py-2 px-4 lg:py-3 lg:px-9 lg:text-xl border-[#dd40d5] border-2 border-solid rounded-xl font-orbitron 
+                    <button 
+                        onClick={handleFormSubmit}
+                        className="bg-[#FFFFFF] opacity-40 text-black font-bold py-2 px-4 lg:py-3 lg:px-9 lg:text-xl border-[#dd40d5] border-2 border-solid rounded-xl font-orbitron 
                                 transition-all duration-300 ease-in-out 
                                 hover:text-white hover:bg-transparent 
                                 hover:scale-105 
                                 hover:shadow-lg hover:shadow-[#dd40d5] 
-                                w-40 text-center ml-5 "> 
+                                w-40 text-center ml-5 "
+                    > 
                         Enviar
                     </button>
                 </div>

@@ -2,27 +2,29 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useAnalytics } from '../hooks/useAnalytics';
 
-const SearchBar = ({ searchText, onSearchChange, onClearSearch }) => {
+const SearchBar = ({ searchText, onSearchChange, onClearSearch, resultsCount = 0 }) => {
+  const { trackEvent, trackSearchNoResults } = useAnalytics();
   const handleChange = (e) => {
     const searchValue = e.target.value;
     onSearchChange(searchValue);
     
     // Track búsqueda si tiene más de 3 caracteres
-    if (searchValue.length > 3 && typeof window !== 'undefined') {
-      // Google Analytics
-      if (window.gtag) {
-        window.gtag('event', 'search', {
-          search_term: searchValue,
-          results_count: 0,
-          event_category: 'site_search'
-        });
-      }
-      
-      // Microsoft Clarity
-      if (window.clarity) {
-        window.clarity('event', 'product_search', { term: searchValue });
-      }
+    if (searchValue.length > 3) {
+      // Usar timeout para permitir que resultsCount se actualice
+      setTimeout(() => {
+        if (resultsCount === 0) {
+          trackSearchNoResults(searchValue);
+        } else {
+          trackEvent('search', {
+            search_term: searchValue,
+            results_count: resultsCount,
+            event_category: 'site_search',
+            clarity_event: 'product_search'
+          });
+        }
+      }, 500);
     }
   };
 
@@ -112,7 +114,16 @@ const SearchBar = ({ searchText, onSearchChange, onClearSearch }) => {
           {['Gaming', 'Office', 'Intel', 'AMD', 'RTX', '16GB'].map((suggestion, index) => (
             <button
               key={suggestion}
-              onClick={() => onSearchChange(suggestion)}
+              onClick={() => {
+                onSearchChange(suggestion);
+                // Track uso de sugerencias
+                trackEvent('search_suggestion_click', {
+                  suggestion_term: suggestion,
+                  suggestion_position: index + 1,
+                  event_category: 'site_search',
+                  clarity_event: 'suggestion_used'
+                });
+              }}
               className="px-3 py-1 bg-gray-700 hover:bg-[#dd40d5] text-gray-300 hover:text-black 
                          rounded-full text-sm transition-colors duration-200 font-roboto"
             >

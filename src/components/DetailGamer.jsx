@@ -96,11 +96,29 @@ const DetailGamer = () => {
                                 className="flex flex-col items-center w-[45%] max-w-[500px] sm:w-[40%] sm:max-w-[550px]" 
                             >
                                 <motion.div variants={singleLaptopVariants}>
-                                    <Image src="/img/carrousel-equipos/4.png" width={550} height={343} alt="Gaming Laptop 1" className="rounded-lg" /> 
+                                    <Image 
+                                      src="/img/carrousel-equipos/4.png" 
+                                      width={550} 
+                                      height={343} 
+                                      alt="Gaming Laptop 1" 
+                                      className="rounded-lg w-full h-auto" 
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
+                                      quality={80}
+                                      loading="lazy"
+                                    /> 
                                 </motion.div>
                                 {/* CAMBIO: ELIMINADO mb-24 */}
                                 <motion.div variants={singleLogoVariants} className=""> 
-                                    <Image src="/img/carrousel-equipos/amd_logo.png" width={150} height={150} alt="AMD Logo" className='' /> 
+                                    <Image 
+                                      src="/img/carrousel-equipos/amd_logo.png" 
+                                      width={150} 
+                                      height={150} 
+                                      alt="AMD Logo" 
+                                      className="w-auto h-auto" 
+                                      sizes="150px"
+                                      quality={85}
+                                      loading="lazy"
+                                    /> 
                                 </motion.div>
                             </motion.div>
 
@@ -113,11 +131,29 @@ const DetailGamer = () => {
                                 className="flex flex-col items-center w-[45%] max-w-[500px] sm:w-[40%] sm:max-w-[550px]" 
                             >
                                 <motion.div variants={singleLaptopVariants}>
-                                    <Image src="/img/carrousel-equipos/5.png" width={550} height={343} alt="Gaming Laptop 2" className="rounded-lg" />
+                                    <Image 
+                                      src="/img/carrousel-equipos/5.png" 
+                                      width={550} 
+                                      height={343} 
+                                      alt="Gaming Laptop 2" 
+                                      className="rounded-lg w-full h-auto" 
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
+                                      quality={80}
+                                      loading="lazy"
+                                    />
                                 </motion.div>
                                 
                                 <motion.div variants={singleLogoVariants} className=""> 
-                                    <Image src="/img/carrousel-equipos/intel_logo.png" width={130} height={130} alt="Intel Logo" className='mb-6' /> 
+                                    <Image 
+                                      src="/img/carrousel-equipos/intel_logo.png" 
+                                      width={130} 
+                                      height={130} 
+                                      alt="Intel Logo" 
+                                      className="mb-6 w-auto h-auto" 
+                                      sizes="130px"
+                                      quality={85}
+                                      loading="lazy"
+                                    /> 
                                 </motion.div>
                             </motion.div>
                         </div>
