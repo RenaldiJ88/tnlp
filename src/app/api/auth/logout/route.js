@@ -6,13 +6,10 @@ export async function POST(request) {
   try {
     // Log de logout
     const token = request.cookies.get('adminToken')?.value
-    if (token) {
-      const { verifyToken } = require('../../../../lib/auth')
-      const verification = verifyToken(token)
-      
-      if (verification.success) {
-        console.log(`Logout para usuario: ${verification.payload.username}`)
-      }
+    if (token && token.startsWith('auth_')) {
+      const parts = token.split('_')
+      const username = parts[1]
+      console.log(`Logout para usuario: ${username}`)
     }
     
     // Crear respuesta
@@ -23,11 +20,11 @@ export async function POST(request) {
     
     // Eliminar cookie de autenticación
     response.cookies.set('adminToken', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      httpOnly: false,
+      secure: false,
+      sameSite: 'lax',
       maxAge: 0,              // Expira inmediatamente
-      path: '/admin'
+      path: '/'
     })
     
     return response

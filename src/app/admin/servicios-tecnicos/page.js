@@ -133,7 +133,7 @@ export default function ServiciosTecnicosAdmin() {
   }
 
   const getClientOrders = (clientId) => {
-    return orders.filter(order => order.clienteId === clientId)
+    return orders.filter(order => order.cliente_id === clientId)
   }
 
   const handleEditOrder = (order) => {
@@ -280,7 +280,7 @@ export default function ServiciosTecnicosAdmin() {
       {showEditOrderModal && selectedOrder && (
         <EditOrderModal
           order={selectedOrder}
-          client={clients.find(c => c.id === selectedOrder.clienteId)}
+          client={clients.find(c => c.id === selectedOrder.cliente_id)}
           serviceOptions={serviceOptions}
           onClose={() => {
             setShowEditOrderModal(false)
@@ -339,22 +339,18 @@ function ClientCard({ client, orders, onDelete, onCreateOrder, onEdit, onViewOrd
       </div>
 
       <div className="space-y-2">
-        <div className="flex space-x-2">
-          <button
-            onClick={() => onCreateOrder(client)}
-            className="flex-1 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-          >
-            🔧 Nueva Orden
-          </button>
-          {orders.length > 0 && (
-            <button
-              onClick={() => onViewOrders(client)}
-              className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-            >
-              📋 Ver Órdenes
-            </button>
-          )}
-        </div>
+        <button
+          onClick={() => onCreateOrder(client)}
+          className="w-full bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          🔧 Nueva Orden
+        </button>
+        <button
+          onClick={() => onViewOrders(client)}
+          className="w-full bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          📋 Ver Órdenes
+        </button>
         <div className="flex space-x-2">
           <button
             onClick={() => onEdit(client)}

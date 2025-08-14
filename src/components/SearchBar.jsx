@@ -103,35 +103,7 @@ const SearchBar = ({ searchText, onSearchChange, onClearSearch, resultsCount = 0
         Prueba buscar: &quot;Intel i7&quot;, &quot;RTX 4060&quot;, &quot;16GB RAM&quot;, &quot;15.6 pulgadas&quot;
       </motion.div>
 
-      {/* Sugerencias rápidas */}
-      {!searchText && (
-        <motion.div 
-          className="mt-4 flex flex-wrap justify-center gap-2"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          {['Gaming', 'Office', 'Intel', 'AMD', 'RTX', '16GB'].map((suggestion, index) => (
-            <button
-              key={suggestion}
-              onClick={() => {
-                onSearchChange(suggestion);
-                // Track uso de sugerencias
-                trackEvent('search_suggestion_click', {
-                  suggestion_term: suggestion,
-                  suggestion_position: index + 1,
-                  event_category: 'site_search',
-                  clarity_event: 'suggestion_used'
-                });
-              }}
-              className="px-3 py-1 bg-gray-700 hover:bg-[#dd40d5] text-gray-300 hover:text-black 
-                         rounded-full text-sm transition-colors duration-200 font-roboto"
-            >
-              {suggestion}
-            </button>
-          ))}
-        </motion.div>
-      )}
+      
     </div>
   );
 };

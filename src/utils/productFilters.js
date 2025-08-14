@@ -24,7 +24,7 @@ export const extractProductSpecs = (product) => {
   // Extraer precio numérico
   const numericPrice = extractNumericPrice(product.price);
   
-  return {
+  const result = {
     ...product,
     specs: {
       processor: processorInfo,
@@ -33,10 +33,17 @@ export const extractProductSpecs = (product) => {
       storage: storage,
       graphics: graphics,
       numericPrice: numericPrice,
-      category: product.categoria === '1' ? 'office' : 'gamer',
+      category: product.categoria === 'office' ? 'office' : 
+                product.categoria === 'gaming' ? 'gaming' : 
+                product.categoria === 'ultrabook' ? 'ultrabook' : 
+                product.categoria,
       isOffer: product.isOffer === 1
     }
   };
+  
+
+  
+  return result;
 };
 
 /**
@@ -164,7 +171,16 @@ const extractGraphics = (description) => {
  * Extrae precio numérico del string
  */
 const extractNumericPrice = (priceString) => {
-  const priceMatch = priceString.match(/\$(\d+)/);
+  // Si es un string vacío o "0", retornar 0
+  if (!priceString || priceString === "0" || priceString === "") {
+    return 0;
+  }
+  
+  // Convertir a string si no lo es
+  const priceStr = String(priceString);
+  
+  // Buscar patrones de precio: US$550, $550, 550, etc.
+  const priceMatch = priceStr.match(/(?:US\$|\$)?(\d+)/);
   return priceMatch ? parseInt(priceMatch[1]) : 0;
 };
 

@@ -8,7 +8,7 @@ import WhatsAppButton from '../../components/WhatsAppButton';
 import ProductCard from '../../components/ProductCard';
 import FilterSidebar from '../../components/FilterSidebar';
 import SearchBar from '../../components/SearchBar';
-import productsData from '../../data/products-unified.json';
+import { supabase } from '../../lib/supabase';
 import { extractProductSpecs, filterProducts, sortProducts, getUniqueFilterValues } from '../../utils/productFilters';
 
 const ProductsSearchPage = () => {
@@ -27,11 +27,56 @@ const ProductsSearchPage = () => {
   const [sortBy, setSortBy] = useState('name-asc');
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  // Cargar productos desde Supabase
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        console.log('🔄 Cargando productos desde Supabase...');
+
+        
+        const { data, error } = await supabase
+          .from('productos')
+          .select('*')
+          .order('id', { ascending: true });
+        
+        if (error) {
+          console.error('❌ Error loading products:', error);
+          console.log('🔍 Detalles del error:', {
+            message: error.message,
+            details: error.details,
+            hint: error.hint
+          });
+          setProducts([]);
+        } else {
+          console.log('✅ Productos cargados:', data.length);
+          
+          // Mapear campos de Supabase a formato esperado
+          const mappedProducts = data.map(product => ({
+            ...product,
+            isOffer: product.is_offer,
+            lastModified: product.last_modified
+          }));
+          
+          setProducts(mappedProducts);
+        }
+      } catch (error) {
+        console.error('❌ Error loading products:', error);
+        setProducts([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   // Procesar productos con especificaciones extraídas
   const processedProducts = useMemo(() => {
-    return productsData.productos.map(product => extractProductSpecs(product));
-  }, []);
+    const processed = products.map(product => extractProductSpecs(product));
+    return processed;
+  }, [products]);
 
   // Obtener valores únicos para filtros
   const filterOptions = useMemo(() => {
@@ -41,12 +86,9 @@ const ProductsSearchPage = () => {
   // Aplicar filtros y ordenamiento
   const filteredProducts = useMemo(() => {
     const filtered = filterProducts(processedProducts, filters);
-    return sortProducts(filtered, sortBy);
+    const sorted = sortProducts(filtered, sortBy);
+    return sorted;
   }, [processedProducts, filters, sortBy]);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
 
   // Función para actualizar filtros
   const updateFilter = (filterType, value) => {
@@ -215,11 +257,13 @@ const ProductsSearchPage = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <ProductCard
+                    id={product.id}
                     title={product.title}
                     image={product.image}
                     description={product.description}
                     price={product.price}
                     isOffer={product.isOffer === 1}
+                    categoria={product.categoria}
                   />
                 </motion.div>
               ))}

@@ -295,10 +295,22 @@ function ProductModal({ product, onClose, onSave }) {
       const url = '/api/admin/products'
       const method = product ? 'PUT' : 'POST'
       
+      // Mapear campos al formato esperado por la API
+      const productData = {
+        ...formData,
+        categoria: formData.category
+      }
+      delete productData.category
+      
+      // Si es un producto nuevo, no incluir ID
+      if (!product) {
+        delete productData.id
+      }
+      
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(productData)
       })
 
       if (response.ok) {

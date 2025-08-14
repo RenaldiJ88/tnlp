@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-const { verifyToken } = require('./lib/auth')
 
 export function middleware(request) {
   const { pathname } = request.nextUrl

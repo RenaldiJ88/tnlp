@@ -6,12 +6,12 @@ import ServiceCategoryCard from './ServiceCategoryCard'
 
 // Modal para editar orden de servicio
 export default function EditOrderModal({ order, client, serviceOptions, onClose, onSave }) {
-  const [selectedServices, setSelectedServices] = useState(order.servicios || [])
+  const [selectedServices, setSelectedServices] = useState(order.servicios_seleccionados || [])
   const [orderDetails, setOrderDetails] = useState({
-    descripcionEquipo: order.detalles.descripcionEquipo || '',
-    problema: order.detalles.problema || '',
-    urgencia: order.detalles.urgencia || 'normal',
-    notas: order.detalles.notas || ''
+    descripcionEquipo: order.equipo_tipo || '',
+    problema: order.problema || '',
+    urgencia: order.urgencia || 'normal',
+    notas: order.notas || ''
   })
   const [estado, setEstado] = useState(order.estado || 'Recibido')
   const [saving, setSaving] = useState(false)
@@ -50,12 +50,14 @@ export default function EditOrderModal({ order, client, serviceOptions, onClose,
     try {
       const orderData = {
         id: order.id,
-        clienteId: order.clienteId,
-        servicios: selectedServices,
-        detalles: orderDetails,
+        cliente_id: order.cliente_id,
+        servicios_seleccionados: selectedServices,
+        equipo_tipo: orderDetails.descripcionEquipo,
+        problema: orderDetails.problema,
+        urgencia: orderDetails.urgencia,
+        notas: orderDetails.notas,
         estado: estado,
-        total: totalEstimado,
-        fecha: order.fecha
+        total: totalEstimado
       }
 
       const response = await fetch('/api/admin/service-orders', {

@@ -1,15 +1,45 @@
 "use client"
 import ProductCard from './ProductCard';
-import data from '../data/products-unified.json';
+import { supabase } from '../lib/supabase';
 import { useState, useEffect } from 'react';
 import { swiffyslider } from 'swiffy-slider';
 import "swiffy-slider/css";
 import { motion } from "framer-motion"; // <-- Importamos motion
 
 const Productos = () => {
-    // Filtrar solo productos en oferta (isOffer === 1)
-    const productosData = data.productos.filter(producto => producto.isOffer === 1);
+    const [productosData, setProductosData] = useState([]);
     const [itemShowClass, setItemShowClass] = useState("slider-item-show3");
+
+    // Cargar productos en oferta desde Supabase
+    useEffect(() => {
+        const loadOfferProducts = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('productos')
+                    .select('*')
+                    .eq('is_offer', 1)
+                    .order('id', { ascending: true });
+                
+                if (error) {
+                    console.error('Error loading offer products:', error);
+                    setProductosData([]);
+                } else {
+                    // Mapear campos de Supabase a formato esperado
+                    const mappedProducts = data.map(product => ({
+                        ...product,
+                        isOffer: product.is_offer,
+                        lastModified: product.last_modified
+                    }));
+                    setProductosData(mappedProducts);
+                }
+            } catch (error) {
+                console.error('Error loading offer products:', error);
+                setProductosData([]);
+            }
+        };
+
+        loadOfferProducts();
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -101,11 +131,13 @@ const Productos = () => {
                             >
                                 <div  className='my-12 flex justify-center'>
                                     <ProductCard
+                                        id={products.id}
                                         title={products.title}
                                         image={products.image}
                                         description={products.description}
                                         price={products.price}
                                         isOffer={products.isOffer === 1}
+                                        categoria={products.categoria}
                                     />
                                 </div>
                             </motion.li>

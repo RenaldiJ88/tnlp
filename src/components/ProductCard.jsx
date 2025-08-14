@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getWhatsAppLink } from "../hooks/whatsappUtils"; 
 
-const ProductCard = ({ title, image, description, price, isOffer = false }) => {
+const ProductCard = ({ id, title, image, description, price, isOffer = false, categoria }) => {
     const whatsAppLink = getWhatsAppLink(title, price);
 
     // Tracking para clicks en productos
@@ -80,28 +80,28 @@ const ProductCard = ({ title, image, description, price, isOffer = false }) => {
             </div>
 
             <Link 
-                href={whatsAppLink} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="mt-4 px-6 py-2 bg-[#dd40d5] text-white font-bold rounded-full hover:bg-white hover:text-[#dd40d5] transition-all duration-300 ease-in-out"
+                href={`/productos/${id}`}
+                className="mt-4 px-6 py-2 bg-[#dd40d5] text-white font-bold rounded-full hover:bg-white hover:text-[#dd40d5] transition-all duration-300 ease-in-out flex items-center justify-center space-x-2"
                 onClick={(e) => {
                     e.stopPropagation(); // Evitar doble tracking del div padre
                     if (typeof window !== 'undefined') {
-                        // Google Analytics - Evento de alta conversión
+                        // Google Analytics - Evento de vista de producto
                         if (window.gtag) {
-                            window.gtag('event', 'whatsapp_product_inquiry', {
+                            window.gtag('event', 'view_item', {
+                                item_id: id,
                                 item_name: title,
-                                item_category: isOffer ? 'Offer Products' : 'Products',
+                                item_category: categoria || (isOffer ? 'Offer Products' : 'Products'),
                                 value: parseFloat(price.replace(/[^0-9.-]/g, '')) || 0,
-                                currency: 'ARS',
+                                currency: 'USD',
                                 event_category: 'ecommerce',
-                                event_label: 'Product Purchase Intent'
+                                event_label: 'Product Detail View'
                             });
                         }
                         
                         // Microsoft Clarity
                         if (window.clarity) {
-                            window.clarity('event', 'purchase_intent', { 
+                            window.clarity('event', 'product_detail_view', { 
+                                product_id: id,
                                 product: title, 
                                 price: price,
                                 is_offer: isOffer,
@@ -111,7 +111,8 @@ const ProductCard = ({ title, image, description, price, isOffer = false }) => {
                     }
                 }}
             >
-                Comprar
+                <span>👁️</span>
+                <span>Ver más</span>
             </Link>
         </div>
     );

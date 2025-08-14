@@ -130,7 +130,7 @@ const FilterSidebar = ({
           Equipos Office
         </FilterOption>
         <FilterOption 
-          value="gamer" 
+          value="gaming" 
           currentValue={filters.category} 
           onChange={(value) => onFilterChange('category', value)}
           filterType="category"

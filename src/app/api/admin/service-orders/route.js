@@ -1,138 +1,204 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { supabaseAdmin } from '../../../../lib/supabase'
 
 export const runtime = 'nodejs'
 
-const ordersFilePath = path.join(process.cwd(), 'src/data/service-orders.json')
-
-// GET - Obtener todas las órdenes
+// GET - Obtener todas las órdenes de servicio
 export async function GET() {
   try {
-    const fileContent = fs.readFileSync(ordersFilePath, 'utf-8')
-    const data = JSON.parse(fileContent)
-    return NextResponse.json(data.ordenes || [])
+    const { data: orders, error } = await supabaseAdmin
+      .from('ordenes_servicio')
+      .select(`
+        *,
+        clientes (
+          id,
+          nombre,
+          telefono,
+          direccion,
+          documento,
+          email
+        )
+      `)
+      .order('id', { ascending: false })
+    
+    if (error) {
+      console.error('Error fetching service orders:', error)
+      return NextResponse.json([], { status: 500 })
+    }
+    
+    return NextResponse.json(orders || [])
   } catch (error) {
     console.error('Error reading service orders:', error)
     return NextResponse.json([], { status: 500 })
   }
 }
 
-// POST - Crear nueva orden
+// POST - Crear nueva orden de servicio
 export async function POST(request) {
   try {
     const newOrder = await request.json()
     
-    // Leer archivo actual
-    let data = { ordenes: [] }
-    try {
-      const fileContent = fs.readFileSync(ordersFilePath, 'utf-8')
-      data = JSON.parse(fileContent)
-    } catch (error) {
-      console.log('Creating new service orders file')
-    }
-    
-    // Generar ID único
-    const newId = data.ordenes.length > 0 
-      ? Math.max(...data.ordenes.map(o => o.id)) + 1 
-      : 1
-    
-    // Crear orden con datos completos
-    const orderToAdd = {
-      id: newId,
-      clienteId: newOrder.clienteId,
-      servicios: newOrder.servicios,
-      detalles: newOrder.detalles,
-      total: newOrder.total,
+    // Preparar datos para inserción
+    const orderData = {
+      cliente_id: newOrder.clienteId,
+      equipo_tipo: newOrder.equipoTipo || 'No especificado',
+      equipo_marca: newOrder.equipoMarca || 'No especificado',
+      equipo_modelo: newOrder.equipoModelo || 'No especificado',
+      problema: newOrder.problema || '',
+      urgencia: newOrder.urgencia || 'Media',
+      servicios_seleccionados: newOrder.servicios || [],
+      total: parseFloat(newOrder.total) || 0,
       estado: newOrder.estado || 'Recibido',
-      fecha: newOrder.fecha,
-      fechaCreacion: new Date().toISOString(),
-      fechaModificacion: new Date().toISOString()
+      notas: newOrder.notas || ''
     }
     
-    data.ordenes.push(orderToAdd)
+    const { data, error } = await supabaseAdmin
+      .from('ordenes_servicio')
+      .insert([orderData])
+      .select(`
+        *,
+        clientes (
+          id,
+          nombre,
+          telefono,
+          direccion,
+          documento,
+          email
+        )
+      `)
     
-    // Guardar archivo
-    fs.writeFileSync(ordersFilePath, JSON.stringify(data, null, 2))
+    if (error) {
+      console.error('Error creating service order:', error)
+      return NextResponse.json(
+        { success: false, message: 'Error al crear orden de servicio' },
+        { status: 500 }
+      )
+    }
     
-    return NextResponse.json(orderToAdd, { status: 201 })
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Orden de servicio creada exitosamente',
+      order: data[0] 
+    })
   } catch (error) {
     console.error('Error creating service order:', error)
     return NextResponse.json(
-      { error: 'Error al crear orden de servicio' }, 
+      { success: false, message: 'Error al crear orden de servicio' },
       { status: 500 }
     )
   }
 }
 
-// PUT - Actualizar orden
+// PUT - Actualizar orden de servicio existente
 export async function PUT(request) {
   try {
     const updatedOrder = await request.json()
     
-    // Leer archivo actual
-    const fileContent = fs.readFileSync(ordersFilePath, 'utf-8')
-    const data = JSON.parse(fileContent)
-    
-    // Encontrar y actualizar orden
-    const orderIndex = data.ordenes.findIndex(o => o.id === updatedOrder.id)
-    if (orderIndex === -1) {
+    if (!updatedOrder.id) {
       return NextResponse.json(
-        { error: 'Orden no encontrada' }, 
+        { success: false, message: 'ID de orden requerido' },
+        { status: 400 }
+      )
+    }
+    
+    // Preparar datos para actualización
+    const orderData = {
+      cliente_id: updatedOrder.cliente_id,
+      equipo_tipo: updatedOrder.equipo_tipo || 'No especificado',
+      equipo_marca: updatedOrder.equipo_marca || 'No especificado',
+      equipo_modelo: updatedOrder.equipo_modelo || 'No especificado',
+      problema: updatedOrder.problema || '',
+      urgencia: updatedOrder.urgencia || 'Media',
+      servicios_seleccionados: updatedOrder.servicios_seleccionados || [],
+      total: parseFloat(updatedOrder.total) || 0,
+      estado: updatedOrder.estado || 'Recibido',
+      notas: updatedOrder.notas || ''
+    }
+    
+    // Si se está marcando como completado, agregar fecha
+    if (updatedOrder.estado === 'Completado') {
+      orderData.fecha_completado = new Date().toISOString()
+    }
+    
+    const { data, error } = await supabaseAdmin
+      .from('ordenes_servicio')
+      .update(orderData)
+      .eq('id', updatedOrder.id)
+      .select(`
+        *,
+        clientes (
+          id,
+          nombre,
+          telefono,
+          direccion,
+          documento,
+          email
+        )
+      `)
+    
+    if (error) {
+      console.error('Error updating service order:', error)
+      return NextResponse.json(
+        { success: false, message: 'Error al actualizar orden de servicio' },
+        { status: 500 }
+      )
+    }
+    
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { success: false, message: 'Orden de servicio no encontrada' },
         { status: 404 }
       )
     }
     
-    // Mantener datos importantes
-    data.ordenes[orderIndex] = {
-      ...data.ordenes[orderIndex],
-      ...updatedOrder,
-      fechaModificacion: new Date().toISOString()
-    }
-    
-    // Guardar archivo
-    fs.writeFileSync(ordersFilePath, JSON.stringify(data, null, 2))
-    
-    return NextResponse.json(data.ordenes[orderIndex])
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Orden de servicio actualizada exitosamente',
+      order: data[0] 
+    })
   } catch (error) {
     console.error('Error updating service order:', error)
     return NextResponse.json(
-      { error: 'Error al actualizar orden' }, 
+      { success: false, message: 'Error al actualizar orden de servicio' },
       { status: 500 }
     )
   }
 }
 
-// DELETE - Eliminar orden
+// DELETE - Eliminar orden de servicio
 export async function DELETE(request) {
   try {
     const { searchParams } = new URL(request.url)
-    const orderId = parseInt(searchParams.get('id'))
+    const orderId = searchParams.get('id')
     
-    // Leer archivo actual
-    const fileContent = fs.readFileSync(ordersFilePath, 'utf-8')
-    const data = JSON.parse(fileContent)
-    
-    // Filtrar orden a eliminar
-    const filteredOrders = data.ordenes.filter(o => o.id !== orderId)
-    
-    if (filteredOrders.length === data.ordenes.length) {
+    if (!orderId) {
       return NextResponse.json(
-        { error: 'Orden no encontrada' }, 
-        { status: 404 }
+        { success: false, message: 'ID de orden requerido' },
+        { status: 400 }
       )
     }
     
-    data.ordenes = filteredOrders
+    const { error } = await supabaseAdmin
+      .from('ordenes_servicio')
+      .delete()
+      .eq('id', orderId)
     
-    // Guardar archivo
-    fs.writeFileSync(ordersFilePath, JSON.stringify(data, null, 2))
+    if (error) {
+      console.error('Error deleting service order:', error)
+      return NextResponse.json(
+        { success: false, message: 'Error al eliminar orden de servicio' },
+        { status: 500 }
+      )
+    }
     
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Orden de servicio eliminada exitosamente'
+    })
   } catch (error) {
     console.error('Error deleting service order:', error)
     return NextResponse.json(
-      { error: 'Error al eliminar orden' }, 
+      { success: false, message: 'Error al eliminar orden de servicio' },
       { status: 500 }
     )
   }
