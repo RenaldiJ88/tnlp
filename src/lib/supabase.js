@@ -13,3 +13,4 @@ export const supabaseAdmin = typeof window === 'undefined'
       process.env.SUPABASE_SERVICE_ROLE_KEY
     )
   : null
+// Force new deployment - Thu, Aug 14, 2025  8:29:31 PM
