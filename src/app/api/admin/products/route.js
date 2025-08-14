@@ -1,19 +1,22 @@
 import { NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { supabaseAdmin } from '../../../../lib/supabase'
 
-const PRODUCTS_FILE = path.join(process.cwd(), 'src/data/products-unified.json')
+export const runtime = 'nodejs'
 
 // GET - Obtener todos los productos
 export async function GET() {
   try {
-    const fileContent = fs.readFileSync(PRODUCTS_FILE, 'utf8')
-    const data = JSON.parse(fileContent)
+    const { data: products, error } = await supabaseAdmin
+      .from('productos')
+      .select('*')
+      .order('id', { ascending: true })
     
-    // El archivo tiene estructura { "productos": [...] }
-    const products = data.productos || []
+    if (error) {
+      console.error('Error fetching products:', error)
+      return NextResponse.json([], { status: 500 })
+    }
     
-    return NextResponse.json(products)
+    return NextResponse.json(products || [])
   } catch (error) {
     console.error('Error reading products:', error)
     return NextResponse.json([], { status: 500 })
@@ -25,29 +28,33 @@ export async function POST(request) {
   try {
     const newProduct = await request.json()
     
-    // Leer productos existentes
-    const fileContent = fs.readFileSync(PRODUCTS_FILE, 'utf8')
-    const data = JSON.parse(fileContent)
-    const products = data.productos || []
+    // Preparar datos para inserción
+    const productData = {
+      title: newProduct.title,
+      description: newProduct.description,
+      price: parseFloat(newProduct.price) || 0,
+      image: newProduct.image,
+      categoria: newProduct.categoria,
+      is_offer: (newProduct.isOffer === true || newProduct.isOffer === 'true' || newProduct.isOffer === 1) ? 1 : 0
+    }
     
-    // Agregar ID único
-    const newId = Math.max(...products.map(p => parseInt(p.id) || 0)) + 1
-    newProduct.id = newId.toString()
-    newProduct.dateAdded = new Date().toISOString()
+    const { data, error } = await supabaseAdmin
+      .from('productos')
+      .insert([productData])
+      .select()
     
-    // Agregar al array
-    products.push(newProduct)
-    
-    // Actualizar estructura completa
-    data.productos = products
-    
-    // Escribir de vuelta al archivo
-    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2))
+    if (error) {
+      console.error('Error creating product:', error)
+      return NextResponse.json(
+        { success: false, message: 'Error al crear producto' },
+        { status: 500 }
+      )
+    }
     
     return NextResponse.json({ 
       success: true, 
       message: 'Producto creado exitosamente',
-      product: newProduct 
+      product: data[0] 
     })
   } catch (error) {
     console.error('Error creating product:', error)
@@ -63,35 +70,48 @@ export async function PUT(request) {
   try {
     const updatedProduct = await request.json()
     
-    // Leer productos existentes
-    const fileContent = fs.readFileSync(PRODUCTS_FILE, 'utf8')
-    const data = JSON.parse(fileContent)
-    const products = data.productos || []
+    if (!updatedProduct.id) {
+      return NextResponse.json(
+        { success: false, message: 'ID de producto requerido' },
+        { status: 400 }
+      )
+    }
     
-    // Encontrar y actualizar el producto
-    const productIndex = products.findIndex(p => p.id === updatedProduct.id)
+    // Preparar datos para actualización
+    const productData = {
+      title: updatedProduct.title,
+      description: updatedProduct.description,
+      price: parseFloat(updatedProduct.price) || 0,
+      image: updatedProduct.image,
+      categoria: updatedProduct.categoria,
+      is_offer: (updatedProduct.isOffer === true || updatedProduct.isOffer === 'true' || updatedProduct.isOffer === 1) ? 1 : 0
+    }
     
-    if (productIndex === -1) {
+    const { data, error } = await supabaseAdmin
+      .from('productos')
+      .update(productData)
+      .eq('id', updatedProduct.id)
+      .select()
+    
+    if (error) {
+      console.error('Error updating product:', error)
+      return NextResponse.json(
+        { success: false, message: 'Error al actualizar producto' },
+        { status: 500 }
+      )
+    }
+    
+    if (!data || data.length === 0) {
       return NextResponse.json(
         { success: false, message: 'Producto no encontrado' },
         { status: 404 }
       )
     }
     
-    // Actualizar con timestamp
-    updatedProduct.lastModified = new Date().toISOString()
-    products[productIndex] = updatedProduct
-    
-    // Actualizar estructura completa
-    data.productos = products
-    
-    // Escribir de vuelta al archivo
-    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2))
-    
     return NextResponse.json({ 
       success: true, 
       message: 'Producto actualizado exitosamente',
-      product: updatedProduct 
+      product: data[0] 
     })
   } catch (error) {
     console.error('Error updating product:', error)
@@ -115,26 +135,18 @@ export async function DELETE(request) {
       )
     }
     
-    // Leer productos existentes
-    const fileContent = fs.readFileSync(PRODUCTS_FILE, 'utf8')
-    const data = JSON.parse(fileContent)
-    const products = data.productos || []
+    const { error } = await supabaseAdmin
+      .from('productos')
+      .delete()
+      .eq('id', productId)
     
-    // Filtrar el producto a eliminar
-    const filteredProducts = products.filter(p => p.id !== productId)
-    
-    if (filteredProducts.length === products.length) {
+    if (error) {
+      console.error('Error deleting product:', error)
       return NextResponse.json(
-        { success: false, message: 'Producto no encontrado' },
-        { status: 404 }
+        { success: false, message: 'Error al eliminar producto' },
+        { status: 500 }
       )
     }
-    
-    // Actualizar estructura completa
-    data.productos = filteredProducts
-    
-    // Escribir de vuelta al archivo
-    fs.writeFileSync(PRODUCTS_FILE, JSON.stringify(data, null, 2))
     
     return NextResponse.json({ 
       success: true, 

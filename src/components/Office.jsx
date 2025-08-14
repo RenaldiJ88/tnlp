@@ -1,14 +1,50 @@
 "use client"; // Necesario para componentes interactivos de React en Next.js
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import data from '../data/products-unified.json'; // Archivo unificado con todos los productos
+import { supabase } from '../lib/supabase';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const Office = () => {
-    const productosData = data.productos;
+    const [productosData, setProductosData] = useState([]);
     const heroSectionRef = useRef(null);
+
+    // Cargar productos office desde Supabase
+    useEffect(() => {
+        const loadOfficeProducts = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('productos')
+                    .select('*')
+                    .eq('categoria', 'office')
+                    .order('id', { ascending: true });
+                
+                if (error) {
+                    console.error('Error loading office products:', error);
+                    setProductosData([]);
+                } else {
+                    console.log('🔍 Office - Productos encontrados:', data.length);
+                    console.log('🔍 Office - Datos crudos de Supabase:', data.slice(0, 3));
+                    console.log('🔍 Office - Primeros 3 productos:', data.slice(0, 3).map(p => ({ id: p.id, title: p.title, categoria: p.categoria })));
+                    
+                    // Mapear campos de Supabase a formato esperado
+                    const mappedProducts = data.map(product => ({
+                        ...product,
+                        isOffer: product.is_offer,
+                        lastModified: product.last_modified
+                    }));
+                    console.log('🔍 Office - Productos mapeados:', mappedProducts.slice(0, 3));
+                    setProductosData(mappedProducts);
+                }
+            } catch (error) {
+                console.error('Error loading office products:', error);
+                setProductosData([]);
+            }
+        };
+
+        loadOfficeProducts();
+    }, []);
 
     // Imágenes específicas para la cabecera de Equipos Office
     const backgroundImageURL = "/img/carrousel-equipos/bg-office.jpg"; // Fondo para Office
@@ -173,31 +209,37 @@ const Office = () => {
                     viewport={{ once: true, amount: 0.05 }} 
                 >
                     <ul className="flex flex-wrap justify-center px-10">
-                        {productosData.map((product, index) => {
-                            // Filtrar los productos por categoría "office"
-                            if (product.categoria === '1') { // Filtro por categoría '1' para Office
+                        {console.log('🔍 Office - Renderizando productos:', productosData.length)}
+                        {productosData.length === 0 ? (
+                            <div className="text-white text-center py-10">
+                                <p>No se encontraron productos office</p>
+                                <p>Productos cargados: {productosData.length}</p>
+                            </div>
+                        ) : (
+                            productosData.map((product, index) => {
+                                console.log('🔍 Office - Renderizando producto:', index, product.title);
+                                // Mostrar todos los productos ya que ya están filtrados por categoría office
                                 return (
-                                    // --- CORRECCIÓN AQUÍ: li ahora es motion.li y recibe variants ---
                                     <motion.li 
-                                        key={index} 
+                                        key={product.id || index} 
                                         className="px-5"
                                         variants={itemCardVariants}
                                     >
                                         <div className='w-80 m-12 flex '>
                                             <ProductCard
+                                                id={product.id}
                                                 title={product.title}
                                                 image={product.image}
                                                 description={product.description}
                                                 price={product.price}
                                                 isOffer={product.isOffer === 1}
+                                                categoria={product.categoria}
                                             />
                                         </div>
                                     </motion.li>
                                 );
-                            } else {
-                                return null;
-                            }
-                        })}
+                            })
+                        )}
                     </ul>
                 </motion.div>
             </section>

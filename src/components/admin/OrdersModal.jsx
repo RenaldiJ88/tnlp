@@ -83,7 +83,7 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                         Orden #{order.id}
                       </h4>
                       <p className="text-sm text-gray-600">
-                        {order.detalles.descripcionEquipo}
+                        {order.equipo_tipo}
                       </p>
                     </div>
                     <div className="text-right">
@@ -91,7 +91,7 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                         {order.estado}
                       </span>
                       <p className="text-xs text-gray-500 mt-1">
-                        {order.fecha}
+                        {order.fecha_ingreso}
                       </p>
                     </div>
                   </div>
@@ -99,17 +99,17 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                       <h5 className="font-medium text-gray-900 mb-2">Problema:</h5>
-                      <p className="text-sm text-gray-700">{order.detalles.problema}</p>
+                      <p className="text-sm text-gray-700">{order.problema}</p>
                     </div>
                     <div>
                       <h5 className="font-medium text-gray-900 mb-2">Urgencia:</h5>
                       <span className={`text-sm px-2 py-1 rounded ${
-                        order.detalles.urgencia === 'urgente' ? 'bg-red-100 text-red-800' :
-                        order.detalles.urgencia === 'alta' ? 'bg-orange-100 text-orange-800' :
-                        order.detalles.urgencia === 'normal' ? 'bg-blue-100 text-blue-800' :
+                        order.urgencia === 'urgente' ? 'bg-red-100 text-red-800' :
+                        order.urgencia === 'alta' ? 'bg-orange-100 text-orange-800' :
+                        order.urgencia === 'normal' ? 'bg-blue-100 text-blue-800' :
                         'bg-gray-100 text-gray-800'
                       }`}>
-                        {order.detalles.urgencia}
+                        {order.urgencia}
                       </span>
                     </div>
                   </div>
@@ -117,7 +117,7 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                   <div className="mb-3">
                     <h5 className="font-medium text-gray-900 mb-2">Servicios seleccionados:</h5>
                     <div className="space-y-1">
-                      {order.servicios.map((servicio, index) => (
+                      {order.servicios_seleccionados.map((servicio, index) => (
                         <div key={index} className="flex justify-between items-center text-sm">
                           <span className="text-gray-700">
                             {servicio.categoria} → {servicio.subcategoria} → {servicio.opcion}
@@ -153,10 +153,10 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                     </div>
                   </div>
 
-                  {order.detalles.notas && (
+                  {order.notas && (
                     <div className="mt-3 pt-3 border-t border-gray-100">
                       <h5 className="font-medium text-gray-900 mb-1">Notas:</h5>
-                      <p className="text-sm text-gray-700">{order.detalles.notas}</p>
+                      <p className="text-sm text-gray-700">{order.notas}</p>
                     </div>
                   )}
                 </div>
