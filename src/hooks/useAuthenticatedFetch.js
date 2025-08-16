@@ -24,6 +24,8 @@ export const useAuthenticatedFetch = () => {
       }
       
       console.log('🔐 Enviando request autenticado con token de Supabase')
+      console.log('📍 URL:', url)
+      console.log('🔑 Token:', session.access_token ? 'Presente' : 'Ausente')
       
       // Hacer la llamada con headers autenticados
       const response = await fetch(url, {
@@ -31,6 +33,41 @@ export const useAuthenticatedFetch = () => {
         headers,
         credentials: 'include'
       })
+      
+      // Log de respuesta para debugging
+      console.log('📡 Respuesta recibida:', {
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url
+      })
+      
+      // Si hay error de autorización, intentar refrescar el token
+      if (response.status === 401) {
+        console.log('🔄 Token expirado, intentando refrescar...')
+        const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession()
+        
+        if (refreshError) {
+          console.error('Error refrescando sesión:', refreshError)
+          throw new Error('Sesión expirada')
+        }
+        
+        if (refreshData.session) {
+          console.log('✅ Sesión refrescada, reintentando request...')
+          // Reintentar con el nuevo token
+          const newHeaders = {
+            ...headers,
+            'Authorization': `Bearer ${refreshData.session.access_token}`
+          }
+          
+          const retryResponse = await fetch(url, {
+            ...options,
+            headers: newHeaders,
+            credentials: 'include'
+          })
+          
+          return retryResponse
+        }
+      }
       
       return response
     } catch (error) {

@@ -1,33 +1,49 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configuración para Vercel
-  experimental: {
-    // Habilitar App Router completamente
-    appDir: true,
-  },
+  // Configuración básica
+  reactStrictMode: true,
+  swcMinify: true,
   
   // Configuración de imágenes
   images: {
-    domains: ['localhost'],
-    unoptimized: false,
+    domains: ['localhost', 'tunotebooklp.com'],
+    formats: ['image/webp', 'image/avif'],
   },
   
-  // Configuración de funciones
-  functions: {
-    // Asegurar que las funciones se generen
-    includeFiles: ['src/app/api/**/*'],
+  // Configuración de headers para APIs
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Methods', value: 'GET, POST, PUT, DELETE, OPTIONS' },
+          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
+        ],
+      },
+    ]
   },
   
-  // Configuración de build
-  output: 'standalone',
-  
-  // Configuración de trailing slash
-  trailingSlash: false,
-  
-  // Configuración de rewrites si es necesario
+  // Configuración de rewrites para APIs
   async rewrites() {
-    return [];
+    return [
+      {
+        source: '/api/admin/:path*',
+        destination: '/api/admin/:path*',
+      },
+    ]
   },
-};
+  
+  // Configuración de variables de entorno
+  env: {
+    CUSTOM_KEY: process.env.CUSTOM_KEY,
+  },
+  
+  // Configuración de webpack (opcional)
+  webpack: (config, { isServer }) => {
+    // Configuración personalizada de webpack si es necesaria
+    return config
+  },
+}
 
-export default nextConfig;
+export default nextConfig

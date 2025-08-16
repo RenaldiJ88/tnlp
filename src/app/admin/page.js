@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useAuthenticatedFetch } from '../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../lib/supabase'
@@ -22,11 +22,7 @@ export default function AdminDashboard() {
   const [serviceStats, setServiceStats] = useState([])
   const [monthlyStats, setMonthlyStats] = useState([])
 
-  useEffect(() => {
-    loadDashboardData()
-  }, [])
-
-  const loadDashboardData = async () => {
+  const loadDashboardData = useCallback(async () => {
     try {
       // Cargar clientes
       const clientsResponse = await authenticatedFetch('/api/admin/clients')
@@ -129,7 +125,11 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error loading dashboard data:', error)
     }
-  }
+  }, [authenticatedFetch])
+
+  useEffect(() => {
+    loadDashboardData()
+  }, [loadDashboardData])
 
   const StatCard = ({ title, value, icon, color = "blue" }) => (
     <motion.div
