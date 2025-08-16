@@ -68,15 +68,6 @@ export default function AdminAuthWrapper({ children }) {
           isAdmin: true
         })
         
-        // Guardar en localStorage para compatibilidad
-        localStorage.setItem('adminAuth', JSON.stringify({
-          user: {
-            username: user.email,
-            isAdmin: true
-          },
-          timestamp: Date.now()
-        }))
-        
         // Redirigir automáticamente al dashboard si está en login
         if (pathname === '/admin/login') {
           console.log('🔄 Redirigiendo al dashboard desde checkAuthStatus...')
@@ -113,7 +104,6 @@ export default function AdminAuthWrapper({ children }) {
       }
       
       setUser(null)
-      localStorage.removeItem('adminAuth')
       setTimeout(() => {
         router.push('/admin/login')
       }, 100)

@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useAuthenticatedFetch } from '../../hooks/useAuthenticatedFetch'
+import { supabase } from '../../lib/supabase'
 
 export default function AdminDashboard() {
+  const { authenticatedFetch } = useAuthenticatedFetch()
   const [stats, setStats] = useState({
     totalClientes: 0,
     totalOrdenes: 0,
@@ -26,11 +29,11 @@ export default function AdminDashboard() {
   const loadDashboardData = async () => {
     try {
       // Cargar clientes
-      const clientsResponse = await fetch('/api/admin/clients')
+      const clientsResponse = await authenticatedFetch('/api/admin/clients')
       const clients = await clientsResponse.json()
       
       // Cargar órdenes
-      const ordersResponse = await fetch('/api/admin/service-orders')
+      const ordersResponse = await authenticatedFetch('/api/admin/service-orders')
       const orders = await ordersResponse.json()
 
       // Calcular estadísticas

@@ -55,16 +55,6 @@ export default function AdminLogin() {
       if (data.user) {
         console.log('✅ Login exitoso con Supabase:', data.user)
         
-        // Guardar en localStorage para compatibilidad
-        localStorage.setItem('adminAuth', JSON.stringify({
-          user: {
-            username: data.user.email,
-            isAdmin: true
-          },
-          token: data.session.access_token,
-          timestamp: Date.now()
-        }))
-        
         // Redirigir al admin
         router.push('/admin')
       }
