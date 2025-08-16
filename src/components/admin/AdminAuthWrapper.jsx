@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { supabase } from '../supabase'
 import AdminSidebar from './AdminSidebar'
 import AdminHeader from './AdminHeader'
 
@@ -13,73 +14,64 @@ export default function AdminAuthWrapper({ children }) {
 
   useEffect(() => {
     checkAuthStatus()
-  }, [])
+    
+    // Escuchar cambios de autenticación de Supabase
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('🔍 Auth state change:', event, session?.user?.email)
+        
+        if (event === 'SIGNED_IN' && session?.user) {
+          console.log('✅ Usuario autenticado:', session.user.email)
+          setUser({
+            username: session.user.email,
+            isAdmin: true
+          })
+        } else if (event === 'SIGNED_OUT') {
+          console.log('❌ Usuario desconectado')
+          setUser(null)
+          router.push('/admin/login')
+        }
+      }
+    )
+
+    return () => subscription.unsubscribe()
+  }, [router])
 
   const checkAuthStatus = async () => {
     try {
-      console.log('🔍 AdminAuthWrapper: Verificando autenticación...')
+      console.log('🔍 AdminAuthWrapper: Verificando autenticación con Supabase...')
       console.log('📍 Ruta actual:', pathname)
       
-      // Debug: verificar cookies y localStorage
-      if (typeof window !== 'undefined') {
-        console.log('🍪 Cookies disponibles:', document.cookie)
-        console.log('📦 LocalStorage:', localStorage.getItem('adminAuth'))
+      const { data: { user }, error } = await supabase.auth.getUser()
+      
+      if (error) {
+        console.error('❌ Error al verificar usuario:', error)
+        setUser(null)
+        if (pathname !== '/admin/login') {
+          router.push('/admin/login')
+        }
+        return
       }
       
-      const response = await fetch('/api/auth/login', {
-        method: 'GET',
-        credentials: 'include', // ¡Esto es clave para enviar cookies!
-        cache: 'no-store'
-      })
-      console.log('📡 Response status:', response.status)
-      
-      const data = await response.json()
-      console.log('📄 Response data:', data)
-      
-      if (data.success) {
-        console.log('✅ Usuario autenticado:', data.user)
+      if (user) {
+        console.log('✅ Usuario autenticado con Supabase:', user.email)
+        setUser({
+          username: user.email,
+          isAdmin: true
+        })
         
-        // Guardar token en localStorage para usar en APIs
-        if (typeof window !== 'undefined') {
-          const authData = {
-            user: data.user,
-            token: data.token || 'auth_token_placeholder', // Token del backend
-            timestamp: Date.now()
-          }
-          localStorage.setItem('adminAuth', JSON.stringify(authData))
-        }
-        
-        setUser(data.user)
+        // Guardar en localStorage para compatibilidad
+        localStorage.setItem('adminAuth', JSON.stringify({
+          user: {
+            username: user.email,
+            isAdmin: true
+          },
+          timestamp: Date.now()
+        }))
       } else {
-        console.log('❌ No autenticado:', data.error)
-        
-        // Fallback: verificar localStorage
-        if (typeof window !== 'undefined') {
-          const localAuth = localStorage.getItem('adminAuth')
-          if (localAuth) {
-            try {
-              const authData = JSON.parse(localAuth)
-              const isRecent = (Date.now() - authData.timestamp) < (24 * 60 * 60 * 1000) // 24 horas
-              
-              if (isRecent && authData.user) {
-                console.log('📦 Usando autenticación desde localStorage:', authData.user)
-                setUser(authData.user)
-                return
-              } else {
-                console.log('📦 LocalStorage expirado, limpiando...')
-                localStorage.removeItem('adminAuth')
-              }
-            } catch (e) {
-              console.log('📦 Error al leer localStorage, limpiando...')
-              localStorage.removeItem('adminAuth')
-            }
-          }
-        }
-        
+        console.log('❌ No hay usuario autenticado')
         setUser(null)
-        // Solo redirigir si no está en la página de login
         if (pathname !== '/admin/login') {
-          console.log('🔄 Redirigiendo a login...')
           router.push('/admin/login')
         }
       }
@@ -97,11 +89,15 @@ export default function AdminAuthWrapper({ children }) {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', { 
-        method: 'POST',
-        credentials: 'include'
-      })
+      console.log('🚪 Cerrando sesión...')
+      const { error } = await supabase.auth.signOut()
+      
+      if (error) {
+        console.error('Error en logout:', error)
+      }
+      
       setUser(null)
+      localStorage.removeItem('adminAuth')
       router.push('/admin/login')
     } catch (error) {
       console.error('Logout error:', error)
@@ -118,18 +114,6 @@ export default function AdminAuthWrapper({ children }) {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
           <p className="text-gray-600">Verificando autenticación...</p>
           <p className="text-gray-400 text-sm mt-2">Ruta: {pathname}</p>
-          {process.env.NODE_ENV === 'development' && (
-            <button 
-              onClick={() => {
-                console.log('🔄 Forzando recarga de auth...')
-                setLoading(false)
-                setUser({ username: 'tnlp-admin', isAdmin: true })
-              }}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              🛠️ Debug: Saltar autenticación
-            </button>
-          )}
         </div>
       </div>
     )
@@ -141,7 +125,6 @@ export default function AdminAuthWrapper({ children }) {
   }
 
   // Si no está autenticado y no está en login, no mostrar nada
-  // (el middleware ya debería haber redirigido)
   if (!user) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">

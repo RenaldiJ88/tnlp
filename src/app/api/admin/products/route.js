@@ -1,7 +1,38 @@
 import { NextResponse } from 'next/server'
-import { supabaseAdmin } from '../../../../lib/supabase.js'
+import { createClient } from '@supabase/supabase-js'
 
 export const runtime = 'nodejs'
+
+// Crear cliente Supabase con service_role para operaciones admin
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+)
+
+// Función para validar token de Supabase
+async function validateSupabaseToken(request) {
+  try {
+    const authHeader = request.headers.get('authorization')
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return { valid: false, error: 'Token no proporcionado' }
+    }
+    
+    const token = authHeader.replace('Bearer ', '')
+    
+    // Verificar el token con Supabase
+    const { data: { user }, error } = await supabaseAdmin.auth.getUser(token)
+    
+    if (error || !user) {
+      return { valid: false, error: 'Token inválido' }
+    }
+    
+    return { valid: true, user }
+  } catch (error) {
+    console.error('Error validando token:', error)
+    return { valid: false, error: 'Error validando token' }
+  }
+}
 
 // GET - Obtener todos los productos
 export async function GET() {
@@ -26,6 +57,16 @@ export async function GET() {
 // POST - Crear nuevo producto
 export async function POST(request) {
   try {
+    // Validar token de Supabase
+    const { valid, error: authError } = await validateSupabaseToken(request)
+    
+    if (!valid) {
+      return NextResponse.json(
+        { success: false, message: 'No autorizado', error: authError },
+        { status: 401 }
+      )
+    }
+    
     const newProduct = await request.json()
     
     // Preparar datos para inserción
@@ -68,6 +109,16 @@ export async function POST(request) {
 // PUT - Actualizar producto existente
 export async function PUT(request) {
   try {
+    // Validar token de Supabase
+    const { valid, error: authError } = await validateSupabaseToken(request)
+    
+    if (!valid) {
+      return NextResponse.json(
+        { success: false, message: 'No autorizado', error: authError },
+        { status: 401 }
+      )
+    }
+    
     const updatedProduct = await request.json()
     
     if (!updatedProduct.id) {
@@ -125,6 +176,16 @@ export async function PUT(request) {
 // DELETE - Eliminar producto
 export async function DELETE(request) {
   try {
+    // Validar token de Supabase
+    const { valid, error: authError } = await validateSupabaseToken(request)
+    
+    if (!valid) {
+      return NextResponse.json(
+        { success: false, message: 'No autorizado', error: authError },
+        { status: 401 }
+      )
+    }
+    
     const { searchParams } = new URL(request.url)
     const productId = searchParams.get('id')
     
