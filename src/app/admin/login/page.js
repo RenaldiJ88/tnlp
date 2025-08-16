@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { supabase } from '../../../lib/supabase'
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   })
   const [loading, setLoading] = useState(false)
@@ -21,8 +22,8 @@ export default function AdminLogin() {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await fetch('/api/auth/login')
-      if (response.ok) {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
         // Ya está autenticado, redirigir al admin
         router.push('/admin')
       }
@@ -38,39 +39,34 @@ export default function AdminLogin() {
     setError('')
 
     try {
-      console.log('🔍 Enviando login:', formData)
+      console.log('🔍 Enviando login a Supabase:', formData)
       
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include', // Importante para recibir cookies
-        body: JSON.stringify(formData)
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
       })
 
-      console.log('📡 Response status:', response.status)
-      const data = await response.json()
-      console.log('📄 Response data:', data)
+      if (error) {
+        console.log('❌ Login fallido:', error.message)
+        setError(error.message || 'Error al iniciar sesión')
+        return
+      }
 
-      if (data.success) {
-        console.log('✅ Login exitoso, redirigiendo...')
+      if (data.user) {
+        console.log('✅ Login exitoso con Supabase:', data.user)
         
-        // Como respaldo, guardar también en localStorage
+        // Guardar en localStorage para compatibilidad
         localStorage.setItem('adminAuth', JSON.stringify({
-          user: data.user,
+          user: {
+            username: data.user.email,
+            isAdmin: true
+          },
+          token: data.session.access_token,
           timestamp: Date.now()
         }))
         
-        // Debug: verificar cookies después del login
-        setTimeout(() => {
-          console.log('🍪 Cookies disponibles después del login:', document.cookie)
-          console.log('📦 LocalStorage establecido:', localStorage.getItem('adminAuth'))
-          window.location.href = '/admin'
-        }, 500)
-      } else {
-        console.log('❌ Login fallido:', data.error)
-        setError(data.error || 'Error al iniciar sesión')
+        // Redirigir al admin
+        router.push('/admin')
       }
     } catch (error) {
       console.error('Login error:', error)
@@ -135,24 +131,24 @@ export default function AdminLogin() {
               </motion.div>
             )}
 
-            {/* Username field */}
+            {/* Email field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Usuario
+                Email
               </label>
               <div className="relative">
                 <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
+                  type="email"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pl-12"
-                  placeholder="Ingresa tu usuario"
-                  autoComplete="username"
+                  placeholder="Ingresa tu email"
+                  autoComplete="email"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-400 text-lg">👤</span>
+                  <span className="text-gray-400 text-lg">📧</span>
                 </div>
               </div>
             </div>
@@ -220,11 +216,10 @@ export default function AdminLogin() {
               className="mt-6 p-4 bg-gray-50 rounded-lg border-l-4 border-blue-500"
             >
               <p className="text-xs text-gray-600 font-medium mb-1">
-                🔧 Modo Desarrollo
+                🔧 Modo Desarrollo - Supabase Auth
               </p>
               <p className="text-xs text-gray-500">
-                Usuario: <code className="bg-white px-1 rounded">tnlp-admin</code><br />
-                Contraseña: <code className="bg-white px-1 rounded">TNLP@2024LaPlata</code>
+                Usa el email y contraseña que creaste en Supabase
               </p>
             </motion.div>
           )}
