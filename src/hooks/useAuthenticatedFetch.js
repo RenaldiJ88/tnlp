@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { supabase } from '../supabase'
+import { supabase } from '../lib/supabase'
 
 export const useAuthenticatedFetch = () => {
   const authenticatedFetch = useCallback(async (url, options = {}) => {

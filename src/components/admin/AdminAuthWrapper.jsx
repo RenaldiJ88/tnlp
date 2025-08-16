@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { supabase } from '../supabase'
+import { supabase } from '../../supabase'
 import AdminSidebar from './AdminSidebar'
 import AdminHeader from './AdminHeader'
 
