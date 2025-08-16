@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 // Hook personalizado para tracking avanzado
 export const useAnalytics = () => {
@@ -24,7 +24,7 @@ export const useAnalytics = () => {
   };
 
   // Tracking de scroll profundo
-  const trackScrollDepth = () => {
+  const trackScrollDepth = useCallback(() => {
     let maxScroll = 0;
     const intervals = [25, 50, 75, 90];
     const tracked = new Set();
@@ -52,10 +52,10 @@ export const useAnalytics = () => {
     };
 
     return handleScroll;
-  };
+  }, [trackEvent]);
 
   // Tracking de tiempo en página
-  const trackTimeOnPage = () => {
+  const trackTimeOnPage = useCallback(() => {
     const startTime = Date.now();
     const intervals = [30, 60, 120, 300]; // 30s, 1m, 2m, 5m
     const tracked = new Set();
@@ -78,7 +78,7 @@ export const useAnalytics = () => {
 
     const timer = setInterval(checkTimeOnPage, 10000); // Check every 10s
     return () => clearInterval(timer);
-  };
+  }, [trackEvent]);
 
   // Tracking de clics fuera del sitio
   const trackExternalLink = (url, context = '') => {

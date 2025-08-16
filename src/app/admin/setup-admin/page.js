@@ -53,8 +53,8 @@ export default function SetupAdmin() {
       // Crear política simple
       const { error: policyError } = await supabase.rpc('exec_sql', {
         sql: `
-          DROP POLICY IF EXISTS "Allow all operations for now" ON user_roles;
-          CREATE POLICY "Allow all operations for now" ON user_roles
+          DROP POLICY IF EXISTS 'Allow all operations for now' ON user_roles;
+          CREATE POLICY 'Allow all operations for now' ON user_roles
             FOR ALL USING (true);
         `
       })
