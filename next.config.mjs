@@ -10,7 +10,7 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
   },
   
-  // Configuración de headers para APIs
+  // Configuración de headers para APIs (CORS)
   async headers() {
     return [
       {
@@ -28,22 +28,17 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/admin/:path*',
-        destination: '/api/admin/:path*',
+        source: '/api/:path*',
+        destination: '/api/:path*',
       },
     ]
   },
   
-  // Configuración de variables de entorno
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
+  // Configuración para Vercel
+  output: 'standalone',
   
-  // Configuración de webpack (opcional)
-  webpack: (config, { isServer }) => {
-    // Configuración personalizada de webpack si es necesaria
-    return config
-  },
+  // Configuración de trailing slash
+  trailingSlash: false,
 }
 
 export default nextConfig
