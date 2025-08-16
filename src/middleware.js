@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server'
 
 export function middleware(request) {
+  // TEMPORALMENTE DESHABILITADO PARA SUPABASE AUTH
+  // TODO: Implementar verificación de Supabase JWT en el futuro
+  
+  // Por ahora, permitir todas las rutas
+  return NextResponse.next()
+  
+  /*
   const { pathname } = request.nextUrl
 
   // Aplicar middleware SOLO a rutas admin (páginas), NO a APIs por ahora
@@ -37,6 +44,7 @@ export function middleware(request) {
 
   // Para todas las demás rutas (incluyendo APIs), continuar sin verificación
   return NextResponse.next()
+  */
 }
 
 export const config = {
