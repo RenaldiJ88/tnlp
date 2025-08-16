@@ -135,10 +135,26 @@ export async function DELETE(request) {
       )
     }
     
-    const { error } = await supabaseAdmin
+    // Primero verificar que el producto existe
+    const { data: existingProduct, error: checkError } = await supabaseAdmin
+      .from('productos')
+      .select('id')
+      .eq('id', productId)
+      .single()
+    
+    if (checkError || !existingProduct) {
+      return NextResponse.json(
+        { success: false, message: 'Producto no encontrado' },
+        { status: 404 }
+      )
+    }
+    
+    // Intentar eliminar el producto
+    const { data: deletedProduct, error } = await supabaseAdmin
       .from('productos')
       .delete()
       .eq('id', productId)
+      .select()
     
     if (error) {
       console.error('Error deleting product:', error)
@@ -148,9 +164,21 @@ export async function DELETE(request) {
       )
     }
     
+    // Verificar que realmente se eliminó
+    if (!deletedProduct || deletedProduct.length === 0) {
+      console.error('Producto no se eliminó de la base de datos')
+      return NextResponse.json(
+        { success: false, message: 'No se pudo eliminar el producto' },
+        { status: 500 }
+      )
+    }
+    
+    console.log('Producto eliminado exitosamente:', deletedProduct[0])
+    
     return NextResponse.json({ 
       success: true, 
-      message: 'Producto eliminado exitosamente'
+      message: 'Producto eliminado exitosamente',
+      deletedProduct: deletedProduct[0]
     })
   } catch (error) {
     console.error('Error deleting product:', error)

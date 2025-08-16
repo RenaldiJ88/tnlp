@@ -3,8 +3,9 @@ import { NextResponse } from 'next/server'
 export function middleware(request) {
   const { pathname } = request.nextUrl
 
-  // Solo aplicar middleware a rutas admin (excepto login)
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  // Aplicar middleware a rutas admin Y rutas de API admin
+  if ((pathname.startsWith('/admin') && pathname !== '/admin/login') || 
+      pathname.startsWith('/api/admin')) {
     
     // Obtener token de la cookie
     const token = request.cookies.get('adminToken')?.value
@@ -42,12 +43,16 @@ export function middleware(request) {
 export const config = {
   matcher: [
     /*
-     * Aplicar middleware a todas las rutas admin excepto:
-     * - api routes
+     * Aplicar middleware a todas las rutas admin Y rutas de API admin:
+     * - /admin/* (páginas admin)
+     * - /api/admin/* (APIs admin)
+     * Excluir:
+     * - /admin/login
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/admin/:path*'
+    '/admin/:path*',
+    '/api/admin/:path*'
   ]
 }
