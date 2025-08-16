@@ -2,6 +2,7 @@ import { Roboto, Inter, Orbitron} from 'next/font/google'
 import './globals.css'
 import { GoogleAnalytics } from '../components/Analytics'
 import { MicrosoftClarity } from '../components/Clarity'
+import { SupabaseAuthProvider } from '../hooks/useSupabaseAuth'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -33,9 +34,11 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="/img/favicon.ico" />
       </head>
       <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>
-        <GoogleAnalytics />
-        <MicrosoftClarity />
-        {children}
+        <SupabaseAuthProvider>
+          <GoogleAnalytics />
+          <MicrosoftClarity />
+          {children}
+        </SupabaseAuthProvider>
       </body>
     </html>
   )

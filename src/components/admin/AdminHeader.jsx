@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useSupabaseAuth } from '../../hooks/useSupabaseAuth'
 
-export default function AdminHeader({ user, onLogout }) {
+export default function AdminHeader({ user }) {
   const [showUserMenu, setShowUserMenu] = useState(false)
+  const { logout } = useSupabaseAuth()
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
@@ -63,7 +65,7 @@ export default function AdminHeader({ user, onLogout }) {
                 <button
                   onClick={() => {
                     setShowUserMenu(false)
-                    onLogout()
+                    logout()
                   }}
                   className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                 >

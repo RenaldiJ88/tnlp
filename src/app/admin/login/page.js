@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { supabase } from '../../../lib/supabase'
+import { useSupabaseAuth } from '../../../hooks/useSupabaseAuth'
 
 export default function AdminLogin() {
   const [formData, setFormData] = useState({
@@ -14,24 +14,15 @@ export default function AdminLogin() {
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const { user, login, isAuthenticated } = useSupabaseAuth()
 
   // Verificar si ya está autenticado
   useEffect(() => {
-    checkAuthStatus()
-  }, [])
-
-  const checkAuthStatus = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        // Ya está autenticado, redirigir al admin
-        router.push('/admin')
-      }
-    } catch (error) {
-      // No está autenticado, continuar con login
-      console.log('No authenticated')
+    if (isAuthenticated && user) {
+      console.log('✅ Usuario ya autenticado, redirigiendo...')
+      router.push('/admin')
     }
-  }
+  }, [isAuthenticated, user, router])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -41,23 +32,16 @@ export default function AdminLogin() {
     try {
       console.log('🔍 Enviando login a Supabase:', formData)
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password
-      })
+      const result = await login(formData.email, formData.password)
 
-      if (error) {
-        console.log('❌ Login fallido:', error.message)
-        setError(error.message || 'Error al iniciar sesión')
+      if (!result.success) {
+        setError(result.error || 'Error al iniciar sesión')
         return
       }
 
-      if (data.user) {
-        console.log('✅ Login exitoso con Supabase:', data.user)
-        
-        // Redirigir al admin
-        router.push('/admin')
-      }
+      console.log('✅ Login exitoso con Supabase:', result.user)
+      // La redirección se manejará automáticamente por el useEffect
+      
     } catch (error) {
       console.error('Login error:', error)
       setError('Error de conexión. Intenta nuevamente.')

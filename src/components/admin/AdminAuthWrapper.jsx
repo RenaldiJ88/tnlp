@@ -1,120 +1,29 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { supabase } from '../../lib/supabase'
+import { useSupabaseAuth } from '../../hooks/useSupabaseAuth'
 import AdminSidebar from './AdminSidebar'
 import AdminHeader from './AdminHeader'
 
 export default function AdminAuthWrapper({ children }) {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const { user, loading, isAuthenticated } = useSupabaseAuth()
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
-    checkAuthStatus()
+    // Redirigir automáticamente al dashboard si está autenticado y en login
+    if (isAuthenticated && user && pathname === '/admin/login') {
+      console.log('🔄 Usuario autenticado, redirigiendo al dashboard...')
+      router.push('/admin')
+    }
     
-    // Escuchar cambios de autenticación de Supabase
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('🔍 Auth state change:', event, session?.user?.email)
-        
-        if (event === 'SIGNED_IN' && session?.user) {
-          console.log('✅ Usuario autenticado:', session.user.email)
-          setUser({
-            username: session.user.email,
-            isAdmin: true
-          })
-          
-          // Redirigir automáticamente al dashboard si está en login
-          if (pathname === '/admin/login') {
-            console.log('🔄 Redirigiendo al dashboard...')
-            setTimeout(() => {
-              router.push('/admin')
-            }, 100)
-          }
-        } else if (event === 'SIGNED_OUT') {
-          console.log('❌ Usuario desconectado')
-          setUser(null)
-          router.push('/admin/login')
-        }
-      }
-    )
-
-    return () => subscription.unsubscribe()
-  }, [router])
-
-  const checkAuthStatus = async () => {
-    try {
-      console.log('🔍 AdminAuthWrapper: Verificando autenticación con Supabase...')
-      console.log('📍 Ruta actual:', pathname)
-      
-      const { data: { user }, error } = await supabase.auth.getUser()
-      
-      if (error) {
-        console.error('❌ Error al verificar usuario:', error)
-        setUser(null)
-        if (pathname !== '/admin/login') {
-          router.push('/admin/login')
-        }
-        return
-      }
-      
-      if (user) {
-        console.log('✅ Usuario autenticado con Supabase:', user.email)
-        setUser({
-          username: user.email,
-          isAdmin: true
-        })
-        
-        // Redirigir automáticamente al dashboard si está en login
-        if (pathname === '/admin/login') {
-          console.log('🔄 Redirigiendo al dashboard desde checkAuthStatus...')
-          setTimeout(() => {
-            router.push('/admin')
-          }, 100)
-        }
-      } else {
-        console.log('❌ No hay usuario autenticado')
-        setUser(null)
-        if (pathname !== '/admin/login') {
-          router.push('/admin/login')
-        }
-      }
-    } catch (error) {
-      console.error('Auth check error:', error)
-      setUser(null)
-      if (pathname !== '/admin/login') {
-        router.push('/admin/login')
-      }
-    } finally {
-      console.log('🏁 Verificación completada, loading = false')
-      setLoading(false)
+    // Redirigir al login si no está autenticado y no está en login
+    if (!loading && !isAuthenticated && pathname !== '/admin/login') {
+      console.log('🔒 Usuario no autenticado, redirigiendo al login...')
+      router.push('/admin/login')
     }
-  }
-
-  const handleLogout = async () => {
-    try {
-      console.log('🚪 Cerrando sesión...')
-      const { error } = await supabase.auth.signOut()
-      
-      if (error) {
-        console.error('Error en logout:', error)
-      }
-      
-      setUser(null)
-      setTimeout(() => {
-        router.push('/admin/login')
-      }, 100)
-    } catch (error) {
-      console.error('Logout error:', error)
-      setUser(null)
-      setTimeout(() => {
-        router.push('/admin/login')
-      }, 100)
-    }
-  }
+  }, [isAuthenticated, user, loading, pathname, router])
 
   // Mostrar loading mientras verifica autenticación
   if (loading) {
@@ -135,7 +44,7 @@ export default function AdminAuthWrapper({ children }) {
   }
 
   // Si no está autenticado y no está en login, no mostrar nada
-  if (!user) {
+  if (!isAuthenticated || !user) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
@@ -153,6 +62,12 @@ export default function AdminAuthWrapper({ children }) {
     )
   }
 
+  // Formatear el usuario para el AdminHeader
+  const formattedUser = {
+    username: user.email,
+    isAdmin: true
+  }
+
   // Usuario autenticado, mostrar layout admin completo
   return (
     <div className="min-h-screen bg-gray-100">
@@ -162,7 +77,7 @@ export default function AdminAuthWrapper({ children }) {
         
         {/* Main Content */}
         <div className="flex-1 flex flex-col lg:ml-0">
-          <AdminHeader user={user} onLogout={handleLogout} />
+          <AdminHeader user={formattedUser} />
           
           {/* Page Content */}
           <main className="flex-1 p-3 sm:p-4 md:p-6 bg-gray-50">

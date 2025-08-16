@@ -8,6 +8,7 @@ import { supabase } from '../../lib/supabase'
 
 // Modal para editar orden de servicio
 export default function EditOrderModal({ order, client, serviceOptions, onClose, onSave }) {
+  const { authenticatedFetch } = useAuthenticatedFetch()
   const [selectedServices, setSelectedServices] = useState(order.servicios_seleccionados || [])
   const [orderDetails, setOrderDetails] = useState({
     descripcionEquipo: order.equipo_tipo || '',
@@ -62,7 +63,7 @@ export default function EditOrderModal({ order, client, serviceOptions, onClose,
         total: totalEstimado
       }
 
-      const response = await fetch('/api/admin/service-orders', {
+      const response = await authenticatedFetch(`/api/admin/service-orders/${order.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
