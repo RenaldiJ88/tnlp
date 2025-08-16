@@ -30,7 +30,7 @@ export default function AdminAuthWrapper({ children }) {
           // Redirigir automáticamente al dashboard si está en login
           if (pathname === '/admin/login') {
             console.log('🔄 Redirigiendo al dashboard...')
-            window.location.href = '/admin'
+            router.replace('/admin')
           }
         } else if (event === 'SIGNED_OUT') {
           console.log('❌ Usuario desconectado')
@@ -78,7 +78,7 @@ export default function AdminAuthWrapper({ children }) {
         // Redirigir automáticamente al dashboard si está en login
         if (pathname === '/admin/login') {
           console.log('🔄 Redirigiendo al dashboard desde checkAuthStatus...')
-          window.location.href = '/admin'
+          router.replace('/admin')
         }
       } else {
         console.log('❌ No hay usuario autenticado')
@@ -110,11 +110,11 @@ export default function AdminAuthWrapper({ children }) {
       
       setUser(null)
       localStorage.removeItem('adminAuth')
-      window.location.href = '/admin/login'
+      router.replace('/admin/login')
     } catch (error) {
       console.error('Logout error:', error)
       setUser(null)
-      window.location.href = '/admin/login'
+      router.replace('/admin/login')
     }
   }
 
