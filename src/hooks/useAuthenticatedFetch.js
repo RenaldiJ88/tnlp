@@ -1,38 +1,42 @@
 import { useCallback } from 'react'
+import { supabase } from '../lib/supabase'
 
 export const useAuthenticatedFetch = () => {
   const authenticatedFetch = useCallback(async (url, options = {}) => {
-    // Obtener el token del localStorage
-    const adminAuth = localStorage.getItem('adminAuth')
-    let token = null
-    
-    if (adminAuth) {
-      try {
-        const authData = JSON.parse(adminAuth)
-        token = authData.token || authData.adminToken
-      } catch (e) {
-        console.error('Error parsing adminAuth:', e)
+    try {
+      // Obtener la sesión actual de Supabase
+      const { data: { session }, error } = await supabase.auth.getSession()
+      
+      if (error) {
+        console.error('Error obteniendo sesión:', error)
+        throw new Error('No hay sesión válida')
       }
+      
+      if (!session) {
+        throw new Error('Usuario no autenticado')
+      }
+      
+      // Configurar headers con el token de Supabase
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+        ...options.headers
+      }
+      
+      console.log('🔐 Enviando request autenticado con token de Supabase')
+      
+      // Hacer la llamada con headers autenticados
+      const response = await fetch(url, {
+        ...options,
+        headers,
+        credentials: 'include'
+      })
+      
+      return response
+    } catch (error) {
+      console.error('Error en authenticatedFetch:', error)
+      throw error
     }
-    
-    // Configurar headers con autenticación
-    const headers = {
-      'Content-Type': 'application/json',
-      ...options.headers
-    }
-    
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`
-    }
-    
-    // Hacer la llamada con headers autenticados
-    const response = await fetch(url, {
-      ...options,
-      headers,
-      credentials: 'include'
-    })
-    
-    return response
   }, [])
   
   return { authenticatedFetch }
