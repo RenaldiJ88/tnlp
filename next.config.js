@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configuración básica
+  // Configuración básica para Next.js 13+
   reactStrictMode: true,
   swcMinify: true,
   
@@ -10,7 +10,7 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
   },
   
-  // Configuración de headers para APIs (CORS)
+  // Configuración de headers para CORS (solo si es necesario)
   async headers() {
     return [
       {
@@ -23,22 +23,6 @@ const nextConfig = {
       },
     ]
   },
-  
-  // Configuración de rewrites para APIs
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/api/:path*',
-      },
-    ]
-  },
-  
-  // Configuración para Vercel
-  output: 'standalone',
-  
-  // Configuración de trailing slash
-  trailingSlash: false,
 }
 
-export default nextConfig
+module.exports = nextConfig

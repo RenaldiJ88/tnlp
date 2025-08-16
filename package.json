@@ -9,7 +9,6 @@
     "lint": "next lint",
     "migrate": "node scripts/migrate-to-supabase.js"
   },
-  "type": "module",
   "dependencies": {
     "@material-tailwind/react": "^2.1.9",
     "@supabase/supabase-js": "^2.55.0",

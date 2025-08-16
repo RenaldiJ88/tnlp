@@ -21,12 +21,6 @@ Thumbs.db
 # Archivos de IDE
 .vscode/
 .idea/
-*.swp
-*.swo
-
-# Archivos de git
-.git/
-.gitignore
 
 # Archivos de documentación
 README.md
@@ -34,6 +28,3 @@ README.md
 
 # Scripts de migración
 scripts/
-
-# Archivos de configuración local
-jsconfig.json
