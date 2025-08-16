@@ -38,6 +38,17 @@ export default function AdminAuthWrapper({ children }) {
       
       if (data.success) {
         console.log('✅ Usuario autenticado:', data.user)
+        
+        // Guardar token en localStorage para usar en APIs
+        if (typeof window !== 'undefined') {
+          const authData = {
+            user: data.user,
+            token: data.token || 'auth_token_placeholder', // Token del backend
+            timestamp: Date.now()
+          }
+          localStorage.setItem('adminAuth', JSON.stringify(authData))
+        }
+        
         setUser(data.user)
       } else {
         console.log('❌ No autenticado:', data.error)
