@@ -26,6 +26,12 @@ export default function AdminAuthWrapper({ children }) {
             username: session.user.email,
             isAdmin: true
           })
+          
+          // Redirigir automáticamente al dashboard si está en login
+          if (pathname === '/admin/login') {
+            console.log('🔄 Redirigiendo al dashboard...')
+            router.push('/admin')
+          }
         } else if (event === 'SIGNED_OUT') {
           console.log('❌ Usuario desconectado')
           setUser(null)
@@ -68,6 +74,12 @@ export default function AdminAuthWrapper({ children }) {
           },
           timestamp: Date.now()
         }))
+        
+        // Redirigir automáticamente al dashboard si está en login
+        if (pathname === '/admin/login') {
+          console.log('🔄 Redirigiendo al dashboard desde checkAuthStatus...')
+          router.push('/admin')
+        }
       } else {
         console.log('❌ No hay usuario autenticado')
         setUser(null)
