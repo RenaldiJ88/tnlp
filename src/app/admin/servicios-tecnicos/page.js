@@ -5,8 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ServiceCategoryCard from '../../../components/admin/ServiceCategoryCard'
 import OrdersModal from '../../../components/admin/OrdersModal'
 import EditOrderModal from '../../../components/admin/EditOrderModal'
+import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
+import { supabase } from '../../../lib/supabase'
 
 export default function ServiciosTecnicosAdmin() {
+  const { authenticatedFetch } = useAuthenticatedFetch()
   const [clients, setClients] = useState([])
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
@@ -62,7 +65,7 @@ export default function ServiciosTecnicosAdmin() {
   const loadClients = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/admin/clients')
+      const response = await authenticatedFetch('/api/admin/clients')
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -81,7 +84,7 @@ export default function ServiciosTecnicosAdmin() {
 
   const loadOrders = async () => {
     try {
-      const response = await fetch('/api/admin/service-orders')
+      const response = await authenticatedFetch('/api/admin/service-orders')
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -101,7 +104,7 @@ export default function ServiciosTecnicosAdmin() {
     }
 
     try {
-      const response = await fetch(`/api/admin/clients?id=${clientId}`, {
+      const response = await authenticatedFetch(`/api/admin/clients?id=${clientId}`, {
         method: 'DELETE'
       })
       
@@ -390,7 +393,7 @@ function ClientModal({ client, onClose, onSave }) {
       const url = '/api/admin/clients'
       const method = isEditing ? 'PUT' : 'POST'
       
-      const response = await fetch(url, {
+      const response = await authenticatedFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -562,7 +565,7 @@ function ServiceModal({ client, serviceOptions, onClose, onSave }) {
         fecha: new Date().toISOString().split('T')[0]
       }
 
-      const response = await fetch('/api/admin/service-orders', {
+      const response = await authenticatedFetch('/api/admin/service-orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)

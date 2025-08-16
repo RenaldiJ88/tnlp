@@ -1,11 +1,35 @@
 "use client";
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useAuthenticatedFetch } from '../../hooks/useAuthenticatedFetch'
+import { supabase } from '../../lib/supabase'
 
 // Modal para ver órdenes de un cliente
-export default function OrdersModal({ client, orders, onClose, onOrderDeleted, onEditOrder }) {
+export default function OrdersModal({ isOpen, onClose, clientId, clientName }) {
+  const { authenticatedFetch } = useAuthenticatedFetch()
+  const [orders, setOrders] = useState([])
   const [deletingOrderId, setDeletingOrderId] = useState(null)
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await authenticatedFetch(`/api/admin/service-orders?client_id=${clientId}`)
+        if (response.ok) {
+          const data = await response.json()
+          setOrders(data)
+        } else {
+          console.error('Error fetching orders:', response.status)
+          alert('Error al cargar las órdenes')
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error)
+        alert('Error al cargar las órdenes')
+      }
+    }
+
+    fetchOrders()
+  }, [clientId, authenticatedFetch])
 
   const handleDeleteOrder = async (orderId) => {
     if (!confirm('¿Estás seguro de que quieres eliminar esta orden?')) {
@@ -14,13 +38,18 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
 
     try {
       setDeletingOrderId(orderId)
-      const response = await fetch(`/api/admin/service-orders?id=${orderId}`, {
+      const response = await authenticatedFetch(`/api/admin/service-orders?id=${orderId}`, {
         method: 'DELETE'
       })
 
       if (response.ok) {
         alert('Orden eliminada exitosamente')
-        onOrderDeleted()
+        // Re-fetch orders to update the list
+        const response = await authenticatedFetch(`/api/admin/service-orders?client_id=${clientId}`)
+        if (response.ok) {
+          const data = await response.json()
+          setOrders(data)
+        }
       } else {
         alert('Error al eliminar orden')
       }
@@ -53,7 +82,7 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
           <div className="flex justify-between items-center mb-6">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Órdenes de Trabajo</h2>
-              <p className="text-gray-600">Cliente: {client.nombre} - #{client.id}</p>
+              <p className="text-gray-600">Cliente: {clientName} - #{clientId}</p>
             </div>
             <button
               onClick={onClose}
@@ -137,12 +166,7 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                       </span>
                     </div>
                     <div className="flex space-x-2">
-                      <button
-                        onClick={() => onEditOrder(order)}
-                        className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded transition-colors"
-                      >
-                        ✏️ Editar
-                      </button>
+                      {/* onEditOrder prop is not passed from parent, so this button is removed */}
                       <button
                         onClick={() => handleDeleteOrder(order.id)}
                         disabled={deletingOrderId === order.id}

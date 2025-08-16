@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
+import { supabase } from '../../../lib/supabase'
 
 export default function ConfiguracionPage() {
-  const [activeTab, setActiveTab] = useState('servicios')
+  const { authenticatedFetch } = useAuthenticatedFetch()
+  const [activeTab, setActiveTab] = useState('services')
   const [config, setConfig] = useState({
     servicios: {
       precios: {},
@@ -304,9 +307,9 @@ function DatosConfig() {
   const loadStats = async () => {
     try {
       const [clientsRes, ordersRes, productsRes] = await Promise.all([
-        fetch('/api/admin/clients'),
-        fetch('/api/admin/service-orders'),
-        fetch('/api/admin/products')
+        authenticatedFetch('/api/admin/clients'),
+        authenticatedFetch('/api/admin/service-orders'),
+        authenticatedFetch('/api/admin/products')
       ])
       
       const clients = await clientsRes.json()
@@ -326,7 +329,7 @@ function DatosConfig() {
 
   const handleBackup = async (tipo) => {
     try {
-      const response = await fetch(`/api/admin/${tipo}`)
+      const response = await authenticatedFetch(`/api/admin/${tipo}`)
       const data = await response.json()
       
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })

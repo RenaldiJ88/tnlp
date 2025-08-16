@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
+import { supabase } from '../../../lib/supabase'
 
 export default function ProductosAdmin() {
+  const { authenticatedFetch } = useAuthenticatedFetch()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
@@ -18,7 +21,7 @@ export default function ProductosAdmin() {
   const loadProducts = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/admin/products')
+      const response = await authenticatedFetch('/api/admin/products')
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
@@ -48,7 +51,7 @@ export default function ProductosAdmin() {
     }
 
     try {
-      const response = await fetch(`/api/admin/products?id=${productId}`, {
+      const response = await authenticatedFetch(`/api/admin/products?id=${productId}`, {
         method: 'DELETE'
       })
       

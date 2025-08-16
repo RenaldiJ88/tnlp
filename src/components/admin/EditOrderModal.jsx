@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ServiceCategoryCard from './ServiceCategoryCard'
+import { useAuthenticatedFetch } from '../../hooks/useAuthenticatedFetch'
+import { supabase } from '../../lib/supabase'
 
 // Modal para editar orden de servicio
 export default function EditOrderModal({ order, client, serviceOptions, onClose, onSave }) {
