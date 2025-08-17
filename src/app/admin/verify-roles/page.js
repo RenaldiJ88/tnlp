@@ -126,6 +126,12 @@ export default function VerifyRoles() {
         return
       }
 
+      console.log('🔍 Sesión actual:', {
+        access_token: session.access_token ? `${session.access_token.substring(0, 20)}...` : 'Ausente',
+        refresh_token: session.refresh_token ? 'Presente' : 'Ausente',
+        expires_at: session.expires_at
+      })
+
       const response = await fetch('/api/admin/products', {
         method: 'POST',
         headers: {
@@ -152,6 +158,55 @@ export default function VerifyRoles() {
     } catch (error) {
       console.error('Error probando API:', error)
       setError(`Error probando API: ${error.message}`)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const testPUTRequest = async () => {
+    setLoading(true)
+    setMessage('')
+    setError('')
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (!session) {
+        setError('No hay sesión activa')
+        return
+      }
+
+      console.log('🔍 Probando PUT request con token:', {
+        access_token: session.access_token ? `${session.access_token.substring(0, 20)}...` : 'Ausente'
+      })
+
+      const response = await fetch('/api/admin/products', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({
+          id: 'test-id',
+          title: 'Test PUT Product',
+          description: 'Producto de prueba PUT',
+          price: '200',
+          image: 'test-put.jpg',
+          categoria: 'test',
+          isOffer: false
+        })
+      })
+
+      if (response.ok) {
+        setMessage('✅ PUT request funcionando correctamente')
+      } else {
+        const errorData = await response.json()
+        setError(`❌ PUT request falló: ${response.status} - ${errorData.message || errorData.error}`)
+      }
+
+    } catch (error) {
+      console.error('Error probando PUT:', error)
+      setError(`Error probando PUT: ${error.message}`)
     } finally {
       setLoading(false)
     }
@@ -191,7 +246,7 @@ export default function VerifyRoles() {
             )}
 
             {/* Botones de acción */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <button
                 onClick={checkUserRoles}
                 disabled={loading}
@@ -213,7 +268,15 @@ export default function VerifyRoles() {
                 disabled={loading}
                 className="bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-medium"
               >
-                {loading ? 'Probando...' : '🧪 Probar API Admin'}
+                {loading ? 'Probando...' : '🧪 Probar POST'}
+              </button>
+
+              <button
+                onClick={testPUTRequest}
+                disabled={loading}
+                className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-medium"
+              >
+                {loading ? 'Probando...' : '🧪 Probar PUT'}
               </button>
             </div>
 
