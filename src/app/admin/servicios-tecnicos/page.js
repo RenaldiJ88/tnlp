@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ServiceCategoryCard from '../../../components/admin/ServiceCategoryCard'
 import OrdersModal from '../../../components/admin/OrdersModal'
@@ -60,9 +60,9 @@ export default function ServiciosTecnicosAdmin() {
   useEffect(() => {
     loadClients()
     loadOrders()
-  }, [])
+  }, [loadClients, loadOrders])
 
-  const loadClients = async () => {
+  const loadClients = useCallback(async () => {
     try {
       setLoading(true)
       const response = await authenticatedFetch('/api/admin/clients')
@@ -80,9 +80,9 @@ export default function ServiciosTecnicosAdmin() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [authenticatedFetch])
 
-  const loadOrders = async () => {
+  const loadOrders = useCallback(async () => {
     try {
       const response = await authenticatedFetch('/api/admin/service-orders')
       
@@ -96,7 +96,7 @@ export default function ServiciosTecnicosAdmin() {
       console.error('Error loading orders:', error)
       setOrders([])
     }
-  }
+  }, [authenticatedFetch])
 
   const handleDeleteClient = async (clientId) => {
     if (!confirm('¿Estás seguro de que quieres eliminar este cliente?')) {

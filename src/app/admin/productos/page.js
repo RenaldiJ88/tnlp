@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../../lib/supabase'
@@ -14,11 +14,7 @@ export default function ProductosAdmin() {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
 
-  useEffect(() => {
-    loadProducts()
-  }, [])
-
-  const loadProducts = async () => {
+  const loadProducts = useCallback(async () => {
     try {
       setLoading(true)
       const response = await authenticatedFetch('/api/admin/products')
@@ -43,7 +39,11 @@ export default function ProductosAdmin() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [authenticatedFetch])
+
+  useEffect(() => {
+    loadProducts()
+  }, [loadProducts])
 
   const handleDeleteProduct = async (productId) => {
     if (!confirm('¿Estás seguro de que quieres eliminar este producto?')) {

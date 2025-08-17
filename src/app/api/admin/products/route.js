@@ -9,8 +9,8 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 )
 
-// Función para validar token de Supabase
-async function validateSupabaseToken(request) {
+// Función para validar token de Supabase y verificar rol de admin
+async function validateAdminToken(request) {
   try {
     const authHeader = request.headers.get('authorization')
     
@@ -27,14 +27,25 @@ async function validateSupabaseToken(request) {
       return { valid: false, error: 'Token inválido' }
     }
     
+    // Verificar si el usuario tiene rol de admin
+    const { data: roleData, error: roleError } = await supabaseAdmin
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .single()
+    
+    if (roleError || !roleData || roleData.role !== 'admin') {
+      return { valid: false, error: 'Usuario no tiene permisos de administrador' }
+    }
+    
     return { valid: true, user }
   } catch (error) {
-    console.error('Error validando token:', error)
-    return { valid: false, error: 'Error validando token' }
+    console.error('Error validando token de admin:', error)
+    return { valid: false, error: 'Error validando token de admin' }
   }
 }
 
-// GET - Obtener todos los productos
+// GET - Obtener todos los productos (público, no requiere admin)
 export async function GET() {
   try {
     const { data: products, error } = await supabaseAdmin
@@ -54,18 +65,21 @@ export async function GET() {
   }
 }
 
-// POST - Crear nuevo producto
+// POST - Crear nuevo producto (requiere admin)
 export async function POST(request) {
   try {
-    // Validar token de Supabase
-    const { valid, error: authError } = await validateSupabaseToken(request)
+    // Validar token de admin
+    const { valid, error: authError } = await validateAdminToken(request)
     
     if (!valid) {
+      console.log('❌ POST /products - No autorizado:', authError)
       return NextResponse.json(
         { success: false, message: 'No autorizado', error: authError },
         { status: 401 }
       )
     }
+    
+    console.log('✅ POST /products - Usuario autorizado:', authError)
     
     const newProduct = await request.json()
     
@@ -87,7 +101,7 @@ export async function POST(request) {
     if (error) {
       console.error('Error creating product:', error)
       return NextResponse.json(
-        { success: false, message: 'Error al crear producto' },
+        { success: false, message: 'Error al crear producto', error: error.message },
         { status: 500 }
       )
     }
@@ -100,24 +114,27 @@ export async function POST(request) {
   } catch (error) {
     console.error('Error creating product:', error)
     return NextResponse.json(
-      { success: false, message: 'Error al crear producto' },
+      { success: false, message: 'Error al crear producto', error: error.message },
       { status: 500 }
     )
   }
 }
 
-// PUT - Actualizar producto existente
+// PUT - Actualizar producto existente (requiere admin)
 export async function PUT(request) {
   try {
-    // Validar token de Supabase
-    const { valid, error: authError } = await validateSupabaseToken(request)
+    // Validar token de admin
+    const { valid, error: authError } = await validateAdminToken(request)
     
     if (!valid) {
+      console.log('❌ PUT /products - No autorizado:', authError)
       return NextResponse.json(
         { success: false, message: 'No autorizado', error: authError },
         { status: 401 }
       )
     }
+    
+    console.log('✅ PUT /products - Usuario autorizado')
     
     const updatedProduct = await request.json()
     
@@ -147,7 +164,7 @@ export async function PUT(request) {
     if (error) {
       console.error('Error updating product:', error)
       return NextResponse.json(
-        { success: false, message: 'Error al actualizar producto' },
+        { success: false, message: 'Error al actualizar producto', error: error.message },
         { status: 500 }
       )
     }
@@ -167,24 +184,27 @@ export async function PUT(request) {
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json(
-      { success: false, message: 'Error al actualizar producto' },
+      { success: false, message: 'Error al actualizar producto', error: error.message },
       { status: 500 }
     )
   }
 }
 
-// DELETE - Eliminar producto
+// DELETE - Eliminar producto (requiere admin)
 export async function DELETE(request) {
   try {
-    // Validar token de Supabase
-    const { valid, error: authError } = await validateSupabaseToken(request)
+    // Validar token de admin
+    const { valid, error: authError } = await validateAdminToken(request)
     
     if (!valid) {
+      console.log('❌ DELETE /products - No autorizado:', authError)
       return NextResponse.json(
         { success: false, message: 'No autorizado', error: authError },
         { status: 401 }
       )
     }
+    
+    console.log('✅ DELETE /products - Usuario autorizado')
     
     const { searchParams } = new URL(request.url)
     const productId = searchParams.get('id')
@@ -196,6 +216,8 @@ export async function DELETE(request) {
       )
     }
     
+    console.log('🗑️ Intentando eliminar producto ID:', productId)
+    
     // Primero verificar que el producto existe
     const { data: existingProduct, error: checkError } = await supabaseAdmin
       .from('productos')
@@ -204,11 +226,14 @@ export async function DELETE(request) {
       .single()
     
     if (checkError || !existingProduct) {
+      console.log('❌ Producto no encontrado para eliminar:', productId)
       return NextResponse.json(
         { success: false, message: 'Producto no encontrado' },
         { status: 404 }
       )
     }
+    
+    console.log('✅ Producto encontrado, procediendo a eliminar')
     
     // Intentar eliminar el producto
     const { data: deletedProduct, error } = await supabaseAdmin
@@ -218,23 +243,23 @@ export async function DELETE(request) {
       .select()
     
     if (error) {
-      console.error('Error deleting product:', error)
+      console.error('❌ Error eliminando producto:', error)
       return NextResponse.json(
-        { success: false, message: 'Error al eliminar producto' },
+        { success: false, message: 'Error al eliminar producto', error: error.message },
         { status: 500 }
       )
     }
     
     // Verificar que realmente se eliminó
     if (!deletedProduct || deletedProduct.length === 0) {
-      console.error('Producto no se eliminó de la base de datos')
+      console.error('❌ Producto no se eliminó de la base de datos')
       return NextResponse.json(
         { success: false, message: 'No se pudo eliminar el producto' },
         { status: 500 }
       )
     }
     
-    console.log('Producto eliminado exitosamente:', deletedProduct[0])
+    console.log('✅ Producto eliminado exitosamente:', deletedProduct[0])
     
     return NextResponse.json({ 
       success: true, 
@@ -242,9 +267,9 @@ export async function DELETE(request) {
       deletedProduct: deletedProduct[0]
     })
   } catch (error) {
-    console.error('Error deleting product:', error)
+    console.error('❌ Error en DELETE /products:', error)
     return NextResponse.json(
-      { success: false, message: 'Error al eliminar producto' },
+      { success: false, message: 'Error al eliminar producto', error: error.message },
       { status: 500 }
     )
   }
