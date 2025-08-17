@@ -57,11 +57,6 @@ export default function ServiciosTecnicosAdmin() {
     }
   }
 
-  useEffect(() => {
-    loadClients()
-    loadOrders()
-  }, [loadClients, loadOrders])
-
   const loadClients = useCallback(async () => {
     try {
       setLoading(true)
@@ -97,6 +92,11 @@ export default function ServiciosTecnicosAdmin() {
       setOrders([])
     }
   }, [authenticatedFetch])
+
+  useEffect(() => {
+    loadClients()
+    loadOrders()
+  }, [loadClients, loadOrders])
 
   const handleDeleteClient = async (clientId) => {
     if (!confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
@@ -393,7 +393,7 @@ function ClientModal({ client, onClose, onSave }) {
       const url = '/api/admin/clients'
       const method = isEditing ? 'PUT' : 'POST'
       
-      const response = await authenticatedFetch(url, {
+      const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -565,7 +565,7 @@ function ServiceModal({ client, serviceOptions, onClose, onSave }) {
         fecha: new Date().toISOString().split('T')[0]
       }
 
-      const response = await authenticatedFetch('/api/admin/service-orders', {
+      const response = await fetch('/api/admin/service-orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
