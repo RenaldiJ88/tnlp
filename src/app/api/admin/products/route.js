@@ -27,17 +27,34 @@ async function validateAdminToken(request) {
       return { valid: false, error: 'Token inválido' }
     }
     
-    // Verificar si el usuario tiene rol de admin
+    console.log('🔍 Validando usuario:', user.email, 'ID:', user.id)
+    
+    // Verificar rol en auth.users (raw_app_meta_data)
+    const userRole = user.app_metadata?.role || user.raw_app_meta_data?.role
+    console.log('🔑 Rol en auth.users:', userRole)
+    
+    // Verificar rol en tabla user_roles
     const { data: roleData, error: roleError } = await supabaseAdmin
       .from('user_roles')
       .select('role')
       .eq('user_id', user.id)
       .single()
     
-    if (roleError || !roleData || roleData.role !== 'admin') {
+    console.log('🔑 Rol en user_roles:', roleData?.role, 'Error:', roleError)
+    
+    // Verificar si es admin en cualquiera de los dos lugares
+    const isAdmin = 
+      userRole === 'admin' || 
+      userRole === 'super-admin' || 
+      roleData?.role === 'admin' || 
+      roleData?.role === 'super-admin'
+    
+    if (!isAdmin) {
+      console.log('❌ Usuario no es admin. Roles encontrados:', { userRole, tableRole: roleData?.role })
       return { valid: false, error: 'Usuario no tiene permisos de administrador' }
     }
     
+    console.log('✅ Usuario autorizado como admin con roles:', { userRole, tableRole: roleData?.role })
     return { valid: true, user }
   } catch (error) {
     console.error('Error validando token de admin:', error)
