@@ -262,6 +262,7 @@ export default function ProductosAdmin() {
       {showModal && (
         <ProductModal
           product={editingProduct}
+          authenticatedFetch={authenticatedFetch}
           onClose={() => {
             setShowModal(false)
             setEditingProduct(null)
@@ -278,7 +279,7 @@ export default function ProductosAdmin() {
 }
 
 // Componente del modal (siguiente archivo)
-function ProductModal({ product, onClose, onSave }) {
+function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -310,9 +311,8 @@ function ProductModal({ product, onClose, onSave }) {
         delete productData.id
       }
       
-      const response = await fetch(url, {
+      const response = await authenticatedFetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(productData)
       })
 

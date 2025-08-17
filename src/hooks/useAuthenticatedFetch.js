@@ -26,6 +26,8 @@ export const useAuthenticatedFetch = () => {
       console.log('🔐 Enviando request autenticado con token de Supabase')
       console.log('📍 URL:', url)
       console.log('🔑 Token:', session.access_token ? 'Presente' : 'Ausente')
+      console.log('🔑 Token completo:', session.access_token ? `${session.access_token.substring(0, 20)}...` : 'Ausente')
+      console.log('📋 Headers completos:', headers)
       
       // Hacer la llamada con headers autenticados
       const response = await fetch(url, {
