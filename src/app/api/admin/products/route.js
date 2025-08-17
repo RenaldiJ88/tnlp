@@ -3,42 +3,79 @@ import { createClient } from '@supabase/supabase-js'
 
 export const runtime = 'nodejs'
 
+// Verificar variables de entorno críticas
+const requiredEnvVars = {
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+  serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY
+}
+
+// Verificar que todas las variables estén definidas
+const missingVars = Object.entries(requiredEnvVars)
+  .filter(([key, value]) => !value)
+  .map(([key]) => key)
+
+if (missingVars.length > 0) {
+  console.error('❌ Variables de entorno faltantes:', missingVars)
+  throw new Error(`Variables de entorno faltantes: ${missingVars.join(', ')}`)
+}
+
+console.log('✅ Variables de entorno verificadas:', {
+  supabaseUrl: requiredEnvVars.supabaseUrl ? 'Definida' : 'Faltante',
+  serviceRoleKey: requiredEnvVars.serviceRoleKey ? 'Definida' : 'Faltante'
+})
+
 // Crear cliente Supabase con service_role para operaciones admin
 const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  requiredEnvVars.supabaseUrl,
+  requiredEnvVars.serviceRoleKey
 )
 
 // Función para validar token de Supabase y verificar rol de admin
 async function validateAdminToken(request) {
   try {
+    console.log('🔍 Iniciando validación de token...')
+    
     const authHeader = request.headers.get('authorization')
+    console.log('🔍 Auth header:', authHeader ? 'Presente' : 'Ausente')
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return { valid: false, error: 'Token no proporcionado' }
     }
     
     const token = authHeader.replace('Bearer ', '')
+    console.log('🔍 Token extraído:', token ? `${token.substring(0, 20)}...` : 'Ausente')
     
     // Verificar el token con Supabase
+    console.log('🔍 Verificando token con Supabase...')
     const { data: { user }, error } = await supabaseAdmin.auth.getUser(token)
     
-    if (error || !user) {
-      return { valid: false, error: 'Token inválido' }
+    if (error) {
+      console.error('❌ Error verificando token:', error)
+      return { valid: false, error: `Error verificando token: ${error.message}` }
     }
     
-    console.log('🔍 Validando usuario:', user.email, 'ID:', user.id)
+    if (!user) {
+      console.error('❌ No se encontró usuario para el token')
+      return { valid: false, error: 'Token inválido - usuario no encontrado' }
+    }
+    
+    console.log('🔍 Usuario encontrado:', user.email, 'ID:', user.id)
     
     // Verificar rol en auth.users (raw_app_meta_data)
     const userRole = user.app_metadata?.role || user.raw_app_meta_data?.role
     console.log('🔑 Rol en auth.users:', userRole)
     
     // Verificar rol en tabla user_roles
+    console.log('🔍 Verificando rol en tabla user_roles...')
     const { data: roleData, error: roleError } = await supabaseAdmin
       .from('user_roles')
       .select('role')
       .eq('user_id', user.id)
       .single()
+    
+    if (roleError && roleError.code !== 'PGRST116') {
+      console.error('❌ Error consultando user_roles:', roleError)
+    }
     
     console.log('🔑 Rol en user_roles:', roleData?.role, 'Error:', roleError)
     
@@ -57,8 +94,8 @@ async function validateAdminToken(request) {
     console.log('✅ Usuario autorizado como admin con roles:', { userRole, tableRole: roleData?.role })
     return { valid: true, user }
   } catch (error) {
-    console.error('Error validando token de admin:', error)
-    return { valid: false, error: 'Error validando token de admin' }
+    console.error('❌ Error inesperado validando token de admin:', error)
+    return { valid: false, error: `Error inesperado: ${error.message}` }
   }
 }
 
