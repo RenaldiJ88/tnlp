@@ -106,12 +106,13 @@ export default function DebugAuth() {
         }))
       } else {
         console.log('❌ Error creando cliente, usando ID 1')
+        const errorData = await clientResponse.json()
         setTestResults(prev => ({ 
           ...prev, 
           'POST Client': { 
             status: clientResponse.status,
             ok: false,
-            data: await clientResponse.json(),
+            data: errorData,
             success: false
           }
         }))
