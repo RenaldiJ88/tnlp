@@ -95,10 +95,10 @@ async function validateAdminToken(request) {
 }
 
 // GET - Obtener todos los clientes (requiere admin)
-export async function GET() {
+export async function GET(request) {
   try {
     // Validar token de admin
-    const { valid, error: authError } = await validateAdminToken()
+    const { valid, error: authError } = await validateAdminToken(request)
     
     if (!valid) {
       console.log('❌ GET /clients - No autorizado:', authError)
