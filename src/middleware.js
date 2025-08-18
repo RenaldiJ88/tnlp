@@ -1,50 +1,53 @@
 import { NextResponse } from 'next/server'
 
 export function middleware(request) {
-  // TEMPORALMENTE DESHABILITADO PARA SUPABASE AUTH
-  // TODO: Implementar verificación de Supabase JWT en el futuro
-  
-  // Por ahora, permitir todas las rutas
-  return NextResponse.next()
-  
-  /*
   const { pathname } = request.nextUrl
 
-  // Aplicar middleware SOLO a rutas admin (páginas), NO a APIs por ahora
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
+  // Solo aplicar middleware a rutas admin (excepto login y páginas de debug)
+  if (pathname.startsWith('/admin') && 
+      pathname !== '/admin/login' &&
+      !pathname.startsWith('/admin/debug-') &&
+      !pathname.startsWith('/admin/check-') &&
+      !pathname.startsWith('/admin/test-')) {
     
-    // Obtener token de la cookie
-    const token = request.cookies.get('adminToken')?.value
+    // Buscar token de Supabase en las cookies
+    // Supabase usa cookies con formato específico
+    const supabaseToken = request.cookies.get('sb-wqrugaygrebeqscssvnx-auth-token')?.value
 
-    if (!token) {
-      // No hay token, redirigir a login
+    if (!supabaseToken) {
+      console.log('🔒 Middleware: No hay token de Supabase, redirigiendo a login')
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
 
-    // Verificar token simple
-    if (!token.startsWith('auth_')) {
-      // Token inválido, redirigir a login
-      const response = NextResponse.redirect(new URL('/admin/login', request.url))
+    try {
+      // Parsear el token de Supabase (es un JSON)
+      const tokenData = JSON.parse(supabaseToken)
       
-      // Limpiar cookie inválida
-      response.cookies.set('adminToken', '', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 0,
-        path: '/admin'
-      })
-      
-      return response
-    }
+      if (!tokenData.access_token || !tokenData.user) {
+        console.log('🔒 Middleware: Token de Supabase inválido, redirigiendo a login')
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
 
-    // Token válido, continuar
-    return NextResponse.next()
+      // Verificar si el token no ha expirado
+      const expiresAt = tokenData.expires_at
+      const now = Math.floor(Date.now() / 1000)
+      
+      if (expiresAt && now > expiresAt) {
+        console.log('🔒 Middleware: Token expirado, redirigiendo a login')
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
+
+      console.log('✅ Middleware: Usuario autorizado:', tokenData.user.email)
+      return NextResponse.next()
+
+    } catch (error) {
+      console.log('🔒 Middleware: Error parseando token, redirigiendo a login')
+      return NextResponse.redirect(new URL('/admin/login', request.url))
+    }
   }
 
-  // Para todas las demás rutas (incluyendo APIs), continuar sin verificación
+  // Para todas las demás rutas, continuar sin verificación
   return NextResponse.next()
-  */
 }
 
 export const config = {
