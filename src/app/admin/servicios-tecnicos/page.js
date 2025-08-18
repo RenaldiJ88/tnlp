@@ -237,6 +237,7 @@ export default function ServiciosTecnicosAdmin() {
       {showClientModal && (
         <ClientModal
           client={selectedClient}
+          authenticatedFetch={authenticatedFetch}
           onClose={() => {
             setShowClientModal(false)
             setSelectedClient(null)
@@ -253,6 +254,7 @@ export default function ServiciosTecnicosAdmin() {
         <ServiceModal
           client={selectedClient}
           serviceOptions={serviceOptions}
+          authenticatedFetch={authenticatedFetch}
           onClose={() => {
             setShowServiceModal(false)
             setSelectedClient(null)
@@ -374,7 +376,7 @@ function ClientCard({ client, orders, onDelete, onCreateOrder, onEdit, onViewOrd
 }
 
 // Modal para nuevo/editar cliente
-function ClientModal({ client, onClose, onSave }) {
+function ClientModal({ client, onClose, onSave, authenticatedFetch }) {
   const [formData, setFormData] = useState({
     nombre: '',
     telefono: '',
@@ -393,9 +395,8 @@ function ClientModal({ client, onClose, onSave }) {
       const url = '/api/admin/clients'
       const method = isEditing ? 'PUT' : 'POST'
       
-      const response = await fetch(url, {
+      const response = await authenticatedFetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       })
 
@@ -514,7 +515,7 @@ function ClientModal({ client, onClose, onSave }) {
 }
 
 // Modal para crear orden de servicio
-function ServiceModal({ client, serviceOptions, onClose, onSave }) {
+function ServiceModal({ client, serviceOptions, onClose, onSave, authenticatedFetch }) {
   const [selectedServices, setSelectedServices] = useState([])
   const [orderDetails, setOrderDetails] = useState({
     descripcionEquipo: '',
@@ -565,9 +566,8 @@ function ServiceModal({ client, serviceOptions, onClose, onSave }) {
         fecha: new Date().toISOString().split('T')[0]
       }
 
-      const response = await fetch('/api/admin/service-orders', {
+      const response = await authenticatedFetch('/api/admin/service-orders', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
       })
 
