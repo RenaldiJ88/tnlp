@@ -11,11 +11,22 @@ export function middleware(request) {
       !pathname.startsWith('/admin/test-')) {
     
     // Buscar token de Supabase en las cookies
-    // Supabase usa cookies con formato específico
-    const supabaseToken = request.cookies.get('sb-wqrugaygrebeqscssvnx-auth-token')?.value
+    // Supabase usa cookies con diferentes formatos posibles
+    let supabaseToken = null
+    
+    // Intentar diferentes formatos de cookies de Supabase
+    const cookies = request.cookies
+    for (const cookie of cookies.getAll()) {
+      if (cookie.name.includes('auth-token') && cookie.name.startsWith('sb-')) {
+        supabaseToken = cookie.value
+        console.log('🔍 Middleware: Encontré cookie de Supabase:', cookie.name)
+        break
+      }
+    }
 
     if (!supabaseToken) {
       console.log('🔒 Middleware: No hay token de Supabase, redirigiendo a login')
+      console.log('🔍 Cookies disponibles:', cookies.getAll().map(c => c.name))
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
 
