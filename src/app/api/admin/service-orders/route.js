@@ -141,10 +141,7 @@ export async function POST(request) {
       )
     }
     
-    console.log('✅ POST /service-orders - Usuario autorizado')
-    
     const orderData = await request.json()
-    console.log('📋 Datos recibidos:', JSON.stringify(orderData, null, 2))
     
     // Preparar datos para inserción
     const serviceOrderData = {
@@ -158,29 +155,15 @@ export async function POST(request) {
       estado: orderData.estado || 'Recibido'
     }
     
-    console.log('🔧 Datos preparados para Supabase:', JSON.stringify(serviceOrderData, null, 2))
-    
     const { data, error } = await supabaseAdmin
       .from('ordenes_servicio')
       .insert([serviceOrderData])
       .select()
     
     if (error) {
-      console.error('❌ Error detallado creando orden de servicio:', {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code,
-        data: serviceOrderData
-      })
+      console.error('Error creating service order:', error.message)
       return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Error al crear orden de servicio', 
-          error: error.message,
-          details: error.details,
-          hint: error.hint
-        },
+        { success: false, message: 'Error al crear orden de servicio', error: error.message },
         { status: 500 }
       )
     }
