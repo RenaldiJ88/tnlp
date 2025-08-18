@@ -148,14 +148,13 @@ export async function POST(request) {
     // Preparar datos para inserción
     const serviceOrderData = {
       cliente_id: orderData.clienteId,
-      servicios: JSON.stringify(orderData.servicios),
-      descripcion_equipo: orderData.detalles.descripcionEquipo,
-      problema: orderData.detalles.problema,
-      urgencia: orderData.detalles.urgencia,
-      notas: orderData.detalles.notas || '',
-      total: orderData.total,
-      estado: orderData.estado || 'Recibido',
-      fecha: orderData.fecha || new Date().toISOString().split('T')[0]
+      servicios_seleccionados: orderData.servicios,
+      equipo_tipo: orderData.detalles?.descripcionEquipo || orderData.descripcionEquipo || '',
+      problema: orderData.detalles?.problema || orderData.problema || '',
+      urgencia: orderData.detalles?.urgencia || orderData.urgencia || 'Media',
+      notas: orderData.detalles?.notas || orderData.notas || '',
+      total: orderData.total || 0,
+      estado: orderData.estado || 'Recibido'
     }
     
     const { data, error } = await supabaseAdmin
@@ -212,13 +211,13 @@ export async function PUT(request) {
     
     // Preparar datos para actualización
     const orderData = {
-      servicios: JSON.stringify(updatedOrder.servicios),
-      descripcion_equipo: updatedOrder.descripcion_equipo,
-      problema: updatedOrder.problema,
-      urgencia: updatedOrder.urgencia,
+      servicios_seleccionados: updatedOrder.servicios_seleccionados || updatedOrder.servicios,
+      equipo_tipo: updatedOrder.equipo_tipo || updatedOrder.descripcion_equipo || '',
+      problema: updatedOrder.problema || '',
+      urgencia: updatedOrder.urgencia || 'Media',
       notas: updatedOrder.notas || '',
-      total: updatedOrder.total,
-      estado: updatedOrder.estado
+      total: updatedOrder.total || 0,
+      estado: updatedOrder.estado || 'Recibido'
     }
     
     const { data, error } = await supabaseAdmin
