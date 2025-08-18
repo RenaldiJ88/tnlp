@@ -68,41 +68,86 @@ export default function DebugAuth() {
     }
   }
 
-  const runAllTests = () => {
+  const runAllTests = async () => {
     // Test datos mínimos para crear cliente
     const testClient = {
-      nombre: "Test Usuario",
-      telefono: "221-123-4567", 
-      documento: "12345678",
-      direccion: "Test Address 123"
+      nombre: "Test Usuario Debug",
+      telefono: "221-999-8888", 
+      documento: "99888777",
+      direccion: "Test Debug Address 123"
     }
 
-    // Test datos mínimos para crear orden
-    const testOrder = {
-      clienteId: 1, // Asumiendo que existe cliente con ID 1
-      servicios: [{
-        id: "test-service",
-        categoria: "Mantenimiento",
-        subcategoria: "Limpiezas", 
-        opcion: "Limpieza Advance CPU",
-        precio: 8000
-      }],
-      detalles: {
-        descripcionEquipo: "Test Laptop",
-        problema: "Test problem",
-        urgencia: "normal",
-        notas: "Test notes"
-      },
-      total: 8000,
-      estado: "Recibido",
-      fecha: new Date().toISOString().split('T')[0]
-    }
-
-    // Ejecutar tests
+    // Primero ejecutar tests básicos
     testEndpoint('GET Clients', '/api/admin/clients', 'GET')
-    testEndpoint('POST Client', '/api/admin/clients', 'POST', testClient)
-    testEndpoint('GET Service Orders', '/api/admin/service-orders', 'GET')
-    testEndpoint('POST Service Order', '/api/admin/service-orders', 'POST', testOrder)
+    
+    // Crear cliente y usar su ID para la orden
+    try {
+      console.log('🧪 Creando cliente de prueba...')
+      const clientResponse = await authenticatedFetch('/api/admin/clients', {
+        method: 'POST',
+        body: JSON.stringify(testClient)
+      })
+      
+      let clientId = 1 // fallback
+      
+      if (clientResponse.ok) {
+        const clientData = await clientResponse.json()
+        clientId = clientData.client?.id || 1
+        console.log('✅ Cliente creado con ID:', clientId)
+        
+        setTestResults(prev => ({ 
+          ...prev, 
+          'POST Client': { 
+            status: clientResponse.status,
+            ok: true,
+            data: clientData,
+            success: true
+          }
+        }))
+      } else {
+        console.log('❌ Error creando cliente, usando ID 1')
+        const errorData = await clientResponse.json()
+        setTestResults(prev => ({ 
+          ...prev, 
+          'POST Client': { 
+            status: clientResponse.status,
+            ok: false,
+            data: errorData,
+            success: false
+          }
+        }))
+      }
+
+      // Test datos mínimos para crear orden CON ID REAL
+      const testOrder = {
+        clienteId: clientId,
+        servicios: [{
+          id: "test-service",
+          categoria: "Mantenimiento",
+          subcategoria: "Limpiezas", 
+          opcion: "Limpieza Advance CPU",
+          precio: 8000
+        }],
+        detalles: {
+          descripcionEquipo: "Test Laptop Debug",
+          problema: "Test problem for debugging",
+          urgencia: "normal",
+          notas: "Test notes debug"
+        },
+        total: 8000,
+        estado: "Recibido",
+        fecha: new Date().toISOString().split('T')[0]
+      }
+
+      console.log('🧪 Datos de orden a enviar:', testOrder)
+
+      // Continuar con los otros tests
+      testEndpoint('GET Service Orders', '/api/admin/service-orders', 'GET')
+      testEndpoint('POST Service Order', '/api/admin/service-orders', 'POST', testOrder)
+      
+    } catch (error) {
+      console.error('Error en runAllTests:', error)
+    }
   }
 
   const renderResult = (name, result) => {
