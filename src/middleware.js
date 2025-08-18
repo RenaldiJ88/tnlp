@@ -3,29 +3,41 @@ import { NextResponse } from 'next/server'
 export function middleware(request) {
   const { pathname } = request.nextUrl
 
-  // Solo aplicar middleware a rutas admin (excepto login y páginas de debug)
+  // Aplicar middleware a rutas admin (excepto login y debug)
   if (pathname.startsWith('/admin') && 
       pathname !== '/admin/login' &&
-      !pathname.startsWith('/admin/debug-') &&
-      !pathname.startsWith('/admin/check-') &&
-      !pathname.startsWith('/admin/test-')) {
+      !pathname.startsWith('/admin/debug-')) {
     
     // Buscar token de Supabase en las cookies
-    // Supabase usa cookies con diferentes formatos posibles
+    const cookies = request.cookies
     let supabaseToken = null
     
-    // Intentar diferentes formatos de cookies de Supabase
-    const cookies = request.cookies
+    // Buscar cookies de Supabase - pueden tener diferentes nombres
+    const possibleCookieNames = [
+      'sb-wqrugaygrebeqscssvnx-auth-token',
+      'supabase-auth-token', 
+      'supabase.auth.token',
+      'sb-auth-token'
+    ]
+    
+    // También buscar cualquier cookie que contenga información de sesión
     for (const cookie of cookies.getAll()) {
-      if (cookie.name.includes('auth-token') && cookie.name.startsWith('sb-')) {
+      // Buscar por nombres específicos
+      if (possibleCookieNames.includes(cookie.name)) {
         supabaseToken = cookie.value
-        console.log('🔍 Middleware: Encontré cookie de Supabase:', cookie.name)
+        console.log('🔍 Middleware: Encontré cookie específica:', cookie.name)
+        break
+      }
+      // Buscar cualquier cookie de Supabase con auth
+      if (cookie.name.startsWith('sb-') && cookie.name.includes('auth')) {
+        supabaseToken = cookie.value
+        console.log('🔍 Middleware: Encontré cookie genérica:', cookie.name)
         break
       }
     }
 
     if (!supabaseToken) {
-      console.log('🔒 Middleware: No hay token de Supabase, redirigiendo a login')
+      console.log('🔒 Middleware: No hay token de Supabase')
       console.log('🔍 Cookies disponibles:', cookies.getAll().map(c => c.name))
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
