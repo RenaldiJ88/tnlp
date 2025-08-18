@@ -111,9 +111,9 @@ export async function GET(request) {
     console.log('✅ GET /service-orders - Usuario autorizado')
     
     const { data: orders, error } = await supabaseAdmin
-      .from('service_orders')
+      .from('ordenes_servicio')
       .select('*')
-      .order('created_at', { ascending: false })
+      .order('date_added', { ascending: false })
     
     if (error) {
       console.error('Error fetching service orders:', error)
@@ -159,7 +159,7 @@ export async function POST(request) {
     }
     
     const { data, error } = await supabaseAdmin
-      .from('service_orders')
+      .from('ordenes_servicio')
       .insert([serviceOrderData])
       .select()
     
@@ -222,7 +222,7 @@ export async function PUT(request) {
     }
     
     const { data, error } = await supabaseAdmin
-      .from('service_orders')
+      .from('ordenes_servicio')
       .update(orderData)
       .eq('id', updatedOrder.id)
       .select()
@@ -286,7 +286,7 @@ export async function DELETE(request) {
     
     // Primero verificar que la orden existe
     const { data: existingOrder, error: checkError } = await supabaseAdmin
-      .from('service_orders')
+      .from('ordenes_servicio')
       .select('id')
       .eq('id', orderId)
       .single()
@@ -303,7 +303,7 @@ export async function DELETE(request) {
     
     // Intentar eliminar la orden
     const { data: deletedOrder, error } = await supabaseAdmin
-      .from('service_orders')
+      .from('ordenes_servicio')
       .delete()
       .eq('id', orderId)
       .select()

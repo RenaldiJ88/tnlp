@@ -113,7 +113,7 @@ export async function GET(request) {
     const { data: clients, error } = await supabaseAdmin
       .from('clientes')
       .select('*')
-      .order('created_at', { ascending: false })
+      .order('date_added', { ascending: false })
     
     if (error) {
       console.error('Error fetching clients:', error)
@@ -151,7 +151,7 @@ export async function POST(request) {
       telefono: newClient.telefono,
       direccion: newClient.direccion,
       documento: newClient.documento,
-      fecha_registro: new Date().toISOString().split('T')[0]
+      email: newClient.email || null
     }
     
     const { data, error } = await supabaseAdmin
