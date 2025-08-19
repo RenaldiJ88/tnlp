@@ -6,7 +6,7 @@ import CriticalImage from "./CriticalImage";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    const imgFon = '/img/home/img-home.jpg';
+    const imgFon = '/img/home/img-home.webp';
 
 
     const containerVariants = {
@@ -92,7 +92,7 @@ const Home = () => {
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 480px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 400px, (max-width: 1280px) 900px, (max-width: 1536px) 950px, 1100px"
+                        sizes="(max-width: 480px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 350px, (max-width: 1280px) 400px, 500px"
                     />
                 </motion.div>
             </div>
