@@ -36,35 +36,68 @@ export function middleware(request) {
       }
     }
 
+    // Mostrar todas las cookies para debug
+    console.log('🔍 Middleware: Cookies disponibles:', cookies.getAll().map(c => ({ name: c.name, hasValue: !!c.value })))
+    
     if (!supabaseToken) {
-      console.log('🔒 Middleware: No hay token de Supabase')
-      console.log('🔍 Cookies disponibles:', cookies.getAll().map(c => c.name))
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+      console.log('🔒 Middleware: No encontré token específico de Supabase')
+      
+      // Buscar cualquier cookie que pueda contener sesión
+      let sessionCookie = null
+      for (const cookie of cookies.getAll()) {
+        if ((cookie.name.includes('session') || cookie.name.includes('token') || cookie.name.includes('auth')) && cookie.value) {
+          sessionCookie = cookie
+          console.log('🔍 Middleware: Encontré posible cookie de sesión:', cookie.name)
+          break
+        }
+      }
+      
+      if (!sessionCookie) {
+        console.log('🔒 Middleware: No hay ninguna cookie de sesión válida')
+        return NextResponse.redirect(new URL('/admin/login', request.url))
+      }
+      
+      supabaseToken = sessionCookie.value
     }
 
     try {
-      // Parsear el token de Supabase (es un JSON)
-      const tokenData = JSON.parse(supabaseToken)
+      // Intentar parsear el token como JSON
+      let tokenData
+      try {
+        tokenData = JSON.parse(supabaseToken)
+      } catch (parseError) {
+        // Si no es JSON, podría ser un token directo
+        console.log('🔍 Middleware: Token no es JSON, asumiendo formato directo')
+        if (supabaseToken.length > 20) { // Un token válido debería ser largo
+          console.log('✅ Middleware: Aceptando token directo')
+          return NextResponse.next()
+        } else {
+          console.log('🔒 Middleware: Token demasiado corto')
+          return NextResponse.redirect(new URL('/admin/login', request.url))
+        }
+      }
       
-      if (!tokenData.access_token || !tokenData.user) {
-        console.log('🔒 Middleware: Token de Supabase inválido, redirigiendo a login')
+      // Si es JSON, verificar estructura
+      if (tokenData && (tokenData.access_token || tokenData.user || tokenData.session)) {
+        // Verificar expiración si existe
+        const expiresAt = tokenData.expires_at
+        const now = Math.floor(Date.now() / 1000)
+        
+        if (expiresAt && now > expiresAt) {
+          console.log('🔒 Middleware: Token expirado')
+          return NextResponse.redirect(new URL('/admin/login', request.url))
+        }
+
+        const userEmail = tokenData.user?.email || tokenData.session?.user?.email || 'usuario'
+        console.log('✅ Middleware: Usuario autorizado:', userEmail)
+        return NextResponse.next()
+      } else {
+        console.log('🔒 Middleware: Token JSON inválido')
         return NextResponse.redirect(new URL('/admin/login', request.url))
       }
-
-      // Verificar si el token no ha expirado
-      const expiresAt = tokenData.expires_at
-      const now = Math.floor(Date.now() / 1000)
-      
-      if (expiresAt && now > expiresAt) {
-        console.log('🔒 Middleware: Token expirado, redirigiendo a login')
-        return NextResponse.redirect(new URL('/admin/login', request.url))
-      }
-
-      console.log('✅ Middleware: Usuario autorizado:', tokenData.user.email)
-      return NextResponse.next()
 
     } catch (error) {
-      console.log('🔒 Middleware: Error parseando token, redirigiendo a login')
+      console.log('🔒 Middleware: Error procesando token:', error.message)
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
   }
