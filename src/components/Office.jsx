@@ -137,7 +137,7 @@ const Office = () => {
                                       alt="Office Laptop 1" 
                                       className="rounded-lg w-full h-auto" 
                                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
-                                      quality={80}
+                                      quality={65}
                                       loading="lazy"
                                     /> 
                                 </motion.div>
@@ -149,7 +149,7 @@ const Office = () => {
                                       alt="AMD Logo" 
                                       className="w-auto h-auto" 
                                       sizes="120px"
-                                      quality={85}
+                                      quality={65}
                                       loading="lazy"
                                     /> 
                                 </motion.div>
@@ -172,7 +172,7 @@ const Office = () => {
                                       alt="Office Laptop 2" 
                                       className="rounded-lg w-full h-auto" 
                                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 550px"
-                                      quality={80}
+                                      quality={65}
                                       loading="lazy"
                                     />
                                 </motion.div>
@@ -184,7 +184,7 @@ const Office = () => {
                                       alt="Intel Logo" 
                                       className="w-auto h-auto" 
                                       sizes="120px"
-                                      quality={85}
+                                      quality={65}
                                       loading="lazy"
                                     /> 
                                 </motion.div>

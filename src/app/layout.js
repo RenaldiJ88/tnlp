@@ -32,6 +32,18 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <head>
           <link rel="icon" href="/img/favicon.ico" />
+          <link 
+            rel="preload" 
+            as="image" 
+            href="/img/home/note-home.png"
+            media="(max-width: 768px)"
+          />
+          <link 
+            rel="preload" 
+            as="image" 
+            href="/img/home/img-home.jpg"
+            media="(max-width: 768px)"
+          />
       </head>
       <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>
         <SupabaseAuthProvider>
