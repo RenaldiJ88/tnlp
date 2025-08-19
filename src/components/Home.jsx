@@ -48,8 +48,7 @@ const Home = () => {
         <motion.div 
             className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
             style={{ 
-                backgroundColor: '#1A1A1A',
-                background: `linear-gradient(to bottom, rgba(26,26,26,0.2) 0%, rgba(26,26,26,0.8) 70%, #1A1A1A 100%)`,
+                backgroundImage: `linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url(${imgFon})`,
                 y: yBackground
             }}
         >
