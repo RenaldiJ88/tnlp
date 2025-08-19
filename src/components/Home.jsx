@@ -43,7 +43,7 @@ const Home = () => {
 
     return (
 
-    <main className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12" role="main" aria-label="Página principal de notebooks gaming y office">
+    <main className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12">
 
         <motion.div 
             className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
@@ -89,10 +89,10 @@ const Home = () => {
                         src="/img/home/note-home.webp"
                         width={1100}
                         height={700}
-                        alt="Notebook gaming de alta gama con pantalla brillante mostrando gráficos coloridos, ideal para juegos y trabajo profesional"
+                        alt="Notebook gaming de alta performance"
                         className="w-full h-full object-contain"
                         sizes="(max-width: 360px) 280px, (max-width: 390px) 300px, (max-width: 480px) 320px, (max-width: 768px) 400px, 500px"
-                        quality={85}
+                        quality={75}
                         priority={true}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
@@ -112,7 +112,7 @@ const Home = () => {
                 target='_blank' 
                 rel="noopener noreferrer"
                 href={"https://wa.me/5492216767615"}
-                aria-label="Contactar por WhatsApp para consultar y comprar notebooks gaming y office"
+                aria-label="Contactar por WhatsApp"
             >
                 <button 
                     className="bg-[#FFFFFF] opacity-40 text-black font-bold py-3 px-6 text-sm sm:py-3 sm:px-8 sm:text-base lg:py-3 lg:px-9 lg:text-xl border-[#dd40d5] border-2 border-solid rounded-xl font-orbitron 
@@ -121,7 +121,7 @@ const Home = () => {
                         hover:scale-105 
                         hover:shadow-lg hover:shadow-[#dd40d5]
                     "
-                    aria-label="Abrir WhatsApp para hacer consulta sobre notebooks"
+                    aria-label="Contactar"
                 >
                     Comprar Ahora
                 </button>
