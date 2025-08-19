@@ -41,11 +41,11 @@ const Map = () => {
                 viewport={{ once: true, amount: 0.5 }} // Se anima al 50% visible, una sola vez
             >
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3270.783621305636!2d-57.969308923404824!3d-34.936963275175565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a2e87ecf8f4f17%3A0x140b90b52b9e37f!2sC.%2056%201621%2C%20B1900%20BLM%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1715637290242!5m2!1ses-419!2sar" // *** RECUERDA VERIFICAR Y ACTUALIZAR ESTA URL CON TU URL REAL DE EMBEBIDO DE GOOGLE MAPS ***
-                    // CAMBIO: w-full para que el iframe ocupe todo el ancho de su contenedor (max-w-lg)
-                    className='w-full h-[246px] rounded-3xl' // <-- Cambiado w-[82%] y mx-auto por w-full
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3270.783621305636!2d-57.969308923404824!3d-34.936963275175565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a2e87ecf8f4f17%3A0x140b90b52b9e37f!2sC.%2056%201621%2C%20B1900%20BLM%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1715637290242!5m2!1ses-419!2sar"
+                    className='w-full h-[246px] rounded-3xl'
                     loading='lazy'
                     referrerPolicy="no-referrer-when-downgrade"
+                    title="Ubicación de Tu Notebook LP - Mapa de Google Maps"
                 >
                 </iframe>
             </motion.div>
