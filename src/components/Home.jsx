@@ -48,8 +48,8 @@ const Home = () => {
         <motion.div 
             className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
             style={{ 
-
-                backgroundImage: `linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url(${imgFon})`,
+                backgroundColor: '#1A1A1A',
+                background: `linear-gradient(to bottom, rgba(26,26,26,0.2) 0%, rgba(26,26,26,0.8) 70%, #1A1A1A 100%)`,
                 y: yBackground
             }}
         >
@@ -92,7 +92,7 @@ const Home = () => {
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 360px) 160px, (max-width: 390px) 180px, (max-width: 480px) 200px, (max-width: 768px) 240px, 350px"
+                        sizes="(max-width: 360px) 140px, (max-width: 390px) 160px, (max-width: 480px) 180px, (max-width: 768px) 220px, 300px"
                     />
                 </motion.div>
             </div>
