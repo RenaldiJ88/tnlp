@@ -16,13 +16,13 @@ const image6 = '/img/tickers/marcas/Lenovo Blanco.png';
 function Marcas() {
     const images = [ image1, image2, image3, image4, image5, image6 ];
     return (
-        <div className='bg-black-tnlp' id="Marcas">
+        <section className='bg-black-tnlp' id="Marcas" aria-label="Marcas de notebooks disponibles" role="region">
             <Ticker duration={30} direction={-1} className='flex '>
                 {images.map((item, index) => (
                     <div key={index} className="w-20 md:w-36 mx-10 pt-4 my-auto">
                         <Image
                             src={item}
-                            alt={`Marca ${index + 1}`}
+                            alt={`Logo de marca tecnológica ${index + 1} - Partner oficial de notebooks gaming y office`}
                             width={150}
                             height={100}
                             className="w-full h-auto object-contain"
@@ -36,7 +36,7 @@ function Marcas() {
 
                 ))}
             </Ticker>
-        </div>
+        </section>
     );
 }
 export default Marcas;

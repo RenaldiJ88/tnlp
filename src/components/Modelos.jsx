@@ -20,7 +20,7 @@ function Modelos() {
                     <div key={index} className="w-36 md:w-52 mx-5 pb-4 my-auto">
                         <Image
                             src={item}
-                            alt={`Modelo ${index + 1}`}
+                            alt={`Modelo de notebook gaming ${index + 1} - Equipos de alta performance para gamers y profesionales`}
                             width={200}
                             height={125}
                             className="w-full h-auto object-contain"
