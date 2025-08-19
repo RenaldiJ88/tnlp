@@ -92,8 +92,8 @@ const Home = () => {
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 360px) 120px, (max-width: 390px) 140px, (max-width: 480px) 160px, (max-width: 768px) 200px, 280px"
-                        quality={65}
+                        sizes="(max-width: 360px) 280px, (max-width: 390px) 300px, (max-width: 480px) 320px, (max-width: 768px) 400px, 500px"
+                        quality={85}
                         priority={true}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
