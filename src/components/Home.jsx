@@ -86,13 +86,17 @@ const Home = () => {
                     animate="visible"
                     className="w-[280px] h-[200px] sm:w-[350px] sm:h-[250px] md:w-[400px] md:h-[300px] lg:w-[900px] lg:h-[500px] lg:mt-44 xl:w-[950px] xl:h-[570px] my-auto xl:mt-32 2xl:w-[1000px] 2xl:h-[600px] 3xl:w-[1100px] 3xl:h-[700px] 2xl:mt-36"
                 >
-                    <CriticalImage
+                    <Image
                         src="/img/home/note-home.webp"
                         width={1100}
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
                         sizes="(max-width: 360px) 120px, (max-width: 390px) 140px, (max-width: 480px) 160px, (max-width: 768px) 200px, 280px"
+                        quality={65}
+                        priority={true}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
                 </motion.div>
             </div>
