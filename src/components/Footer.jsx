@@ -110,7 +110,7 @@ const Footer = () => {
                         className="text-center md:text-center"
                         variants={columnVariants} // Aplica variantes de columna
                     >
-                        <h3 className="text-lg font-semibold mb-4 uppercase tracking-wider">Navegación</h3>
+                        <h2 className="text-lg font-semibold mb-4 uppercase tracking-wider">Navegación</h2>
                         <ul className="space-y-2">
                             <li><a href="/#Home" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">Home</a></li>
                             <li><a href="/#Servicios" className="text-gray-300 hover:text-blue-400 transition-colors duration-300">Servicios</a></li>
@@ -125,7 +125,7 @@ const Footer = () => {
                         className="text-center md:text-center"
                         variants={columnVariants} // Aplica variantes de columna
                     >
-                        <h3 className="text-lg font-semibold mb-4 uppercase tracking-wider">Contacto</h3>
+                        <h2 className="text-lg font-semibold mb-4 uppercase tracking-wider">Contacto</h2>
                         <ul className="space-y-3 text-gray-300 ml-14">
                             <li className="flex items-center justify-center md:justify-start">
                                 <MapPinIcon className="mr-3 text-xl text-blue-400 flex-shrink-0 w-5 h-5" />
@@ -133,7 +133,7 @@ const Footer = () => {
                             </li>
                             <li className="flex items-center justify-center md:justify-start">
                                 <WhatsAppIcon className="mr-3 text-xl text-blue-400 flex-shrink-0 w-5 h-5" />
-                                <a href="tel:+542216767615" className="hover:text-blue-400 transition-colors duration-300">221 676 7615</a>
+                                <a href="tel:+542216767615" className="hover:text-blue-400 transition-colors duration-300" aria-label="Llamar al 221 676 7615">221 676 7615</a>
                             </li>
                             <li className="flex items-center justify-center md:justify-start">
                                 <MailIcon className="mr-3 text-xl text-blue-400 flex-shrink-0 w-5 h-5" />
@@ -147,7 +147,7 @@ const Footer = () => {
                         className="text-center "
                         variants={columnVariants} // Aplica variantes de columna
                     >
-                        <h3 className="text-lg font-semibold mb-4 uppercase tracking-wider">Seguínos</h3>
+                        <h2 className="text-lg font-semibold mb-4 uppercase tracking-wider">Seguínos</h2>
                         <div className='flex justify-center md:justify-center space-x-4'>
                             <a target='_blank' rel="noopener noreferrer" href={'https://www.instagram.com/tunotebooklp/'} aria-label="Instagram">
                                 <InstagramIcon className="text-3xl text-gray-300 hover:text-pink-500 transition-colors duration-300 w-7 h-7" />
