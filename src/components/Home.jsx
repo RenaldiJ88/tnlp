@@ -92,7 +92,7 @@ const Home = () => {
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 360px) 140px, (max-width: 390px) 160px, (max-width: 480px) 180px, (max-width: 768px) 220px, 300px"
+                        sizes="(max-width: 360px) 120px, (max-width: 390px) 140px, (max-width: 480px) 160px, (max-width: 768px) 200px, 280px"
                     />
                 </motion.div>
             </div>
