@@ -35,28 +35,7 @@ export default function RootLayout({ children }) {
           <link 
             rel="preload" 
             as="image" 
-            href="/img/home/note-home.webp"
-            media="(max-width: 768px)"
-            type="image/webp"
-          />
-          <link 
-            rel="preload" 
-            as="image" 
             href="/img/home/note-home.avif"
-            media="(max-width: 768px)"
-            type="image/avif"
-          />
-          <link 
-            rel="preload" 
-            as="image" 
-            href="/img/home/img-home.webp"
-            media="(max-width: 768px)"
-            type="image/webp"
-          />
-          <link 
-            rel="preload" 
-            as="image" 
-            href="/img/home/img-home.avif"
             media="(max-width: 768px)"
             type="image/avif"
           />
