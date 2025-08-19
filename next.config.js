@@ -30,6 +30,10 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   
+  // Optimizaciones para móvil
+  poweredByHeader: false,
+  compress: true,
+  
   // Configuración de headers para CORS (solo si es necesario)
   async headers() {
     return [

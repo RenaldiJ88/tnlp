@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
+import CriticalImage from "./CriticalImage";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
@@ -86,17 +86,13 @@ const Home = () => {
                     animate="visible"
                     className="w-[280px] h-[200px] sm:w-[350px] sm:h-[250px] md:w-[400px] md:h-[300px] lg:w-[900px] lg:h-[500px] lg:mt-44 xl:w-[950px] xl:h-[570px] my-auto xl:mt-32 2xl:w-[1000px] 2xl:h-[600px] 3xl:w-[1100px] 3xl:h-[700px] 2xl:mt-36"
                 >
-                    <Image
-                        src="/img/home/note-home.png"
+                    <CriticalImage
+                        src="/img/home/note-home.webp"
                         width={1100}
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 400px, (max-width: 1280px) 900px, (max-width: 1536px) 950px, 1100px"
-                        priority={true}
-                        quality={90}
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAQABoDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACgQAAIBAwMEAQQDAAAAAAAAAAECAwAEEQUGITESQVETImFxgZGx8P/EABQBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEQA/AHvT7pzKQVU4B4zVpFXdnU7eyt2uryCUXBOERI5C7N5z6wOetc/1PfN1dxCG1cSMGCBIZcZKj8AcV0nQr+HVrSKe6n09I5FCo0YYhVY5HBB49ZqvGdGnE//Z"
+                        sizes="(max-width: 480px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 400px, (max-width: 1280px) 900px, (max-width: 1536px) 950px, 1100px"
                     />
                 </motion.div>
             </div>
