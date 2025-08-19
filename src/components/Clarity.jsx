@@ -21,12 +21,12 @@ export function MicrosoftClarity() {
       document.head.appendChild(script);
     };
 
-    // Cargar después de que el contenido crítico haya terminado
+    // Cargar después de que el contenido crítico haya terminado - delay más agresivo
     if (document.readyState === 'complete') {
-      setTimeout(loadClarity, 1000);
+      setTimeout(loadClarity, 5000);
     } else {
       window.addEventListener('load', () => {
-        setTimeout(loadClarity, 1000);
+        setTimeout(loadClarity, 5000);
       });
     }
 

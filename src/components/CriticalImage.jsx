@@ -15,7 +15,7 @@ const CriticalImage = ({ src, alt, width, height, className = "", sizes, ...prop
       className={className}
       sizes={sizes}
       priority={true}
-      quality={55}
+      quality={50}
       placeholder="empty"
       loading="eager"
       fetchPriority="high"
