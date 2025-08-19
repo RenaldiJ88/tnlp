@@ -1,69 +1,66 @@
-"use client"; // Indica que este es un componente de cliente
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-// Importamos motion y los hooks necesarios para el scroll y transformaciones
+
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    const imgFon = '/img/home/img-home.jpg'; // Variable para la imagen de fondo
+    const imgFon = '/img/home/img-home.jpg';
 
-    // 1. Variantes de animación para el contenedor del texto (h1 y p)
+
     const containerVariants = {
-        hidden: { opacity: 0 }, // El contenedor inicia invisible
+        hidden: { opacity: 0 },
         visible: {
-            opacity: 1, // Se vuelve visible
+            opacity: 1,
             transition: {
-                staggerChildren: 0.3 // Los hijos (h1 y p) se animarán con un retraso de 0.3 segundos entre sí
+                staggerChildren: 0.3
             }
         }
     };
 
-    // 2. Variantes de animación para los ítems de texto (h1 y p)
+
     const itemVariants = {
-        hidden: { opacity: 0, y: 20 }, // Inicia invisible y 20px hacia abajo
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } } // Termina visible en su posición original
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
     };
 
-    // 3. Variantes de animación para la imagen de la laptop
+
     const laptopImageVariants = {
-        hidden: { opacity: 0, scale: 0.95 }, // Inicia invisible y ligeramente más pequeña
-        visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: "easeOut", delay: 0.5 } } // Termina visible y en tamaño normal, con un pequeño retraso
+        hidden: { opacity: 0, scale: 0.95 },
+        visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: "easeOut", delay: 0.5 } }
     };
 
-    // 4. Variantes de animación para el botón "Comprar Ahora"
+
     const buttonVariants = {
-        hidden: { opacity: 0 }, // Solo fade-in, sin desplazamiento vertical inicial
-        visible: { opacity: 1, transition: { duration: 0.7, ease: "easeOut", delay: 1.2 } } // Aparece con un retraso mayor para ir al final de la secuencia
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.7, ease: "easeOut", delay: 1.2 } }
     };
 
-    // 5. Hooks de Framer Motion para el efecto Parallax del fondo
-    const { scrollYProgress } = useScroll(); // Obtiene el progreso de scroll vertical del documento (de 0 a 1)
-    // Mapea el progreso de scroll a un rango de movimiento vertical del fondo
-    // Ajustado a -150% para que el efecto sea claramente visible
+
+    const { scrollYProgress } = useScroll();
     const yBackground = useTransform(scrollYProgress, [0, 1], ["0%", "-150%"]); 
 
     return (
-    // ¡CAMBIO CLAVE AQUÍ!: Cambiado pt-16 a pt-20 para compensar la altura del Navbar fijo.
-    // Esto asegura que tu contenido inicie justo debajo del Navbar.
+
     <div className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12" >
-        {/* Contenedor del fondo con la imagen de galaxia, el linear-gradient y el efecto parallax */}
+
         <motion.div 
             className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
             style={{ 
-                // Degradado ajustado para una transición más suave de transparente a negro en la parte inferior
+
                 backgroundImage: `linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url(${imgFon})`,
-                y: yBackground // Aplicamos el movimiento vertical del parallax
+                y: yBackground
             }}
         >
-            {/* Contenedor del texto (h1 y p) con animaciones de entrada. Eliminado bg-opacity-50. */}
+
             <motion.div 
-                className="container pt-[15%] md:pt-[25%] lg:pt-[35%] xl:pt-[15%] 2xl:pt-[25%] 3xl:pt-[20%]  2xl:pl-0 mx-auto flex-col items-center relative" // ¡bg-opacity-50 eliminado!
+                className="container pt-[15%] md:pt-[25%] lg:pt-[35%] xl:pt-[15%] 2xl:pt-[25%] 3xl:pt-[20%]  2xl:pl-0 mx-auto flex-col items-center relative"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                {/* Título animado */}
+
                 <motion.h1 
                     className="flex justify-center text-center text-[45px] sm:text-[55px] md:text-[50px] xl:text-[60px] 2xl:text-[75px] 3xl:text-[85px] font-orbitron mt-20 w-full"
                     variants={itemVariants}
@@ -72,7 +69,7 @@ const Home = () => {
                         Expertos en Notebooks
                     </span>
                 </motion.h1>
-                {/* Párrafo animado */}
+
                 <motion.p 
                     className="text-center text-white mx-[5px] text-xl lg:text-3xl 2xl:px-24 3xl:px-36 font-roboto"
                     variants={itemVariants}
@@ -81,7 +78,7 @@ const Home = () => {
                 </motion.p>
             </motion.div>
 
-            {/* Contenedor de la imagen de la laptop con animación de entrada */}
+
             <div className="relative flex justify-center">
                 <motion.div
                     variants={laptopImageVariants}
@@ -91,19 +88,21 @@ const Home = () => {
                 >
                     <Image
                         src="/img/home/note-home.png"
-                        width={400}
-                        height={400}
-                        alt={"notebook"}
+                        width={1100}
+                        height={700}
+                        alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 400px, (max-width: 1280px) 900px, (max-width: 1536px) 950px, 1000px"
+                        sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, (max-width: 1024px) 400px, (max-width: 1280px) 900px, (max-width: 1536px) 950px, 1100px"
                         priority={true}
-                        quality={85}
+                        quality={90}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAQABoDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACgQAAIBAwMEAQQDAAAAAAAAAAECAwAEEQUGITESQVETImFxgZGx8P/EABQBAQAAAAAAAAAAAAAAAAAAAAX/xAAZEQACAwEAAAAAAAAAAAAAAAABAgADESH/2gAMAwEAAhEDEQA/AHvT7pzKQVU4B4zVpFXdnU7eyt2uryCUXBOERI5C7N5z6wOetc/1PfN1dxCG1cSMGCBIZcZKj8AcV0nQr+HVrSKe6n09I5FCo0YYhVY5HBB49ZqvGdGnE//Z"
                     />
                 </motion.div>
             </div>
         </motion.div> 
 
-        {/* Contenedor del botón "Comprar Ahora" con animación de entrada y espaciado inferior ajustado */}
+
         <motion.div 
             className="relative flex justify-center place-items-end mb-5 z-10"
             variants={buttonVariants}

@@ -1,13 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configuración básica para Next.js 13+
   reactStrictMode: true,
   swcMinify: true,
   
-  // Configuración de imágenes
+  // Configuración avanzada de imágenes con Sharp
   images: {
-    domains: ['localhost', 'tunotebooklp.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'tunotebooklp.com',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: false,
+    loader: 'default',
+  },
+  
+  // Configuración de optimización estable
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   
   // Configuración de headers para CORS (solo si es necesario)
@@ -25,4 +45,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;

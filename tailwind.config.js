@@ -8,10 +8,10 @@ export default {
   theme: {
     extend: {
       letterSpacing: {
-        wider: '3px', // Agrega una clase personalizada para letter-spacing
+        wider: '3px',
       },
       fontSize: {
-        'custom-lg': '18px', // Agrega una clase personalizada para font-size
+        'custom-lg': '18px',
       },
       fontFamily: {
         orbitron: ["var(--font-orbitron)"],
