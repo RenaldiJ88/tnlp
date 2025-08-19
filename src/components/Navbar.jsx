@@ -28,7 +28,12 @@ const NavLinks = ({ isProductsDropdownOpen, setProductsDropdownOpen, closeMobile
                 {/* Contenedor del botón y menú desplegable de Productos */}
                 <div className="md:relative text-center text-white">
                     <div className='flex justify-center md:pl-0 pl-4'>
-                        <button className="flex items-center" onClick={handleDropdownClick}>
+                        <button 
+                            className="flex items-center" 
+                            onClick={handleDropdownClick}
+                            aria-label={isProductsDropdownOpen ? "Cerrar menú productos" : "Abrir menú productos"}
+                            aria-expanded={isProductsDropdownOpen}
+                        >
                             <p className="border-b-2 border-transparent text-lg md:text-sm lg:text-lg font-bold md:hover:border-white ">Productos</p>
                             {isProductsDropdownOpen ?
                                 (
@@ -48,7 +53,7 @@ const NavLinks = ({ isProductsDropdownOpen, setProductsDropdownOpen, closeMobile
                         <div className="mx-auto absolute md:mt-4 bg-black text-white w-full flex-col rounded-md p-5 z-50">
                             <ul>
                                 <li className='py-2'>
-                                    <a onClick={() => handleNavLinkClick('/productos')} className="cursor-pointer text-[#dd40d5] font-bold">🔍 Todos los productos</a>
+                                    <a onClick={() => handleNavLinkClick('/productos')} className="cursor-pointer text-[#dd40d5] font-bold" role="button" tabIndex="0" onKeyDown={(e) => e.key === 'Enter' && handleNavLinkClick('/productos')}>🔍 Todos los productos</a>
                                 </li>
                                 <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>
                                 <li className='py-2'>
@@ -56,11 +61,11 @@ const NavLinks = ({ isProductsDropdownOpen, setProductsDropdownOpen, closeMobile
                                 </li>
                                 <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>
                                 <li className='py-2'>
-                                    <a onClick={() => handleNavLinkClick('/EquiposGamer')} className="cursor-pointer">Equipos Gamer</a>
+                                    <a onClick={() => handleNavLinkClick('/EquiposGamer')} className="cursor-pointer" role="button" tabIndex="0" onKeyDown={(e) => e.key === 'Enter' && handleNavLinkClick('/EquiposGamer')}>Equipos Gamer</a>
                                 </li>
                                 <li className='mx-auto border-[1px] my-2 border-white w-10 xl:w-28'> </li>
                                 <li className='py-2'>
-                                    <a onClick={() => handleNavLinkClick('/EquiposOffice')} className="cursor-pointer">Equipos Office</a>
+                                    <a onClick={() => handleNavLinkClick('/EquiposOffice')} className="cursor-pointer" role="button" tabIndex="0" onKeyDown={(e) => e.key === 'Enter' && handleNavLinkClick('/EquiposOffice')}>Equipos Office</a>
                                 </li>
                             </ul>
                         </div>
@@ -108,7 +113,7 @@ const Navbar = () => {
 
     return (
         <nav ref={dropdownRef} className="opacity-100 gap-1 grid md:grid-cols-2 bg-transparent h-20 w-full absolute top-0 z-50">
-            <a className="ml-16 sm:ml-20 md:ml-28" href="/"><img src="/img/logotnlp.png" alt="" className='w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[180px] xl:h-[180px] mx-auto md:mx-2' /></a>
+            <a className="ml-16 sm:ml-20 md:ml-28" href="/" aria-label="Ir a inicio"><img src="/img/logotnlp.png" alt="Tu Notebook LP - Logo" className='w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[180px] xl:h-[180px] mx-auto md:mx-2' /></a>
 
             {/* Versión de escritorio */}
             <div className='hidden md:grid'>
@@ -121,7 +126,11 @@ const Navbar = () => {
 
             {/* Botón de menú hamburguesa para móvil */}
             <div className="space-y-2 grid pt-14 pl-6 sm:pl-10 absolute md:hidden">
-                <button onClick={toggleMobileMenu}>
+                <button 
+                    onClick={toggleMobileMenu}
+                    aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+                    aria-expanded={isMobileMenuOpen}
+                >
                     {isMobileMenuOpen ? <X color="white"/> : <Menu color='white'/>}
                 </button>
             </div>
