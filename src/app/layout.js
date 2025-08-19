@@ -32,6 +32,10 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <head>
           <link rel="icon" href="/img/favicon.ico" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+          <link rel="dns-prefetch" href="https://www.clarity.ms" />
           <link 
             rel="preload" 
             as="image" 
