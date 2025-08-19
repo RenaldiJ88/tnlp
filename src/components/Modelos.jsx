@@ -20,12 +20,12 @@ function Modelos() {
                     <div key={index} className="w-36 md:w-52 mx-5 pb-4 my-auto">
                         <Image
                             src={item}
-                            alt={`Modelo de notebook gaming ${index + 1} - Equipos de alta performance para gamers y profesionales`}
+                            alt={`Modelo ${index + 1}`}
                             width={200}
                             height={125}
                             className="w-full h-auto object-contain"
                             sizes="(max-width: 480px) 150px, (max-width: 768px) 180px, 200px"
-                            quality={80}
+                            quality={70}
                             loading="lazy"
                             placeholder="blur"
                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
