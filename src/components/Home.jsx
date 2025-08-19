@@ -46,8 +46,10 @@ const Home = () => {
     <div className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12" >
 
         <motion.div 
-            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full home-background" 
+            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
             style={{ 
+                backgroundColor: '#1A1A1A',
+                background: `linear-gradient(to bottom, rgba(26,26,26,0.2) 0%, rgba(26,26,26,0.8) 70%, #1A1A1A 100%)`,
                 y: yBackground
             }}
         >
