@@ -33,12 +33,12 @@ export function GoogleAnalytics() {
       });
     };
 
-    // Cargar después del contenido crítico
+    // Cargar después del contenido crítico - delay más agresivo
     if (document.readyState === 'complete') {
-      setTimeout(loadGA, 500);
+      setTimeout(loadGA, 5000);
     } else {
       window.addEventListener('load', () => {
-        setTimeout(loadGA, 500);
+        setTimeout(loadGA, 5000);
       });
     }
 
