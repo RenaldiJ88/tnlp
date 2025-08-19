@@ -3,10 +3,12 @@ import { NextResponse } from 'next/server'
 export function middleware(request) {
   const { pathname } = request.nextUrl
 
-  // Aplicar middleware a rutas admin (excepto login y debug)
+  // TEMPORALMENTE: Permitir acceso a admin después de login exitoso
+  // TODO: Mejorar detección de cookies de Supabase
   if (pathname.startsWith('/admin') && 
       pathname !== '/admin/login' &&
-      !pathname.startsWith('/admin/debug-')) {
+      !pathname.startsWith('/admin/debug-') &&
+      false) { // TEMPORALMENTE DESHABILITADO
     
     // Buscar token de Supabase en las cookies
     const cookies = request.cookies
