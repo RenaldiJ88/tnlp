@@ -1,4 +1,3 @@
-// ProductCard.jsx
 "use client"; 
 
 import React from 'react';
@@ -9,10 +8,10 @@ import { getWhatsAppLink } from "../hooks/whatsappUtils";
 const ProductCard = ({ id, title, image, description, price, isOffer = false, categoria }) => {
     const whatsAppLink = getWhatsAppLink(title, price);
 
-    // Tracking para clicks en productos
+
     const handleProductClick = () => {
         if (typeof window !== 'undefined') {
-            // Google Analytics
+
             if (window.gtag) {
                 window.gtag('event', 'view_item', {
                     item_name: title,
@@ -22,7 +21,7 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
                 });
             }
             
-            // Microsoft Clarity
+
             if (window.clarity) {
                 window.clarity('event', 'product_view', { 
                     product: title, 
@@ -42,7 +41,7 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
             onClick={handleProductClick}
         >
 
-            {/* Etiqueta de oferta */}
+
             {isOffer && (
                 <div className="absolute top-2 right-2 z-10 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
                     OFERTA
@@ -60,10 +59,12 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
                     src={`/${image}`} 
                     alt={title}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 640px) 280px, (max-width: 768px) 350px, (max-width: 1200px) 400px, 320px"
                     className="rounded-md object-contain"
-                    quality={75}
+                    quality={85}
                     loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                 />
             </div>
 
@@ -83,9 +84,9 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
                 href={`/productos/${id}`}
                 className="mt-4 px-6 py-2 bg-[#dd40d5] text-white font-bold rounded-full hover:bg-white hover:text-[#dd40d5] transition-all duration-300 ease-in-out flex items-center justify-center space-x-2"
                 onClick={(e) => {
-                    e.stopPropagation(); // Evitar doble tracking del div padre
+                    e.stopPropagation();
                     if (typeof window !== 'undefined') {
-                        // Google Analytics - Evento de vista de producto
+
                         if (window.gtag) {
                             window.gtag('event', 'view_item', {
                                 item_id: id,
@@ -98,7 +99,7 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
                             });
                         }
                         
-                        // Microsoft Clarity
+            
                         if (window.clarity) {
                             window.clarity('event', 'product_detail_view', { 
                                 product_id: id,
