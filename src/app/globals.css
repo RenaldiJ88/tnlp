@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Mobile-first: Sin background image para óptimo LCP */
+.home-background {
+  background: linear-gradient(to bottom, rgba(26,26,26,0.2) 0%, rgba(26,26,26,0.8) 70%, #1A1A1A 100%) !important;
+}
+
+/* Desktop: Con background image para mejor UX */
+@media (min-width: 1024px) {
+  .home-background {
+    background: linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url('/img/home/img-home.webp') !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+}

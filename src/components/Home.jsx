@@ -46,10 +46,8 @@ const Home = () => {
     <div className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12" >
 
         <motion.div 
-            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
+            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full home-background" 
             style={{ 
-                backgroundColor: '#1A1A1A',
-                background: `linear-gradient(to bottom, rgba(26,26,26,0.2) 0%, rgba(26,26,26,0.8) 70%, #1A1A1A 100%)`,
                 y: yBackground
             }}
         >
@@ -92,7 +90,7 @@ const Home = () => {
                         height={700}
                         alt="notebook gaming de alta gama"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 360px) 140px, (max-width: 390px) 160px, (max-width: 480px) 180px, (max-width: 768px) 220px, 300px"
+                        sizes="(max-width: 360px) 120px, (max-width: 390px) 140px, (max-width: 480px) 160px, (max-width: 768px) 200px, 280px"
                     />
                 </motion.div>
             </div>
