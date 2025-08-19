@@ -48,9 +48,14 @@ export default function RootLayout({ children }) {
       </head>
       <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>
         <SupabaseAuthProvider>
+          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-blue-600 text-white px-4 py-2 z-50">
+            Saltar al contenido principal
+          </a>
           <GoogleAnalytics />
           <MicrosoftClarity />
-          {children}
+          <div id="main-content">
+            {children}
+          </div>
         </SupabaseAuthProvider>
       </body>
     </html>
