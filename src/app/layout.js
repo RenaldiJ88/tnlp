@@ -34,6 +34,8 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="/img/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+          <link rel="preload" href="/_next/static/chunks/main.js" as="script" />
           <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
           <link rel="dns-prefetch" href="https://www.clarity.ms" />
           <link 
