@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import CriticalImage from "./CriticalImage";
+
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    const imgFon = '/img/home/img-home.webp';
+    const imgFon = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800448/tnlp/home/img-home.jpg";
 
 
     const containerVariants = {
@@ -86,7 +86,7 @@ const Home = () => {
                     className="w-[280px] h-[200px] sm:w-[350px] sm:h-[250px] md:w-[400px] md:h-[300px] lg:w-[900px] lg:h-[500px] lg:mt-44 xl:w-[950px] xl:h-[570px] my-auto xl:mt-32 2xl:w-[1000px] 2xl:h-[600px] 3xl:w-[1100px] 3xl:h-[700px] 2xl:mt-36"
                 >
                     <Image
-                        src="/img/home/note-home.webp"
+                        src="https://res.cloudinary.com/dkj7padnu/image/upload/v1755800457/tnlp/home/note-home.png"
                         width={1100}
                         height={700}
                         alt="Notebook gaming de alta performance"
