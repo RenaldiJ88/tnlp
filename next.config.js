@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'tunotebooklp.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
     ],
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [480, 640, 750, 828, 1080, 1200],
