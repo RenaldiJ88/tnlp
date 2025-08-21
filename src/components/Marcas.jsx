@@ -3,12 +3,12 @@ import React from 'react';
 import Image from "next/image";
 import Ticker from 'framer-motion-ticker';
 
-const image1 = '/img/tickers/marcas/Asus Celeste.png';
-const image2 = '/img/tickers/marcas/Dell Celeste.png';
-const image3 = '/img/tickers/marcas/Acer Blanco.png';
-const image4 = '/img/tickers/marcas/MSI.png';
-const image5 = '/img/tickers/marcas/HP Celeste.png';
-const image6 = '/img/tickers/marcas/Lenovo Blanco.png';
+const image1 = 'https://res.cloudinary.com/dkj7padnu/image/upload/v1755800799/tnlp/tickers/marcas/Asus%20Celeste.png';
+const image2 = 'https://res.cloudinary.com/dkj7padnu/image/upload/v1755800802/tnlp/tickers/marcas/Dell%20Celeste.png';
+const image3 = 'https://res.cloudinary.com/dkj7padnu/image/upload/v1755800797/tnlp/tickers/marcas/Acer%20Blanco.png';
+const image4 = 'https://res.cloudinary.com/dkj7padnu/image/upload/v1755800822/tnlp/tickers/marcas/MSI.png';
+const image5 = 'https://res.cloudinary.com/dkj7padnu/image/upload/v1755800809/tnlp/tickers/marcas/HP%20Celeste.png';
+const image6 = 'https://res.cloudinary.com/dkj7padnu/image/upload/v1755800817/tnlp/tickers/marcas/Lenovo%20Blanco.png';
 
 
 

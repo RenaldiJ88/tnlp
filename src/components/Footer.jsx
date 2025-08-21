@@ -93,7 +93,7 @@ const Footer = () => {
                     >
                         <a href="/#home" className="mb-4">
                             <Image
-                                src="/img/logotnlp.png" 
+                                src="https://res.cloudinary.com/dkj7padnu/image/upload/v1755800515/tnlp/logotnlp.png" 
                                 width={150}
                                 height={150}
                                 alt="Logo TuNotebookLaPlata"

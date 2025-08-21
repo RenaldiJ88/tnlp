@@ -43,11 +43,11 @@ const Office = () => {
     }, []);
 
 
-    const backgroundImageURL = "/img/carrousel-equipos/bg-office.jpg";
-    const laptopOffice1 = "/img/carrousel-equipos/6.png";
-    const laptopOffice2 = "/img/carrousel-equipos/7.png";
-    const amdLogo = "/img/carrousel-equipos/amd_logo.png";
-    const intelLogo = "/img/carrousel-equipos/intel_logo.png";
+    const backgroundImageURL = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800403/tnlp/carrousel-equipos/bg-office.jpg";
+    const laptopOffice1 = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800290/tnlp/carrousel-equipos/6.png";
+    const laptopOffice2 = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800345/tnlp/carrousel-equipos/7.png";
+    const amdLogo = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800389/tnlp/carrousel-equipos/amd_logo.png";
+    const intelLogo = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800414/tnlp/carrousel-equipos/intel_logo.png";
 
 
     const titleVariants = {
