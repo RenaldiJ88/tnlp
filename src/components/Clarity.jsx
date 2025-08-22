@@ -21,12 +21,23 @@ export function MicrosoftClarity() {
       document.head.appendChild(script);
     };
 
-    // Cargar después de que el contenido crítico haya terminado - delay más agresivo
+    // MÁXIMO DIFERIDO - Solo después de primera interacción  
+    const handleFirstInteraction = () => {
+      setTimeout(loadClarity, 2000);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('scroll', handleFirstInteraction);
+    };
+
     if (document.readyState === 'complete') {
-      setTimeout(loadClarity, 5000);
+      document.addEventListener('click', handleFirstInteraction);
+      document.addEventListener('scroll', handleFirstInteraction);
+      // Fallback después de 15s si no hay interacción
+      setTimeout(loadClarity, 15000);
     } else {
       window.addEventListener('load', () => {
-        setTimeout(loadClarity, 5000);
+        document.addEventListener('click', handleFirstInteraction);
+        document.addEventListener('scroll', handleFirstInteraction);
+        setTimeout(loadClarity, 15000);
       });
     }
 
