@@ -42,15 +42,7 @@ export default function RootLayout({ children }) {
           <link 
             rel="preload" 
             as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:low,w_800/v1755800448/tnlp/home/img-home.jpg"
-            media="(max-width: 768px)"
-            fetchpriority="high"
-          />
-          <link 
-            rel="preload" 
-            as="image" 
             href="https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:good,w_1920/v1755800448/tnlp/home/img-home.jpg"
-            media="(min-width: 769px)"
             fetchpriority="high"
           />
       </head>

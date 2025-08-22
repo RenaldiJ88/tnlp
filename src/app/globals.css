@@ -12,12 +12,7 @@ img, video {
   max-width: 100%;
 }
 
-/* AUTO-OPTIMIZACIÓN CLOUDINARY - CACHEABLE */
-@media (max-width: 768px) {
-  .home-bg-optimized {
-    background-image: linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url('https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:low,w_800/v1755800448/tnlp/home/img-home.jpg') !important;
-  }
-}
+/* CSS ya no necesario - usando Next.js Image optimizado */
 
 /* REVERTIDO - Solo gradiente para óptimo móvil LCP */
 .home-background {
