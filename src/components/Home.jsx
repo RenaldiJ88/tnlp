@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    // COMPRESIÓN AGRESIVA PARA LCP 3.9s → 2.5s
-    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_50,w_750/v1755800448/tnlp/home/img-home.jpg";
-    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_60,w_1600/v1755800448/tnlp/home/img-home.jpg";
+    // CONFIGURACIÓN ESTABLE QUE FUNCIONABA EN 87 PUNTOS
+    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg";
+    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg";
 
 
     const containerVariants = {

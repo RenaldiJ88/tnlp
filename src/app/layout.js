@@ -37,22 +37,21 @@ export default function RootLayout({ children }) {
           <link rel="preconnect" href="https://res.cloudinary.com" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Orbitron:wght@400;600;700&family=Inter:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-          <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Orbitron:wght@400;600;700&family=Inter:wght@400;700&display=swap" /></noscript>
+          <link rel="preconnect" href="https://wqguqaygrebeqcssvnv.supabase.co" />
 
           <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
           <link rel="dns-prefetch" href="https://www.clarity.ms" />
           <link 
             rel="preload" 
             as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_50,w_750/v1755800448/tnlp/home/img-home.jpg"
+            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg"
             media="(max-width: 768px)"
             fetchpriority="high"
           />
           <link 
             rel="preload" 
             as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_60,w_1600/v1755800448/tnlp/home/img-home.jpg"
+            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg"
             media="(min-width: 769px)"
             fetchpriority="high"
           />
