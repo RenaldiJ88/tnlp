@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optimización de imagen de fondo Home responsiva */
+/* Optimización de imagen de fondo Home responsiva - MÁXIMA COMPRESIÓN */
 @media (max-width: 768px) {
   .home-bg-optimized {
-    background-image: linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url('https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg') !important;
+    background-image: linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url('https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_50,w_800,h_600,c_fill/v1755800448/tnlp/home/img-home.jpg') !important;
   }
 }
 

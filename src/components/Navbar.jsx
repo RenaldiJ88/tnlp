@@ -113,7 +113,7 @@ const Navbar = () => {
 
     return (
         <nav ref={dropdownRef} className="opacity-100 gap-1 grid md:grid-cols-2 bg-transparent h-20 w-full absolute top-0 z-50">
-                            <a className="ml-16 sm:ml-20 md:ml-28" href="/" aria-label="Ir a inicio"><img src="https://res.cloudinary.com/dkj7padnu/image/upload/v1755800515/tnlp/logotnlp.png" alt="Tu Notebook LP - Logo" className='w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[180px] xl:h-[180px] mx-auto md:mx-2' /></a>
+                            <a className="ml-16 sm:ml-20 md:ml-28" href="/" aria-label="Ir a inicio"><img src="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_70,w_180,h_180/v1755800515/tnlp/logotnlp.png" alt="Tu Notebook LP - Logo" className='w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] lg:w-[180px] xl:h-[180px] mx-auto md:mx-2' /></a>
 
             {/* Versión de escritorio */}
             <div className='hidden md:grid'>
