@@ -24,7 +24,36 @@ const inter = Inter({
 
 
 export const metadata = {
-  title: "Tu Notebook La Plata",  
+  title: "Tu Notebook La Plata",
+  description: "Especialistas en notebooks gaming, diseño y office. Llevamos hasta vos notebooks seleccionadas de alta gama. Servicio técnico especializado. La Plata, Argentina.",
+  keywords: "notebooks, laptops, gaming, office, diseño, servicio técnico, La Plata, Argentina, ASUS, HP, Lenovo, MSI, Dell, Acer",
+  authors: [{ name: "Tu Notebook La Plata" }],
+  creator: "Tu Notebook La Plata",
+  publisher: "Tu Notebook La Plata",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    title: "Tu Notebook La Plata - Especialistas en Notebooks",
+    description: "Especialistas en notebooks gaming, diseño y office. Llevamos hasta vos notebooks seleccionadas de alta gama.",
+    url: "https://tunotebooklp.com",
+    siteName: "Tu Notebook La Plata",
+    locale: "es_AR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tu Notebook La Plata - Especialistas en Notebooks",
+    description: "Especialistas en notebooks gaming, diseño y office.",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -35,8 +64,7 @@ export default function RootLayout({ children }) {
           <link rel="preconnect" href="https://res.cloudinary.com" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
-          <link rel="preload" href="/_next/static/chunks/main.js" as="script" />
+
           <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
           <link rel="dns-prefetch" href="https://www.clarity.ms" />
           <link 
