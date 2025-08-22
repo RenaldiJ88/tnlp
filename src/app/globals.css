@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optimización imagen Home - CONFIGURACIÓN 86 PUNTOS */
+/* MÁXIMA OPTIMIZACIÓN LCP - OBJETIVO: 90+ PUNTOS */
 @media (max-width: 768px) {
   .home-bg-optimized {
-    background-image: linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url('https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg') !important;
+    background-image: linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url('https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_45,w_750,h_600,c_fill,g_center/v1755800448/tnlp/home/img-home.jpg') !important;
   }
 }
 
