@@ -26,34 +26,7 @@ const inter = Inter({
 export const metadata = {
   title: "Tu Notebook La Plata",
   description: "Especialistas en notebooks gaming, diseño y office. Llevamos hasta vos notebooks seleccionadas de alta gama. Servicio técnico especializado. La Plata, Argentina.",
-  keywords: "notebooks, laptops, gaming, office, diseño, servicio técnico, La Plata, Argentina, ASUS, HP, Lenovo, MSI, Dell, Acer",
-  authors: [{ name: "Tu Notebook La Plata" }],
-  creator: "Tu Notebook La Plata",
-  publisher: "Tu Notebook La Plata",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  openGraph: {
-    title: "Tu Notebook La Plata - Especialistas en Notebooks",
-    description: "Especialistas en notebooks gaming, diseño y office. Llevamos hasta vos notebooks seleccionadas de alta gama.",
-    url: "https://tunotebooklp.com",
-    siteName: "Tu Notebook La Plata",
-    locale: "es_AR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Tu Notebook La Plata - Especialistas en Notebooks",
-    description: "Especialistas en notebooks gaming, diseño y office.",
-  },
+  robots: "index,follow",
 };
 
 export default function RootLayout({ children }) {
