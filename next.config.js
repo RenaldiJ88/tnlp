@@ -34,10 +34,9 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // Optimización agresiva de bundles
+  // Optimización conservadora
   experimental: {
     optimizeCss: false,
-    optimizePackageImports: ['framer-motion', 'next/image'],
   },
   
   // Optimización para navegadores modernos
