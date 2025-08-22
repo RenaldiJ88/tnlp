@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    // MÁXIMA OPTIMIZACIÓN LCP - OBJETIVO: 3.9s → 2.5s
-    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_45,w_750,h_600,c_fill,g_center/v1755800448/tnlp/home/img-home.jpg";
-    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_55,w_1600,h_900,c_fill,g_center/v1755800448/tnlp/home/img-home.jpg";
+    // USAR URLs QUE FUNCIONABAN + AUTO-OPTIMIZACIÓN CLOUDINARY
+    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:low,w_800/v1755800448/tnlp/home/img-home.jpg";
+    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:good,w_1920/v1755800448/tnlp/home/img-home.jpg";
 
 
     const containerVariants = {
