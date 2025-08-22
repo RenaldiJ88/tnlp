@@ -6,7 +6,9 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    const imgFon = "https://res.cloudinary.com/dkj7padnu/image/upload/v1755800448/tnlp/home/img-home.jpg";
+    // Imagen optimizada responsiva con Cloudinary
+    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg";
+    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg";
 
 
     const containerVariants = {
@@ -46,9 +48,9 @@ const Home = () => {
     <main className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12">
 
         <motion.div 
-            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full" 
+            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full home-bg-optimized" 
             style={{ 
-                backgroundImage: `linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url(${imgFon})`,
+                backgroundImage: `linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url(${imgFonDesktop})`,
                 y: yBackground
             }}
         >
