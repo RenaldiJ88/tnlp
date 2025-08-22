@@ -3,9 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// LAZY LOAD: Framer Motion solo cuando es necesario
-import dynamic from "next/dynamic";
-const motion = dynamic(() => import("framer-motion").then(mod => ({ default: mod.motion })), { ssr: false }); 
+// RESTAURAR: Importación completa de Framer Motion (necesario para build)
+import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
     // CONFIGURACIÓN ESTABLE QUE FUNCIONABA: Desktop 96, Mobile 84
