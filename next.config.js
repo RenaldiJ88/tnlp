@@ -33,6 +33,11 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+
+  // Optimización conservadora
+  experimental: {
+    optimizeCss: false,
+  },
   
   // Optimización para navegadores modernos
   transpilePackages: [],
@@ -41,10 +46,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   
-  // Optimización de CSS
-  experimental: {
-    optimizeCss: false, // Deshabilitamos para evitar blocking
-  },
+
   
   // Configuración de headers para CORS (solo si es necesario)
   async headers() {
