@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// RESTAURAR: Importación completa de Framer Motion (necesario para build)
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
