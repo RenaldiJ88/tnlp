@@ -6,8 +6,8 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    // CONFIGURACIÓN ESTABLE QUE FUNCIONABA EN 87 PUNTOS
-    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg";
+    // MÓVIL MÁS AGRESIVO - DESKTOP PERFECTO (NO TOCAR)
+    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_45,w_640/v1755800448/tnlp/home/img-home.jpg";
     const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg";
 
 
@@ -16,7 +16,7 @@ const Home = () => {
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.3
+                staggerChildren: 0.1 // Reducido de 0.3 a 0.1 para render más rápido
             }
         }
     };
