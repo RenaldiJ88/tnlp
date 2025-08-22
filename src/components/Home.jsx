@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    // USAR URLs QUE FUNCIONABAN + AUTO-OPTIMIZACIÓN CLOUDINARY
-    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:low,w_800/v1755800448/tnlp/home/img-home.jpg";
-    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_auto:good,w_1920/v1755800448/tnlp/home/img-home.jpg";
+    // CONFIGURACIÓN EXACTA QUE FUNCIONABA
+    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg";
+    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg";
 
 
     const containerVariants = {
@@ -48,30 +48,12 @@ const Home = () => {
     <main className="relative flex flex-col h-screen items-center justify-end pt-20 pb-10 md:pb-12">
 
         <motion.div 
-            className="absolute top-0 h-full w-full flex-col lg:flex-row flex img-full" 
+            className="absolute top-0 h-full w-full bg-cover bg-center flex-col lg:flex-row flex img-full home-bg-optimized" 
             style={{ 
+                backgroundImage: `linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%), url(${imgFonDesktop})`,
                 y: yBackground
             }}
         >
-            {/* Imagen de fondo optimizada con Next.js */}
-            <Image
-                src={imgFonDesktop}
-                alt=""
-                fill
-                priority
-                className="object-cover -z-10"
-                sizes="100vw"
-                quality={70}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-            />
-            {/* Gradiente overlay */}
-            <div 
-                className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,26,26,0.8)] z-0"
-                style={{
-                    background: 'linear-gradient(to bottom, transparent 70%, rgba(26,26,26,0.8) 90%, #1A1A1A 100%)'
-                }}
-            />
 
             <motion.div 
                 className="container pt-[15%] md:pt-[25%] lg:pt-[35%] xl:pt-[15%] 2xl:pt-[25%] 3xl:pt-[20%]  2xl:pl-0 mx-auto flex-col items-center relative"
