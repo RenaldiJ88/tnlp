@@ -7,7 +7,7 @@ import { supabase } from '../../../lib/supabase'
 
 export default function ConfiguracionPage() {
   const { authenticatedFetch } = useAuthenticatedFetch()
-  const [activeTab, setActiveTab] = useState('services')
+  const [activeTab, setActiveTab] = useState('servicios')
   const [config, setConfig] = useState({
     servicios: {
       precios: {},
@@ -30,6 +30,65 @@ export default function ConfiguracionPage() {
       eslogan: 'Expertos en Notebooks'
     }
   })
+  const [loading, setLoading] = useState(true)
+
+  // Cargar configuración desde la base de datos
+  useEffect(() => {
+    loadConfiguration()
+  }, [])
+
+  const loadConfiguration = async () => {
+    try {
+      setLoading(true)
+      
+      // Cargar configuración general
+      const configResponse = await authenticatedFetch('/api/admin/configuracion')
+      if (configResponse.ok) {
+        const configData = await configResponse.json()
+        
+        setConfig(prev => ({
+          ...prev,
+          sitio: { ...prev.sitio, ...configData.sitio },
+          tema: { ...prev.tema, ...configData.tema }
+        }))
+      }
+      
+      // Cargar precios de servicios
+      const serviciosResponse = await authenticatedFetch('/api/admin/servicios-precios')
+      if (serviciosResponse.ok) {
+        const serviciosData = await serviciosResponse.json()
+        
+        const precios = {}
+        const activos = {}
+        
+        serviciosData.forEach(servicio => {
+          precios[servicio.servicio_id] = servicio.precio
+          activos[servicio.servicio_id] = servicio.activo
+        })
+        
+        setConfig(prev => ({
+          ...prev,
+          servicios: { precios, activos }
+        }))
+      }
+      
+    } catch (error) {
+      console.error('Error loading configuration:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Cargando configuración...</p>
+        </div>
+      </div>
+    )
+  }
 
   const tabs = [
     { id: 'servicios', name: '🔧 Servicios', description: 'Precios y configuración de servicios' },
@@ -97,7 +156,7 @@ export default function ConfiguracionPage() {
           >
             {activeTab === 'servicios' && <ServiciosConfig config={config} setConfig={setConfig} />}
             {activeTab === 'sitio' && <SitioConfig config={config} setConfig={setConfig} />}
-            {activeTab === 'datos' && <DatosConfig />}
+            {activeTab === 'datos' && <DatosConfig config={config} setConfig={setConfig} />}
             {activeTab === 'tema' && <TemaConfig config={config} setConfig={setConfig} />}
           </motion.div>
         </div>
@@ -165,7 +224,35 @@ function ServiciosConfig({ config, setConfig }) {
         ))}
       </div>
 
-      <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-colors">
+      <button 
+        onClick={async () => {
+          try {
+            // Actualizar precios de servicios
+            const serviciosActualizados = []
+            
+            for (const [servicioId, precio] of Object.entries(config.servicios.precios)) {
+              const response = await authenticatedFetch('/api/admin/servicios-precios', {
+                method: 'PUT',
+                body: JSON.stringify({
+                  servicio_id: servicioId,
+                  precio: precio,
+                  activo: config.servicios.activos[servicioId] !== false
+                })
+              })
+              
+              if (response.ok) {
+                serviciosActualizados.push(servicioId)
+              }
+            }
+            
+            alert(`✅ Configuración guardada: ${serviciosActualizados.length} servicios actualizados`);
+          } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al guardar configuración');
+          }
+        }}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+      >
         💾 Guardar Configuración de Servicios
       </button>
     </div>
@@ -284,7 +371,30 @@ function SitioConfig({ config, setConfig }) {
         </div>
       </div>
 
-      <button className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors">
+      <button 
+        onClick={async () => {
+          try {
+            const response = await authenticatedFetch('/api/admin/configuracion', {
+              method: 'PUT',
+              body: JSON.stringify({
+                seccion: 'sitio',
+                configuracion: config.sitio
+              })
+            })
+            
+            if (response.ok) {
+              alert('✅ Configuración del sitio guardada en la base de datos');
+            } else {
+              const errorData = await response.json()
+              throw new Error(errorData.message || 'Error del servidor')
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al guardar configuración: ' + error.message);
+          }
+        }}
+        className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+      >
         💾 Guardar Configuración del Sitio
       </button>
     </div>
@@ -292,7 +402,8 @@ function SitioConfig({ config, setConfig }) {
 }
 
 // Componente para gestión de datos
-function DatosConfig() {
+function DatosConfig({ config, setConfig }) {
+  const { authenticatedFetch } = useAuthenticatedFetch()
   const [stats, setStats] = useState({
     clientes: 0,
     ordenes: 0,
@@ -403,12 +514,58 @@ function DatosConfig() {
       <div className="border-t pt-6">
         <h3 className="font-medium text-gray-900 mb-4">📦 Backup Completo</h3>
         <div className="space-y-4">
-          <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium transition-colors">
+          <button 
+            onClick={async () => {
+              try {
+                const backupData = {
+                  fecha: new Date().toISOString(),
+                  configuracion: config,
+                  estadisticas: stats
+                };
+                const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `backup-completo-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                alert('✅ Backup completo descargado');
+              } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al crear backup');
+              }
+            }}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+          >
             📥 Descargar Backup Completo
           </button>
           
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-            <input type="file" id="restore" accept=".json" className="hidden" />
+            <input 
+              type="file" 
+              id="restore" 
+              accept=".json" 
+              className="hidden" 
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  try {
+                    const text = await file.text();
+                    const backupData = JSON.parse(text);
+                    console.log('Datos de backup cargados:', backupData);
+                    if (backupData.configuracion) {
+                      setConfig(backupData.configuracion);
+                      alert('✅ Configuración restaurada exitosamente');
+                    } else {
+                      alert('⚠️ Archivo de backup no válido');
+                    }
+                  } catch (error) {
+                    console.error('Error:', error);
+                    alert('❌ Error al restaurar backup');
+                  }
+                }
+              }}
+            />
             <label htmlFor="restore" className="cursor-pointer">
               <div className="text-gray-600">
                 <span className="text-2xl block mb-2">📤</span>
@@ -522,7 +679,30 @@ function TemaConfig({ config, setConfig }) {
         </div>
       </div>
 
-      <button className="w-full bg-pink-600 hover:bg-pink-700 text-white px-4 py-3 rounded-lg font-medium transition-colors">
+      <button 
+        onClick={async () => {
+          try {
+            const response = await authenticatedFetch('/api/admin/configuracion', {
+              method: 'PUT',
+              body: JSON.stringify({
+                seccion: 'tema',
+                configuracion: config.tema
+              })
+            })
+            
+            if (response.ok) {
+              alert('✅ Cambios de tema guardados en la base de datos');
+            } else {
+              const errorData = await response.json()
+              throw new Error(errorData.message || 'Error del servidor')
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al aplicar cambios: ' + error.message);
+          }
+        }}
+        className="w-full bg-pink-600 hover:bg-pink-700 text-white px-4 py-3 rounded-lg font-medium transition-colors"
+      >
         💾 Aplicar Cambios de Tema
       </button>
     </div>

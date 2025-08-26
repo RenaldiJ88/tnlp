@@ -37,24 +37,9 @@ export default function RootLayout({ children }) {
           <link rel="preconnect" href="https://res.cloudinary.com" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link rel="preconnect" href="https://wqguqaygrebeqcssvnv.supabase.co" />
-
+          
           <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
           <link rel="dns-prefetch" href="https://www.clarity.ms" />
-          <link 
-            rel="preload" 
-            as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg"
-            media="(max-width: 768px)"
-            fetchpriority="high"
-          />
-          <link 
-            rel="preload" 
-            as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg"
-            media="(min-width: 769px)"
-            fetchpriority="high"
-          />
       </head>
       <body className={`${orbitron.variable} ${inter.variable} ${roboto.variable}`}>
         <SupabaseAuthProvider>
