@@ -7,9 +7,9 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    // OPTIMIZACIÓN LCP: Formatos más eficientes y tamaños específicos
-    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_50,w_600,h_400,c_fill/v1755800448/tnlp/home/img-home.jpg";
-    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_65,w_1600,h_900,c_fill/v1755800448/tnlp/home/img-home.jpg";
+    // CONFIGURACIÓN ESTABLE QUE FUNCIONABA: Desktop 96, Mobile 84
+    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg";
+    const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg";
 
 
     const containerVariants = {
@@ -89,16 +89,15 @@ const Home = () => {
                     className="w-[280px] h-[200px] sm:w-[350px] sm:h-[250px] md:w-[400px] md:h-[300px] lg:w-[900px] lg:h-[500px] lg:mt-44 xl:w-[950px] xl:h-[570px] my-auto xl:mt-32 2xl:w-[1000px] 2xl:h-[600px] 3xl:w-[1100px] 3xl:h-[700px] 2xl:mt-36"
                 >
                     <Image
-                        src="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_75,w_1100,h_700,c_fit/v1755800457/tnlp/home/note-home.png"
+                        src="https://res.cloudinary.com/dkj7padnu/image/upload/v1755800457/tnlp/home/note-home.png"
                         width={1100}
                         height={700}
                         alt="Notebook gaming de alta performance"
                         className="w-full h-full object-contain"
-                        sizes="(max-width: 360px) 280px, (max-width: 390px) 300px, (max-width: 480px) 320px, (max-width: 768px) 400px, 900px"
+                        sizes="(max-width: 360px) 280px, (max-width: 390px) 300px, (max-width: 480px) 320px, (max-width: 768px) 400px, 500px"
                         quality={75}
                         priority={true}
                         placeholder="blur"
-                        fetchPriority="high"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                     />
                 </motion.div>
