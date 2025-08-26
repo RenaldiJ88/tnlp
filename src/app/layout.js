@@ -44,21 +44,15 @@ export default function RootLayout({ children }) {
           <link 
             rel="preload" 
             as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_50,w_600,h_400,c_fill/v1755800448/tnlp/home/img-home.jpg"
+            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg"
             media="(max-width: 768px)"
             fetchpriority="high"
           />
           <link 
             rel="preload" 
             as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_65,w_1600,h_900,c_fill/v1755800448/tnlp/home/img-home.jpg"
+            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg"
             media="(min-width: 769px)"
-            fetchpriority="high"
-          />
-          <link 
-            rel="preload" 
-            as="image" 
-            href="https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_75,w_1100,h_700,c_fit/v1755800457/tnlp/home/note-home.png"
             fetchpriority="high"
           />
       </head>
