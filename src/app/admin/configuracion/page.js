@@ -41,41 +41,69 @@ export default function ConfiguracionPage() {
     try {
       setLoading(true)
       
-      // Cargar configuración general
-      const configResponse = await authenticatedFetch('/api/admin/configuracion')
-      if (configResponse.ok) {
-        const configData = await configResponse.json()
-        
-        setConfig(prev => ({
-          ...prev,
-          sitio: { ...prev.sitio, ...configData.sitio },
-          tema: { ...prev.tema, ...configData.tema }
-        }))
+      // Cargar configuración general (con manejo de errores mejorado)
+      try {
+        const configResponse = await authenticatedFetch('/api/admin/configuracion')
+        if (configResponse.ok) {
+          const configData = await configResponse.json()
+          
+          setConfig(prev => ({
+            ...prev,
+            sitio: { ...prev.sitio, ...configData.sitio },
+            tema: { ...prev.tema, ...configData.tema }
+          }))
+        } else {
+          console.warn('No se pudo cargar configuración desde la DB, usando valores por defecto')
+        }
+      } catch (configError) {
+        console.warn('Error cargando configuración:', configError.message)
       }
       
-      // Cargar precios de servicios
-      const serviciosResponse = await authenticatedFetch('/api/admin/servicios-precios')
-      if (serviciosResponse.ok) {
-        const serviciosData = await serviciosResponse.json()
-        
-        const precios = {}
-        const activos = {}
-        
-        serviciosData.forEach(servicio => {
-          precios[servicio.servicio_id] = servicio.precio
-          activos[servicio.servicio_id] = servicio.activo
-        })
-        
-        setConfig(prev => ({
-          ...prev,
-          servicios: { precios, activos }
-        }))
+      // Cargar precios de servicios (con manejo de errores mejorado)  
+      try {
+        const serviciosResponse = await authenticatedFetch('/api/admin/servicios-precios')
+        if (serviciosResponse.ok) {
+          const serviciosData = await serviciosResponse.json()
+          
+          const precios = {}
+          const activos = {}
+          
+          serviciosData.forEach(servicio => {
+            precios[servicio.servicio_id] = servicio.precio
+            activos[servicio.servicio_id] = servicio.activo
+          })
+          
+          setConfig(prev => ({
+            ...prev,
+            servicios: { precios, activos }
+          }))
+        } else {
+          console.warn('No se pudo cargar precios de servicios desde la DB, usando valores por defecto')
+        }
+      } catch (serviciosError) {
+        console.warn('Error cargando servicios:', serviciosError.message)
       }
       
     } catch (error) {
-      console.error('Error loading configuration:', error)
+      console.error('Error general loading configuration:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const setupDatabase = async () => {
+    try {
+      const response = await authenticatedFetch('/api/admin/setup-db')
+      const result = await response.json()
+      
+      if (result.success) {
+        alert('✅ Base de datos verificada correctamente')
+        loadConfiguration() // Recargar configuración
+      } else {
+        alert(`⚠️ ${result.message}\n\nDetalles:\n${result.results.errors.join('\n')}`)
+      }
+    } catch (error) {
+      alert('❌ Error verificando la base de datos: ' + error.message)
     }
   }
 
@@ -125,9 +153,18 @@ export default function ConfiguracionPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">⚙️ Configuración</h1>
-        <p className="text-gray-600">Personaliza y configura tu sistema administrativo</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">⚙️ Configuración</h1>
+          <p className="text-gray-600">Personaliza y configura tu sistema administrativo</p>
+        </div>
+        <button
+          onClick={setupDatabase}
+          className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+        >
+          <span>🔧</span>
+          <span>Verificar DB</span>
+        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -154,10 +191,10 @@ export default function ConfiguracionPage() {
             transition={{ duration: 0.3 }}
             className="bg-white rounded-lg shadow-md p-6"
           >
-            {activeTab === 'servicios' && <ServiciosConfig config={config} setConfig={setConfig} />}
-            {activeTab === 'sitio' && <SitioConfig config={config} setConfig={setConfig} />}
-            {activeTab === 'datos' && <DatosConfig config={config} setConfig={setConfig} />}
-            {activeTab === 'tema' && <TemaConfig config={config} setConfig={setConfig} />}
+            {activeTab === 'servicios' && <ServiciosConfig config={config} setConfig={setConfig} authenticatedFetch={authenticatedFetch} />}
+            {activeTab === 'sitio' && <SitioConfig config={config} setConfig={setConfig} authenticatedFetch={authenticatedFetch} />}
+            {activeTab === 'datos' && <DatosConfig config={config} setConfig={setConfig} authenticatedFetch={authenticatedFetch} />}
+            {activeTab === 'tema' && <TemaConfig config={config} setConfig={setConfig} authenticatedFetch={authenticatedFetch} />}
           </motion.div>
         </div>
       </div>
@@ -166,7 +203,7 @@ export default function ConfiguracionPage() {
 }
 
 // Componente para configuración de servicios
-function ServiciosConfig({ config, setConfig }) {
+function ServiciosConfig({ config, setConfig, authenticatedFetch }) {
   const [servicios] = useState([
     { id: 'limpieza-advance-cpu', nombre: 'Limpieza Advance CPU', precio: 8000, categoria: 'Mantenimiento' },
     { id: 'limpieza-advance-notebook', nombre: 'Limpieza Advance Notebook', precio: 7000, categoria: 'Mantenimiento' },
@@ -260,7 +297,7 @@ function ServiciosConfig({ config, setConfig }) {
 }
 
 // Componente para configuración del sitio
-function SitioConfig({ config, setConfig }) {
+function SitioConfig({ config, setConfig, authenticatedFetch }) {
   const handleSitioChange = (field, value) => {
     setConfig(prev => ({
       ...prev,
@@ -402,8 +439,7 @@ function SitioConfig({ config, setConfig }) {
 }
 
 // Componente para gestión de datos
-function DatosConfig({ config, setConfig }) {
-  const { authenticatedFetch } = useAuthenticatedFetch()
+function DatosConfig({ config, setConfig, authenticatedFetch }) {
   const [stats, setStats] = useState({
     clientes: 0,
     ordenes: 0,
@@ -580,7 +616,7 @@ function DatosConfig({ config, setConfig }) {
 }
 
 // Componente para personalización del tema
-function TemaConfig({ config, setConfig }) {
+function TemaConfig({ config, setConfig, authenticatedFetch }) {
   const handleTemaChange = (field, value) => {
     setConfig(prev => ({
       ...prev,
