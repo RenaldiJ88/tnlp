@@ -56,12 +56,12 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
 
             <div className="relative w-full h-40 mb-3 flex-shrink-0">
                 <Image
-                    src={`https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_60,w_400,h_300,c_fit/tnlp/products/${image.replace('img/products/', '').replace('img/products/office/', 'office/')}`}
+                    src={`https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_55,w_350,h_250,c_fit/tnlp/products/${image.replace('img/products/', '').replace('img/products/office/', 'office/')}`}
                     alt={title}
                     fill
-                    sizes="(max-width: 480px) 250px, (max-width: 768px) 320px, (max-width: 1200px) 380px, 340px"
+                    sizes="(max-width: 480px) 250px, (max-width: 768px) 320px, (max-width: 1200px) 350px, 320px"
                     className="rounded-md object-contain"
-                    quality={60}
+                    quality={55}
                     loading="lazy"
                     placeholder="blur"
                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
