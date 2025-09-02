@@ -42,19 +42,19 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
         >
 
 
-            {/* Badges de oferta y stock */}
-            <div className="absolute top-2 right-2 z-10 space-y-1">
-                {isOffer && (
-                    <div className="bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
-                        OFERTA
-                    </div>
-                )}
-                {en_stock === false && (
-                    <div className="bg-gray-600 text-white px-2 py-1 rounded-full text-xs font-bold">
-                        SIN STOCK
-                    </div>
-                )}
-            </div>
+            {/* Badge de oferta (derecha) */}
+            {isOffer && (
+                <div className="absolute top-2 right-2 z-10 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
+                    OFERTA
+                </div>
+            )}
+
+            {/* Badge de sin stock (izquierda, más notorio) */}
+            {en_stock === false && (
+                <div className="absolute top-2 left-2 z-10 bg-red-800 text-white px-3 py-2 rounded-lg text-sm font-bold shadow-lg border-2 border-red-600 animate-pulse">
+                    ❌ SIN STOCK
+                </div>
+            )}
 
             <div className="text-center mb-3"> 
                 <h3 className="font-orbitron text-white text-lg font-bold">

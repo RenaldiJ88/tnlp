@@ -70,11 +70,17 @@ export default function ProductosAdmin() {
 
   const handleToggleStock = async (productId, currentStock) => {
     try {
+      // Normalizar el valor actual del stock (undefined, null o false = false, true = true)
+      const isCurrentlyInStock = currentStock === true
+      const newStockValue = !isCurrentlyInStock
+      
+      console.log('Toggling stock:', { productId, currentStock, isCurrentlyInStock, newStockValue })
+      
       const response = await authenticatedFetch('/api/admin/products', {
         method: 'PUT',
         body: JSON.stringify({
           id: productId,
-          en_stock: !currentStock
+          en_stock: newStockValue
         })
       })
       
@@ -82,10 +88,13 @@ export default function ProductosAdmin() {
         // Actualizar el producto en el estado local
         setProducts(products.map(p => 
           p.id === productId 
-            ? { ...p, en_stock: !currentStock }
+            ? { ...p, en_stock: newStockValue }
             : p
         ))
+        console.log('Stock updated successfully')
       } else {
+        const errorData = await response.text()
+        console.error('Error response:', errorData)
         alert('Error al actualizar stock')
       }
     } catch (error) {
@@ -172,19 +181,19 @@ export default function ProductosAdmin() {
           📷 Sin imagen
         </div>
         
-        {/* Badges */}
-        <div className="absolute top-2 right-2 space-y-1">
-          {product.isOffer && (
-            <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-              OFERTA
-            </div>
-          )}
-          {product.en_stock === false && (
-            <div className="bg-gray-500 text-white px-2 py-1 rounded text-xs font-bold">
-              SIN STOCK
-            </div>
-          )}
-        </div>
+        {/* Badge de oferta (derecha) */}
+        {product.isOffer && (
+          <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+            OFERTA
+          </div>
+        )}
+
+        {/* Badge de sin stock (izquierda, más notorio) */}
+        {product.en_stock === false && (
+          <div className="absolute top-2 left-2 z-10 bg-red-800 text-white px-3 py-2 rounded-lg text-sm font-bold shadow-lg border-2 border-red-600">
+            ❌ SIN STOCK
+          </div>
+        )}
       </div>
 
       {/* Contenido */}
