@@ -21,41 +21,89 @@ export default function ServiciosTecnicosAdmin() {
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
 
-  // Configuración de servicios y opciones
-  const serviceOptions = {
-    "Mantenimiento": {
-      "Limpiezas": [
-        "Limpieza Advance CPU",
-        "Limpieza Advance notebook", 
-        "Limpieza Pro G CPU",
-        "Limpieza Pro G notebook",
-        "Limpieza Elite notebook",
-        "Limpieza Pro G play/xbox"
-      ]
-    },
-    "Up-Grade y mejoras": {
-      "Mejoras": [
-        "Agregar SSD",
-        "Agregar RAM", 
-        "Instalación SO",
-        "Evolución de rendimiento"
-      ]
-    },
-    "Reparaciones": {
-      "Componentes": [
-        "Mother",
-        "Cargador", 
-        "Pin de carga"
-      ],
-      "Hardware": [
-        "Bisagras",
-        "Pantalla",
-        "Teclado", 
-        "Batería",
-        "Carcasa"
-      ]
+  // Configuración de servicios y opciones - ahora cargados dinámicamente
+  const [serviceOptions, setServiceOptions] = useState({})
+  const [servicePrices, setServicePrices] = useState({})
+  const [loadingServices, setLoadingServices] = useState(true)
+
+  // Cargar servicios desde la base de datos
+  const loadServiceOptions = useCallback(async () => {
+    try {
+      setLoadingServices(true)
+      const response = await authenticatedFetch('/api/admin/servicios-precios?activos=true')
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+      
+      const serviciosData = await response.json()
+      
+      // Organizar servicios por categoría y subcategoría
+      const options = {}
+      const prices = {}
+      
+      serviciosData.forEach(servicio => {
+        const { categoria, subcategoria, nombre, precio, servicio_id } = servicio
+        
+        // Organizar por estructura de categorías
+        if (!options[categoria]) {
+          options[categoria] = {}
+        }
+        if (!options[categoria][subcategoria]) {
+          options[categoria][subcategoria] = []
+        }
+        
+        options[categoria][subcategoria].push(nombre)
+        
+        // Guardar precios por ID de servicio y nombre
+        prices[servicio_id] = precio
+        prices[`${categoria}-${subcategoria}-${nombre}`] = precio
+      })
+      
+      setServiceOptions(options)
+      setServicePrices(prices)
+      
+    } catch (error) {
+      console.error('Error loading service options:', error)
+      // Fallback a servicios por defecto en caso de error
+      setServiceOptions({
+        "Mantenimiento": {
+          "Limpiezas": [
+            "Limpieza Advance CPU",
+            "Limpieza Advance Notebook", 
+            "Limpieza Pro G CPU",
+            "Limpieza Pro G Notebook",
+            "Limpieza Elite Notebook",
+            "Limpieza Pro G Play/Xbox"
+          ]
+        },
+        "Up-Grade y mejoras": {
+          "Mejoras": [
+            "Agregar SSD",
+            "Agregar RAM", 
+            "Instalación SO",
+            "Evolución de rendimiento"
+          ]
+        },
+        "Reparaciones": {
+          "Componentes": [
+            "Reparación Mother",
+            "Reparación Cargador", 
+            "Reparación Pin de carga"
+          ],
+          "Hardware": [
+            "Cambio Bisagras",
+            "Cambio Pantalla",
+            "Cambio Teclado", 
+            "Cambio Batería",
+            "Cambio Carcasa"
+          ]
+        }
+      })
+    } finally {
+      setLoadingServices(false)
     }
-  }
+  }, [authenticatedFetch])
 
   const loadClients = useCallback(async () => {
     try {
@@ -96,7 +144,8 @@ export default function ServiciosTecnicosAdmin() {
   useEffect(() => {
     loadClients()
     loadOrders()
-  }, [loadClients, loadOrders])
+    loadServiceOptions()
+  }, [loadClients, loadOrders, loadServiceOptions])
 
   const handleDeleteClient = async (clientId) => {
     if (!confirm('¿Estás seguro de que quieres eliminar este cliente?')) {
@@ -254,6 +303,8 @@ export default function ServiciosTecnicosAdmin() {
         <ServiceModal
           client={selectedClient}
           serviceOptions={serviceOptions}
+          servicePrices={servicePrices}
+          loadingServices={loadingServices}
           authenticatedFetch={authenticatedFetch}
           onClose={() => {
             setShowServiceModal(false)
@@ -515,7 +566,7 @@ function ClientModal({ client, onClose, onSave, authenticatedFetch }) {
 }
 
 // Modal para crear orden de servicio
-function ServiceModal({ client, serviceOptions, onClose, onSave, authenticatedFetch }) {
+function ServiceModal({ client, serviceOptions, servicePrices, loadingServices, onClose, onSave, authenticatedFetch }) {
   const [selectedServices, setSelectedServices] = useState([])
   const [orderDetails, setOrderDetails] = useState({
     descripcionEquipo: '',
@@ -533,13 +584,16 @@ function ServiceModal({ client, serviceOptions, onClose, onSave, authenticatedFe
       // Remover servicio
       setSelectedServices(selectedServices.filter((_, index) => index !== existingIndex))
     } else {
+      // Obtener precio de la base de datos o usar el precio pasado como parámetro
+      const precioFinal = servicePrices[serviceId] || servicePrices[`${categoria}-${subcategoria}-${opcion}`] || precio || 0
+      
       // Agregar servicio
       const newService = {
         id: serviceId,
         categoria,
         subcategoria,
         opcion,
-        precio: precio || 0
+        precio: precioFinal
       }
       setSelectedServices([...selectedServices, newService])
     }
@@ -658,17 +712,27 @@ function ServiceModal({ client, serviceOptions, onClose, onSave, authenticatedFe
             {/* Selector de servicios */}
             <div>
               <h3 className="text-lg font-semibold mb-4">Servicios a Realizar</h3>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {Object.entries(serviceOptions).map(([categoria, subcategorias]) => (
-                  <ServiceCategoryCard
-                    key={categoria}
-                    categoria={categoria}
-                    subcategorias={subcategorias}
-                    onServiceToggle={handleServiceToggle}
-                    isServiceSelected={isServiceSelected}
-                  />
-                ))}
-              </div>
+              {loadingServices ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Cargando servicios disponibles...</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {Object.entries(serviceOptions).map(([categoria, subcategorias]) => (
+                    <ServiceCategoryCard
+                      key={categoria}
+                      categoria={categoria}
+                      subcategorias={subcategorias}
+                      servicePrices={servicePrices}
+                      onServiceToggle={handleServiceToggle}
+                      isServiceSelected={isServiceSelected}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Servicios seleccionados */}
