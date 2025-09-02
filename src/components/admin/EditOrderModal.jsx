@@ -7,7 +7,7 @@ import { useAuthenticatedFetch } from '../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../lib/supabase'
 
 // Modal para editar orden de servicio
-export default function EditOrderModal({ order, client, serviceOptions, onClose, onSave }) {
+export default function EditOrderModal({ order, client, serviceOptions, servicePrices, onClose, onSave }) {
   const { authenticatedFetch } = useAuthenticatedFetch()
   const [selectedServices, setSelectedServices] = useState(order.servicios_seleccionados || [])
   const [orderDetails, setOrderDetails] = useState({
@@ -27,13 +27,16 @@ export default function EditOrderModal({ order, client, serviceOptions, onClose,
       // Remover servicio
       setSelectedServices(selectedServices.filter((_, index) => index !== existingIndex))
     } else {
+      // Obtener precio de la base de datos o usar el precio pasado como parámetro
+      const precioFinal = servicePrices?.[serviceId] || servicePrices?.[`${categoria}-${subcategoria}-${opcion}`] || precio || 0
+      
       // Agregar servicio
       const newService = {
         id: serviceId,
         categoria,
         subcategoria,
         opcion,
-        precio: precio || 0
+        precio: precioFinal
       }
       setSelectedServices([...selectedServices, newService])
     }
@@ -183,6 +186,7 @@ export default function EditOrderModal({ order, client, serviceOptions, onClose,
                     key={categoria}
                     categoria={categoria}
                     subcategorias={subcategorias}
+                    servicePrices={servicePrices}
                     onServiceToggle={handleServiceToggle}
                     isServiceSelected={isServiceSelected}
                   />
