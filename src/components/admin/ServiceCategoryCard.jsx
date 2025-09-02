@@ -4,36 +4,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 
 // Componente para cada categoría de servicio
-export default function ServiceCategoryCard({ categoria, subcategorias, onServiceToggle, isServiceSelected }) {
+export default function ServiceCategoryCard({ categoria, subcategorias, servicePrices = {}, onServiceToggle, isServiceSelected }) {
   const [expandedSubcat, setExpandedSubcat] = useState(null)
-  
-  // Definir precios base para cada servicio (puedes ajustarlos)
-  const servicePrices = {
-    "Mantenimiento": {
-      "Limpieza Advance CPU": 8000,
-      "Limpieza Advance notebook": 7000, 
-      "Limpieza Pro G CPU": 12000,
-      "Limpieza Pro G notebook": 10000,
-      "Limpieza Elite notebook": 15000,
-      "Limpieza Pro G play/xbox": 9000
-    },
-    "Up-Grade y mejoras": {
-      "Agregar SSD": 15000,
-      "Agregar RAM": 12000,
-      "Instalación SO": 8000,
-      "Evolución de rendimiento": 10000
-    },
-    "Reparaciones": {
-      "Mother": 25000,
-      "Cargador": 8000,
-      "Pin de carga": 12000,
-      "Bisagras": 15000,
-      "Pantalla": 30000,
-      "Teclado": 18000,
-      "Batería": 20000,
-      "Carcasa": 22000
-    }
-  }
 
   // Íconos para cada categoría
   const categoryIcons = {
@@ -42,8 +14,43 @@ export default function ServiceCategoryCard({ categoria, subcategorias, onServic
     "Reparaciones": "🔧"
   }
 
-  const getServicePrice = (opcion) => {
-    return servicePrices[categoria]?.[opcion] || 0
+  const getServicePrice = (subcategoria, opcion) => {
+    // Buscar precio por diferentes patrones
+    const patterns = [
+      `${categoria}-${subcategoria}-${opcion}`,
+      `${categoria}-${opcion}`,
+      opcion
+    ]
+    
+    for (const pattern of patterns) {
+      if (servicePrices[pattern]) {
+        return servicePrices[pattern]
+      }
+    }
+    
+    // Fallback: precios por defecto si no se encuentra en la DB
+    const fallbackPrices = {
+      "Limpieza Advance CPU": 8000,
+      "Limpieza Advance Notebook": 7000,
+      "Limpieza Pro G CPU": 10000,
+      "Limpieza Pro G Notebook": 9000,
+      "Limpieza Elite Notebook": 12000,
+      "Limpieza Pro G Play/Xbox": 8500,
+      "Agregar SSD": 15000,
+      "Agregar RAM": 12000,
+      "Instalación SO": 5000,
+      "Evolución de rendimiento": 18000,
+      "Reparación Mother": 25000,
+      "Reparación Cargador": 8000,
+      "Reparación Pin de carga": 12000,
+      "Cambio Bisagras": 15000,
+      "Cambio Pantalla": 20000,
+      "Cambio Teclado": 10000,
+      "Cambio Batería": 12000,
+      "Cambio Carcasa": 18000
+    }
+    
+    return fallbackPrices[opcion] || 0
   }
 
   return (
@@ -90,7 +97,7 @@ export default function ServiceCategoryCard({ categoria, subcategorias, onServic
                 className="mt-2 space-y-2"
               >
                 {opciones.map(opcion => {
-                  const precio = getServicePrice(opcion)
+                  const precio = getServicePrice(subcategoria, opcion)
                   const isSelected = isServiceSelected(categoria, subcategoria, opcion)
                   
                   return (
