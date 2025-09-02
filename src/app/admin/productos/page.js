@@ -67,6 +67,32 @@ export default function ProductosAdmin() {
     }
   }
 
+  const handleToggleStock = async (productId, currentStock) => {
+    try {
+      const response = await authenticatedFetch('/api/admin/products', {
+        method: 'PUT',
+        body: JSON.stringify({
+          id: productId,
+          en_stock: !currentStock
+        })
+      })
+      
+      if (response.ok) {
+        // Actualizar el producto en el estado local
+        setProducts(products.map(p => 
+          p.id === productId 
+            ? { ...p, en_stock: !currentStock }
+            : p
+        ))
+      } else {
+        alert('Error al actualizar stock')
+      }
+    } catch (error) {
+      console.error('Error updating stock:', error)
+      alert('Error al actualizar stock')
+    }
+  }
+
   const handleEditProduct = (product) => {
     setEditingProduct(product)
     setShowModal(true)
@@ -89,7 +115,7 @@ export default function ProductosAdmin() {
   // Obtener categorías únicas - Asegurar que products sea un array
   const categories = [...new Set((Array.isArray(products) ? products : []).map(p => p.category).filter(Boolean))]
 
-  const ProductCard = ({ product }) => (
+  const ProductCard = ({ product, onToggleStock }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -114,12 +140,19 @@ export default function ProductosAdmin() {
           📷 Sin imagen
         </div>
         
-        {/* Badge de oferta */}
-        {product.isOffer && (
-          <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
-            OFERTA
-          </div>
-        )}
+        {/* Badges */}
+        <div className="absolute top-2 right-2 space-y-1">
+          {product.isOffer && (
+            <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+              OFERTA
+            </div>
+          )}
+          {product.en_stock === false && (
+            <div className="bg-gray-500 text-white px-2 py-1 rounded text-xs font-bold">
+              SIN STOCK
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Contenido */}
@@ -140,6 +173,27 @@ export default function ProductosAdmin() {
               {product.category}
             </span>
           )}
+        </div>
+
+        {/* Switch de Stock */}
+        <div className="flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm font-medium text-gray-700">Stock:</span>
+            <span className={`text-sm font-bold ${
+              product.en_stock !== false ? 'text-green-600' : 'text-red-600'
+            }`}>
+              {product.en_stock !== false ? '✅ Disponible' : '❌ Sin stock'}
+            </span>
+          </div>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              checked={product.en_stock !== false}
+              onChange={() => onToggleStock(product.id, product.en_stock)}
+              className="sr-only peer"
+            />
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+          </label>
         </div>
 
         {/* Acciones */}
@@ -238,7 +292,11 @@ export default function ProductosAdmin() {
       >
         <AnimatePresence>
           {filteredProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              onToggleStock={handleToggleStock}
+            />
           ))}
         </AnimatePresence>
       </div>
@@ -287,6 +345,7 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
     image: '',
     category: '',
     isOffer: false,
+    en_stock: true,
     ...product
   })
   const [saving, setSaving] = useState(false)
@@ -424,17 +483,32 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
               />
             </div>
 
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="isOffer"
-                checked={formData.isOffer}
-                onChange={(e) => setFormData({...formData, isOffer: e.target.checked})}
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="isOffer" className="ml-2 block text-sm text-gray-900">
-                Producto en oferta
-              </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="isOffer"
+                  checked={formData.isOffer}
+                  onChange={(e) => setFormData({...formData, isOffer: e.target.checked})}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label htmlFor="isOffer" className="ml-2 block text-sm text-gray-900">
+                  Producto en oferta
+                </label>
+              </div>
+              
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="en_stock"
+                  checked={formData.en_stock !== false}
+                  onChange={(e) => setFormData({...formData, en_stock: e.target.checked})}
+                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                />
+                <label htmlFor="en_stock" className="ml-2 block text-sm text-gray-900">
+                  Producto en stock
+                </label>
+              </div>
             </div>
 
             <div className="flex justify-end space-x-3 pt-4">
