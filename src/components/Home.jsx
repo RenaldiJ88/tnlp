@@ -3,37 +3,28 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// RESTAURAR: Importación completa de Framer Motion (necesario para build)
 import { motion, useScroll, useTransform } from "framer-motion"; 
 
 const Home = () => {
-    // CONFIGURACIÓN ESTABLE QUE FUNCIONABA: Desktop 96, Mobile 84
-    const imgFonMobile = "https://res.cloudinary.com/dkj7padnu/image/upload/f_avif,q_60,w_800/v1755800448/tnlp/home/img-home.jpg";
     const imgFonDesktop = "https://res.cloudinary.com/dkj7padnu/image/upload/f_webp,q_70,w_1920/v1755800448/tnlp/home/img-home.jpg";
-
 
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.3 // Restaurado valor original que funcionaba
-            }
+            transition: { staggerChildren: 0.3 }
         }
     };
-
 
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
     };
 
-
     const laptopImageVariants = {
         hidden: { opacity: 0, scale: 0.95 },
         visible: { opacity: 1, scale: 1, transition: { duration: 1, ease: "easeOut", delay: 0.5 } }
     };
-
 
     const buttonVariants = {
         hidden: { opacity: 0 },

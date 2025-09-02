@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import ServiceCard from './ServiceCard';
 import data from '../data/services.json';
 import { motion } from "framer-motion";
@@ -8,27 +7,22 @@ import { motion } from "framer-motion";
 const Servicios = () => {
   const serviciosData = data.servicios;    
 
-  // Variantes para el título "SERVICIOS"
   const titleVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
-  // Variantes para el contenedor de las ServiceCard (para escalonar la aparición)
   const containerCardsVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2 // Cada ServiceCard aparecerá con un retraso de 0.2s
-      }
+      transition: { staggerChildren: 0.2 }
     }
   };
 
-  // ¡¡¡AHORA DEFINIMOS itemVariants AQUÍ EN Servicios.jsx!!!
   const itemVariants = {
-    hidden: { opacity: 0, y: 50 }, // Inicia invisible y 50px hacia abajo
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } // Termina visible y en su posición original
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
   return (
@@ -55,7 +49,7 @@ const Servicios = () => {
             <motion.div 
               key={index} 
               className="my-5 md:mx-10"
-              variants={itemVariants} // Ahora itemVariants está definida aquí
+              variants={itemVariants}
             >
               <ServiceCard             
                 title={servicio.categoria}
