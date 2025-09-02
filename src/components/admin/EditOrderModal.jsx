@@ -66,7 +66,7 @@ export default function EditOrderModal({ order, client, serviceOptions, serviceP
         total: totalEstimado
       }
 
-      const response = await authenticatedFetch(`/api/admin/service-orders/${order.id}`, {
+      const response = await authenticatedFetch('/api/admin/service-orders', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData)
