@@ -4,13 +4,13 @@ import { supabase } from '../lib/supabase';
 import { useState, useEffect } from 'react';
 import { swiffyslider } from 'swiffy-slider';
 import "swiffy-slider/css";
-import { motion } from "framer-motion"; // <-- Importamos motion
+import { motion } from "framer-motion";
 
 const Productos = () => {
     const [productosData, setProductosData] = useState([]);
     const [itemShowClass, setItemShowClass] = useState("slider-item-show3");
 
-    // Cargar productos en oferta desde Supabase
+
     useEffect(() => {
         const loadOfferProducts = async () => {
             try {
@@ -24,7 +24,6 @@ const Productos = () => {
                     console.error('Error loading offer products:', error);
                     setProductosData([]);
                 } else {
-                    // Mapear campos de Supabase a formato esperado
                     const mappedProducts = data.map(product => ({
                         ...product,
                         isOffer: product.is_offer,
@@ -66,25 +65,19 @@ const Productos = () => {
         }
     }, []);
 
-    // --- NUEVAS VARIANTES DE ANIMACIÓN ---
-    // Variantes para el título "Productos"
     const titleVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
     };
 
-    // Variantes para el contenedor del slider (para escalonar la aparición de ProductCard)
     const containerCardsVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.15 // Cada ProductCard aparecerá con un retraso de 0.15s
-            }
+            transition: { staggerChildren: 0.15 }
         }
     };
 
-    // Variantes para cada ProductCard individual
     const itemCardVariants = {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
@@ -94,40 +87,30 @@ const Productos = () => {
         <>
             <section  className='flex flex-col justify-center bg-gradient-to-b from-black-tnlp via-[#cfcfcfbb] to-black-tnlp'>
                 <div id="productos">
-                    {/* Animamos el título "Productos" */}
                     <motion.h2 
                         className="text-white uppercase font-bold text-[40px] xl:text-[42px] text-center pt-10 font-orbitron"
-                        variants={titleVariants} // Aplicamos las variantes del título
-                        initial="hidden"          // Estado inicial: oculto
-                        whileInView="visible"     // Animar a 'visible' cuando esté en la vista
-                        viewport={{ once: true, amount: 0.5 }} // Una vez y cuando el 50% del elemento esté visible
+                        variants={titleVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.5 }}
                     >
                         Productos
                     </motion.h2>
                 </div>
                 
-                {/* Animamos el contenedor del slider para escalonar las ProductCard */}
                 <motion.div 
-                    className={`swiffy-slider ${itemShowClass}
-                                slider-nav-round 
-                                slider-nav-dark
-                                slider-nav-autohide
-                                slider-item-nogap 
-                                slider-indicators-round  
-                                slider-nav-animation
-                                `}
-                    variants={containerCardsVariants} // Aplicamos las variantes del contenedor
+                    className={`swiffy-slider ${itemShowClass} slider-nav-round slider-nav-dark slider-nav-autohide slider-item-nogap slider-indicators-round slider-nav-animation`}
+                    variants={containerCardsVariants}
                     initial="hidden"
-                    whileInView="visible" // Animar a 'visible' cuando esté en la vista
-                    viewport={{ once: true, amount: 0.2 }} // Una vez y cuando el 20% del elemento esté visible
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
                 >
                     <ul className="slider-container">
                         {productosData.map((products) => (
-                            // Envolvemos cada li con motion.li y aplicamos las variantes del item
                             <motion.li 
                                 key={products.id} 
                                 className="slide-visible"
-                                variants={itemCardVariants} // Aplicamos las variantes de la tarjeta individual
+                                variants={itemCardVariants}
                             >
                                 <div  className='my-12 flex justify-center'>
                                     <ProductCard

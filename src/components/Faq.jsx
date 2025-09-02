@@ -1,9 +1,8 @@
 "use client";
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Brain } from 'lucide-react'; // <-- Importamos Brain
-import { motion } from "framer-motion"; // <-- Importamos motion
+import { ChevronDown, ChevronUp, Brain } from 'lucide-react';
+import { motion } from "framer-motion";
 
-// Datos de las FAQs
 const faqData = [
     {
         id: 1,
@@ -52,38 +51,29 @@ const faqData = [
     }
 ];
 
-// --- NUEVAS VARIANTES DE ANIMACIÓN ---
-// Variantes para el título principal de FAQs
 const titleVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
-// Variantes para el contenedor de la lista de FAQs (para escalonar la aparición)
 const containerFaqItemsVariants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        transition: {
-            staggerChildren: 0.1 // Cada FaqItem aparecerá con un retraso de 0.1s
-        }
+        transition: { staggerChildren: 0.1 }
     }
 };
 
-// Variantes para cada FaqItem individual
 const itemFaqVariants = {
-    hidden: { opacity: 0, y: 30 }, // Un desplazamiento más pequeño para ítems de lista
+    hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
-
-// Componente para un solo item de FAQ
-function FaqItem({ question, answer, isOpen, onToggle, variants }) { // <-- Recibe las variants
+function FaqItem({ question, answer, isOpen, onToggle, variants }) {
     return (
-        // motion.div para animar cada ítem de FAQ
         <motion.div 
             className="border-b border-gray-700 py-6"
-            variants={variants} // Aplicamos las variants recibidas
+            variants={variants}
         >
             <dt>
                 <button
@@ -101,12 +91,11 @@ function FaqItem({ question, answer, isOpen, onToggle, variants }) { // <-- Reci
                     </span>
                 </button>
             </dt>
-            {/* Animación de apertura/cierre de la respuesta. Similar a ServiceCard "Ver más" */}
             <motion.dd 
-                initial={{ height: 0, opacity: 0 }} // Inicia colapsada y transparente
-                animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }} // Anima a auto/0 y opacidad
-                transition={{ duration: 0.5, ease: "easeOut" }} // Transición más rápida para click
-                className="mt-4 pr-12 overflow-hidden" // Oculta el desbordamiento durante la animación
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="mt-4 pr-12 overflow-hidden"
             >
                 <p className="text-base leading-relaxed text-gray-300 whitespace-pre-line">{answer}</p>
             </motion.dd>
@@ -114,7 +103,6 @@ function FaqItem({ question, answer, isOpen, onToggle, variants }) { // <-- Reci
     );
 }
 
-// Componente principal de la página de FAQs
 export default function FaqPage() {
     const [openFaqId, setOpenFaqId] = useState(null);
 
@@ -125,17 +113,15 @@ export default function FaqPage() {
     return (
         <div className="bg-black-tnlp text-white min-h-screen py-12 px-4 sm:px-6 lg:px-8" id='Faq'>
             <div className="mx-auto max-w-3xl">
-                {/* Animamos el título principal de la sección de FAQs */}
                 <motion.div
                     className="text-center mb-12"
-                    variants={titleVariants} // Aplicamos las variantes del título
+                    variants={titleVariants}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.5 }} // Se anima al 50% visible, una sola vez
+                    viewport={{ once: true, amount: 0.5 }}
                 >
-                    {/* Añadimos el icono Brain y el título */}
                     <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl font-orbitron">
-                        <Brain size={56} className="inline-block mr-4 text-purple-400 align-middle" /> {/* Icono de cerebro */}
+                        <Brain size={56} className="inline-block mr-4 text-purple-400 align-middle" />
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
                              TNLP – FAQs Institucionales
                         </span>
@@ -145,13 +131,12 @@ export default function FaqPage() {
                     </p>
                 </motion.div>
 
-                {/* Lista de preguntas y respuestas animada */}
                 <motion.dl 
                     className="space-y-2"
-                    variants={containerFaqItemsVariants} // Aplicamos las variantes del contenedor para el stagger
+                    variants={containerFaqItemsVariants}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }} // Se anima al 20% visible, una sola vez
+                    viewport={{ once: true, amount: 0.2 }}
                 >
                     {faqData.map((faq) => (
                         <FaqItem
@@ -160,7 +145,7 @@ export default function FaqPage() {
                             answer={faq.answer}
                             isOpen={openFaqId === faq.id}
                             onToggle={() => handleToggle(faq.id)}
-                            variants={itemFaqVariants} // Pasamos las variantes a cada FaqItem
+                            variants={itemFaqVariants}
                         />
                     ))}
                 </motion.dl>

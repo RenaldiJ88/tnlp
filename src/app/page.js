@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import dynamic from 'next/dynamic';
@@ -6,15 +6,12 @@ import dynamic from 'next/dynamic';
 const Home = dynamic(() => import('../components/Home'), {
   loading: () => <div className="min-h-screen bg-black-tnlp" />,
 });
-// SECCIONES PRIORITARIAS: Carga inmediata
 const Servicios = dynamic(() => import('../components/Servicios'), { 
   loading: () => <div className="h-96 bg-black-tnlp animate-pulse" />
 });
 const Marcas = dynamic(() => import('../components/Marcas'), { 
   loading: () => <div className="h-32 bg-black-tnlp animate-pulse" />
 });
-
-// SECCIONES NO CRÍTICAS: Carga diferida para desktop
 const Productos = dynamic(() => import('../components/Productos'), { 
   ssr: false,
   loading: () => <div className="h-96 bg-black-tnlp animate-pulse" />
