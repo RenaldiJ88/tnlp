@@ -199,15 +199,17 @@ export async function PUT(request) {
       )
     }
     
-    // Preparar datos para actualización
-    const productData = {
-      title: updatedProduct.title,
-      description: updatedProduct.description,
-      price: parseFloat(updatedProduct.price) || 0,
-      image: updatedProduct.image,
-      categoria: updatedProduct.categoria,
-      is_offer: (updatedProduct.isOffer === true || updatedProduct.isOffer === 'true' || updatedProduct.isOffer === 1) ? 1 : 0
-    }
+    // Preparar datos para actualización - solo incluir campos que se envían
+    const productData = {}
+    
+    // Solo actualizar campos que se envían en la request
+    if (updatedProduct.title !== undefined) productData.title = updatedProduct.title
+    if (updatedProduct.description !== undefined) productData.description = updatedProduct.description
+    if (updatedProduct.price !== undefined) productData.price = updatedProduct.price
+    if (updatedProduct.image !== undefined) productData.image = updatedProduct.image
+    if (updatedProduct.categoria !== undefined) productData.categoria = updatedProduct.categoria
+    if (updatedProduct.isOffer !== undefined) productData.is_offer = (updatedProduct.isOffer === true || updatedProduct.isOffer === 'true' || updatedProduct.isOffer === 1) ? 1 : 0
+    if (updatedProduct.en_stock !== undefined) productData.en_stock = updatedProduct.en_stock
     
     const { data, error } = await supabaseAdmin
       .from('productos')

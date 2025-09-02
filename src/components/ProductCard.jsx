@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getWhatsAppLink } from "../hooks/whatsappUtils"; 
 
-const ProductCard = ({ id, title, image, description, price, isOffer = false, categoria }) => {
+const ProductCard = ({ id, title, image, description, price, isOffer = false, categoria, en_stock = true }) => {
     const whatsAppLink = getWhatsAppLink(title, price);
 
 
@@ -42,11 +42,19 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
         >
 
 
-            {isOffer && (
-                <div className="absolute top-2 right-2 z-10 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
-                    OFERTA
-                </div>
-            )}
+            {/* Badges de oferta y stock */}
+            <div className="absolute top-2 right-2 z-10 space-y-1">
+                {isOffer && (
+                    <div className="bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
+                        OFERTA
+                    </div>
+                )}
+                {en_stock === false && (
+                    <div className="bg-gray-600 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        SIN STOCK
+                    </div>
+                )}
+            </div>
 
             <div className="text-center mb-3"> 
                 <h3 className="font-orbitron text-white text-lg font-bold">

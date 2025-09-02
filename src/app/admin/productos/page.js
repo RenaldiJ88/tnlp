@@ -13,6 +13,7 @@ export default function ProductosAdmin() {
   const [editingProduct, setEditingProduct] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
+  const [sortBy, setSortBy] = useState('id-asc')
 
   const loadProducts = useCallback(async () => {
     try {
@@ -103,14 +104,45 @@ export default function ProductosAdmin() {
     setShowModal(true)
   }
 
-  // Filtrar productos - Asegurar que products sea un array
-  const filteredProducts = (Array.isArray(products) ? products : []).filter(product => {
-    const matchesSearch = product.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = filterCategory === 'all' || product.category === filterCategory
-    
-    return matchesSearch && matchesCategory
-  })
+  // Filtrar y ordenar productos - Asegurar que products sea un array
+  const filteredProducts = (Array.isArray(products) ? products : [])
+    .filter(product => {
+      const matchesSearch = product.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           product.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesCategory = filterCategory === 'all' || product.category === filterCategory
+      
+      return matchesSearch && matchesCategory
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'id-asc':
+          return a.id - b.id
+        case 'id-desc':
+          return b.id - a.id
+        case 'title-asc':
+          return (a.title || '').localeCompare(b.title || '')
+        case 'title-desc':
+          return (b.title || '').localeCompare(a.title || '')
+        case 'price-asc':
+          const priceA = parseFloat((a.price || '0').replace(/[^0-9.-]/g, '')) || 0
+          const priceB = parseFloat((b.price || '0').replace(/[^0-9.-]/g, '')) || 0
+          return priceA - priceB
+        case 'price-desc':
+          const priceA2 = parseFloat((a.price || '0').replace(/[^0-9.-]/g, '')) || 0
+          const priceB2 = parseFloat((b.price || '0').replace(/[^0-9.-]/g, '')) || 0
+          return priceB2 - priceA2
+        case 'category-asc':
+          return (a.category || '').localeCompare(b.category || '')
+        case 'category-desc':
+          return (b.category || '').localeCompare(a.category || '')
+        case 'stock-asc':
+          return (a.en_stock === false ? 0 : 1) - (b.en_stock === false ? 0 : 1)
+        case 'stock-desc':
+          return (b.en_stock === false ? 0 : 1) - (a.en_stock === false ? 0 : 1)
+        default:
+          return 0
+      }
+    })
 
   // Obtener categorías únicas - Asegurar que products sea un array
   const categories = [...new Set((Array.isArray(products) ? products : []).map(p => p.category).filter(Boolean))]
@@ -245,7 +277,7 @@ export default function ProductosAdmin() {
 
       {/* Filtros */}
       <div className="bg-white rounded-lg shadow-sm p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Búsqueda */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -278,6 +310,29 @@ export default function ProductosAdmin() {
               ))}
             </select>
           </div>
+
+          {/* Ordenar por */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Ordenar por
+            </label>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="id-asc">ID (Menor a Mayor)</option>
+              <option value="id-desc">ID (Mayor a Menor)</option>
+              <option value="title-asc">Nombre (A-Z)</option>
+              <option value="title-desc">Nombre (Z-A)</option>
+              <option value="price-asc">Precio (Menor a Mayor)</option>
+              <option value="price-desc">Precio (Mayor a Menor)</option>
+              <option value="category-asc">Categoría (A-Z)</option>
+              <option value="category-desc">Categoría (Z-A)</option>
+              <option value="stock-asc">Sin stock primero</option>
+              <option value="stock-desc">Con stock primero</option>
+            </select>
+          </div>
         </div>
 
         <div className="mt-4 text-sm text-gray-600">
@@ -287,7 +342,7 @@ export default function ProductosAdmin() {
 
       {/* Grid de productos */}
       <div 
-        key={`${searchTerm}-${filterCategory}`} 
+        key={`${searchTerm}-${filterCategory}-${sortBy}`} 
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
       >
         <AnimatePresence>

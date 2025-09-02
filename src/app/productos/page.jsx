@@ -264,6 +264,7 @@ const ProductsSearchPage = () => {
                     price={product.price}
                     isOffer={product.isOffer === 1}
                     categoria={product.categoria}
+                    en_stock={product.en_stock}
                   />
                 </motion.div>
               ))}
