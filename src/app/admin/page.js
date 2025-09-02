@@ -7,6 +7,10 @@ import { supabase } from '../../lib/supabase'
 
 export default function AdminDashboard() {
   const { authenticatedFetch } = useAuthenticatedFetch()
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [lastUpdate, setLastUpdate] = useState(null)
+  
   const [stats, setStats] = useState({
     totalClientes: 0,
     totalOrdenes: 0,
@@ -21,15 +25,27 @@ export default function AdminDashboard() {
   const [recentOrders, setRecentOrders] = useState([])
   const [serviceStats, setServiceStats] = useState([])
   const [monthlyStats, setMonthlyStats] = useState([])
+  const [autoRefresh, setAutoRefresh] = useState(false)
 
-  const loadDashboardData = useCallback(async () => {
+  const loadDashboardData = useCallback(async (showLoading = true) => {
     try {
+      if (showLoading) {
+        setLoading(true)
+        setError(null)
+      }
+
       // Cargar clientes
       const clientsResponse = await authenticatedFetch('/api/admin/clients')
+      if (!clientsResponse.ok) {
+        throw new Error('Error al cargar clientes')
+      }
       const clients = await clientsResponse.json()
       
       // Cargar órdenes
       const ordersResponse = await authenticatedFetch('/api/admin/service-orders')
+      if (!ordersResponse.ok) {
+        throw new Error('Error al cargar órdenes')
+      }
       const orders = await ordersResponse.json()
 
       // Calcular estadísticas
@@ -121,15 +137,44 @@ export default function AdminDashboard() {
         })
       }
       setMonthlyStats(monthlyData)
+      setLastUpdate(new Date())
 
     } catch (error) {
       console.error('Error loading dashboard data:', error)
+      setError(error.message)
+    } finally {
+      if (showLoading) {
+        setLoading(false)
+      }
     }
   }, [authenticatedFetch])
+
+  // Función para actualizar con confirmación
+  const handleRefreshDashboard = async () => {
+    const confirmed = window.confirm(
+      '¿Estás seguro de que quieres actualizar todas las métricas del dashboard?\n\n' +
+      'Esto recargará todos los datos desde la base de datos.'
+    )
+    
+    if (confirmed) {
+      await loadDashboardData(true)
+    }
+  }
 
   useEffect(() => {
     loadDashboardData()
   }, [loadDashboardData])
+
+  // Auto-refresh cada 5 minutos si está habilitado
+  useEffect(() => {
+    if (!autoRefresh) return
+
+    const interval = setInterval(() => {
+      loadDashboardData(false) // Sin mostrar loading para auto-refresh
+    }, 5 * 60 * 1000) // 5 minutos
+
+    return () => clearInterval(interval)
+  }, [autoRefresh, loadDashboardData])
 
   const StatCard = ({ title, value, icon, color = "blue" }) => (
     <motion.div
@@ -150,12 +195,79 @@ export default function AdminDashboard() {
     </motion.div>
   )
 
+  // Estado de carga general
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600 text-lg">Cargando dashboard...</p>
+          <p className="text-gray-500 text-sm">Obteniendo datos de la base de datos</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Estado de error
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">❌</div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Error al cargar el dashboard</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => loadDashboardData(true)}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+          >
+            🔄 Reintentar
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600">Panel de control - Tu Notebook La Plata</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600">Panel de control - Tu Notebook La Plata</p>
+        </div>
+        <div className="flex items-center space-x-6">
+          {/* Toggle Auto-refresh */}
+          <div className="flex items-center space-x-2">
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={autoRefresh}
+                onChange={(e) => setAutoRefresh(e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+            <span className="text-sm text-gray-600">
+              Auto-actualizar {autoRefresh && '(5 min)'}
+            </span>
+          </div>
+
+          {/* Última actualización */}
+          {lastUpdate && (
+            <div className="text-right">
+              <p className="text-sm text-gray-500">Última actualización:</p>
+              <p className="text-sm font-medium text-gray-700">
+                {lastUpdate.toLocaleString('es-AR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* KPI Cards principales */}
@@ -212,24 +324,42 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">📊 Insights del Negocio</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-600">Servicio más popular:</span>
-              <span className="font-medium text-gray-900">{stats.servicioPopular}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Urgencia promedio:</span>
-              <span className={`font-medium ${
-                stats.urgenciaPromedio === 'Alta' ? 'text-red-600' :
-                stats.urgenciaPromedio === 'Normal' ? 'text-blue-600' : 'text-green-600'
-              }`}>
-                {stats.urgenciaPromedio}
+              <span className="font-medium text-gray-900 text-sm">
+                {stats.servicioPopular || 'N/A'}
               </span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+              <span className="text-gray-600">Urgencia promedio:</span>
+              <span className={`font-medium px-2 py-1 rounded text-sm ${
+                stats.urgenciaPromedio === 'Alta' ? 'bg-red-100 text-red-700' :
+                stats.urgenciaPromedio === 'Normal' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
+              }`}>
+                {stats.urgenciaPromedio || 'N/A'}
+              </span>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
               <span className="text-gray-600">Tasa de finalización:</span>
-              <span className="font-medium text-green-600">
-                {stats.totalOrdenes > 0 ? Math.round((stats.ordenesCompletadas / stats.totalOrdenes) * 100) : 0}%
+              <div className="flex items-center space-x-2">
+                <div className="w-16 bg-gray-200 rounded-full h-2">
+                  <div 
+                    className="bg-green-500 h-2 rounded-full"
+                    style={{ 
+                      width: `${stats.totalOrdenes > 0 ? Math.round((stats.ordenesCompletadas / stats.totalOrdenes) * 100) : 0}%` 
+                    }}
+                  ></div>
+                </div>
+                <span className="font-medium text-green-600 text-sm">
+                  {stats.totalOrdenes > 0 ? Math.round((stats.ordenesCompletadas / stats.totalOrdenes) * 100) : 0}%
+                </span>
+              </div>
+            </div>
+            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+              <span className="text-gray-600">Ticket promedio:</span>
+              <span className="font-medium text-purple-600">
+                ${stats.totalOrdenes > 0 ? Math.round(stats.ingresosTotales / stats.totalOrdenes).toLocaleString() : '0'}
               </span>
             </div>
           </div>
@@ -364,14 +494,19 @@ export default function AdminDashboard() {
           </motion.a>
 
           <motion.button
-            onClick={() => window.location.reload()}
+            onClick={handleRefreshDashboard}
             className="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
             whileHover={{ scale: 1.02 }}
+            disabled={loading}
           >
-            <span className="text-2xl mr-3">🔄</span>
+            <span className="text-2xl mr-3">{loading ? '⏳' : '🔄'}</span>
             <div>
-              <p className="font-medium text-purple-900">Actualizar Dashboard</p>
-              <p className="text-sm text-purple-600">Refrescar todas las métricas</p>
+              <p className="font-medium text-purple-900">
+                {loading ? 'Actualizando...' : 'Actualizar Dashboard'}
+              </p>
+              <p className="text-sm text-purple-600">
+                {loading ? 'Refrescando métricas...' : 'Refrescar todas las métricas'}
+              </p>
             </div>
           </motion.button>
         </div>
