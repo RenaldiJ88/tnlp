@@ -121,6 +121,7 @@ const Productos = () => {
                                         price={products.price}
                                         isOffer={products.isOffer === 1}
                                         categoria={products.categoria}
+                                        en_stock={products.en_stock}
                                     />
                                 </div>
                             </motion.li>
