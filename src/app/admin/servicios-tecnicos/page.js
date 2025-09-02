@@ -338,6 +338,7 @@ export default function ServiciosTecnicosAdmin() {
           order={selectedOrder}
           client={clients.find(c => c.id === selectedOrder.cliente_id)}
           serviceOptions={serviceOptions}
+          servicePrices={servicePrices}
           onClose={() => {
             setShowEditOrderModal(false)
             setSelectedOrder(null)
