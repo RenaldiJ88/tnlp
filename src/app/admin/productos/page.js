@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../../lib/supabase'
+import ImageUpload from '../../../components/ImageUpload'
+import { uploadToCloudinary } from '../../../utils/cloudinary'
 
 export default function ProductosAdmin() {
   const { authenticatedFetch } = useAuthenticatedFetch()
@@ -14,6 +16,7 @@ export default function ProductosAdmin() {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterCategory, setFilterCategory] = useState('all')
   const [sortBy, setSortBy] = useState('id-asc')
+  const [uploading, setUploading] = useState(false)
 
   const loadProducts = useCallback(async () => {
     try {
@@ -413,6 +416,24 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
     ...product
   })
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  const handleImageUpload = async (file) => {
+    if (!file) {
+      setFormData({...formData, image: ''})
+      return
+    }
+    
+    setUploading(true)
+    try {
+      const imageUrl = await uploadToCloudinary(file)
+      setFormData({...formData, image: imageUrl})
+    } catch (error) {
+      alert('Error al subir la imagen')
+    } finally {
+      setUploading(false)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -536,14 +557,12 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Imagen (ruta relativa)
+                Imagen del producto
               </label>
-              <input
-                type="text"
-                value={formData.image}
-                onChange={(e) => setFormData({...formData, image: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ej: img/products/laptop-gaming.webp"
+              <ImageUpload
+                onImageUpload={handleImageUpload}
+                currentImage={formData.image}
+                uploading={uploading}
               />
             </div>
 
