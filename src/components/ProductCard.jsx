@@ -8,6 +8,19 @@ import { getWhatsAppLink } from "../hooks/whatsappUtils";
 const ProductCard = ({ id, title, image, description, price, isOffer = false, categoria, en_stock = true }) => {
     const whatsAppLink = getWhatsAppLink(title, price);
 
+    // Función para obtener URL optimizada de Cloudinary
+    const getOptimizedImageUrl = (imageUrl) => {
+        if (!imageUrl) return ''
+        
+        // Si es de Cloudinary, agregar transformaciones automáticas
+        if (imageUrl.includes('cloudinary.com')) {
+            return imageUrl.replace('/upload/', '/upload/f_auto,q_auto,w_400,h_300,c_fit/')
+        }
+        
+        // Si es local, usar la URL original
+        return imageUrl
+    }
+
 
     const handleProductClick = () => {
         if (typeof window !== 'undefined') {
@@ -64,7 +77,7 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
 
             <div className="relative w-full h-40 mb-3 flex-shrink-0">
                 <Image
-                    src={`https://res.cloudinary.com/dkj7padnu/image/upload/f_auto,q_60,w_400,h_300,c_fit/tnlp/${isOffer ? 'products-offer' : 'products'}/${image.replace('img/products/', '').replace('img/products/office/', 'office/').replace('img/products-offer/', '')}`}
+                    src={getOptimizedImageUrl(image)}
                     alt={title}
                     fill
                     sizes="(max-width: 480px) 250px, (max-width: 768px) 320px, (max-width: 1200px) 380px, 340px"
