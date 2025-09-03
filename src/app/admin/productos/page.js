@@ -171,7 +171,7 @@ export default function ProductosAdmin() {
       <div className="h-64 bg-gray-200 relative">
         {product.image ? (
           <img
-            src={product.image.startsWith('/') ? product.image : `/${product.image}`}
+            src={product.image}
             alt={product.title}
             className="w-full h-full object-cover"
             onError={(e) => {
