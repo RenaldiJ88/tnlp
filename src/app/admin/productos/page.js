@@ -159,6 +159,24 @@ export default function ProductosAdmin() {
   // Obtener categorías únicas - Asegurar que products sea un array
   const categories = [...new Set((Array.isArray(products) ? products : []).map(p => p.category).filter(Boolean))]
 
+  // Función para obtener la URL correcta de la imagen
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return ''
+    
+    // Si es una URL de Cloudinary, usarla directamente
+    if (imageUrl.includes('cloudinary.com')) {
+      return imageUrl
+    }
+    
+    // Si es una ruta local, construir la URL completa
+    if (imageUrl.startsWith('/')) {
+      return imageUrl
+    }
+    
+    // Si no tiene / al inicio, agregarlo
+    return `/${imageUrl}`
+  }
+
   const ProductCard = ({ product, onToggleStock }) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -171,7 +189,7 @@ export default function ProductosAdmin() {
       <div className="h-64 bg-gray-200 relative">
         {product.image ? (
           <img
-            src={product.image}
+            src={getImageUrl(product.image)}
             alt={product.title}
             className="w-full h-full object-cover"
             onError={(e) => {
