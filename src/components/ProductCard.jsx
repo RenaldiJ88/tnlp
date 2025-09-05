@@ -17,8 +17,18 @@ const ProductCard = ({ id, title, image, description, price, isOffer = false, ca
             return imageUrl.replace('/upload/', '/upload/f_auto,q_auto,w_400,h_300,c_fit/')
         }
         
-        // Si es local, usar la URL original
-        return imageUrl
+        // Si es local, asegurar que tenga la barra inicial para Next.js
+        if (imageUrl.startsWith('img/')) {
+            return `/${imageUrl}`
+        }
+        
+        // Si ya tiene la barra inicial, usar tal como está
+        if (imageUrl.startsWith('/')) {
+            return imageUrl
+        }
+        
+        // Si no tiene barra inicial, agregarla
+        return `/${imageUrl}`
     }
 
 
