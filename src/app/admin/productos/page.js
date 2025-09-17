@@ -121,7 +121,7 @@ export default function ProductosAdmin() {
     .filter(product => {
       const matchesSearch = product.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.description?.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = filterCategory === 'all' || product.category === filterCategory
+      const matchesCategory = filterCategory === 'all' || (product.categoria || product.category) === filterCategory
       
       return matchesSearch && matchesCategory
     })
@@ -144,9 +144,9 @@ export default function ProductosAdmin() {
           const priceB2 = parseFloat((b.price || '0').replace(/[^0-9.-]/g, '')) || 0
           return priceB2 - priceA2
         case 'category-asc':
-          return (a.category || '').localeCompare(b.category || '')
+          return ((a.categoria || a.category) || '').localeCompare((b.categoria || b.category) || '')
         case 'category-desc':
-          return (b.category || '').localeCompare(a.category || '')
+          return ((b.categoria || b.category) || '').localeCompare((a.categoria || a.category) || '')
         case 'stock-asc':
           return (a.en_stock === false ? 0 : 1) - (b.en_stock === false ? 0 : 1)
         case 'stock-desc':
@@ -157,7 +157,7 @@ export default function ProductosAdmin() {
     })
 
   // Obtener categorías únicas - Asegurar que products sea un array
-  const categories = [...new Set((Array.isArray(products) ? products : []).map(p => p.category).filter(Boolean))]
+  const categories = [...new Set((Array.isArray(products) ? products : []).map(p => p.categoria || p.category).filter(Boolean))]
 
   // Función para obtener la URL correcta de la imagen
   const getImageUrl = (imageUrl) => {
@@ -203,7 +203,7 @@ export default function ProductosAdmin() {
         </div>
         
         {/* Badge de oferta (derecha) - solo si tiene stock */}
-        {product.isOffer && product.en_stock !== false && (
+        {(product.is_offer === 1 || product.isOffer === true) && product.en_stock !== false && (
           <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
             OFERTA
           </div>
@@ -230,9 +230,9 @@ export default function ProductosAdmin() {
         
         <div className="flex justify-between items-center mb-4">
           <span className="text-xl font-bold text-blue-600">{product.price}</span>
-          {product.category && (
+          {(product.categoria || product.category) && (
             <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-              {product.category}
+              {product.categoria || product.category}
             </span>
           )}
         </div>
@@ -431,7 +431,11 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
     category: '',
     isOffer: false,
     en_stock: true,
-    ...product
+    // Mapear campos de la base de datos al formato del frontend
+    ...product,
+    category: product?.categoria || product?.category || '',
+    isOffer: product?.is_offer === 1 || product?.is_offer === true || product?.isOffer || false,
+    en_stock: product?.en_stock !== false && product?.en_stock !== 0
   })
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
