@@ -202,8 +202,8 @@ export default function ProductosAdmin() {
           📷 Sin imagen
         </div>
         
-        {/* Badge de oferta (derecha) */}
-        {product.isOffer && (
+        {/* Badge de oferta (derecha) - solo si tiene stock */}
+        {product.isOffer && product.en_stock !== false && (
           <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
             OFERTA
           </div>
@@ -464,7 +464,9 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
       // Mapear campos al formato esperado por la API
       const productData = {
         ...formData,
-        categoria: formData.category
+        categoria: formData.category,
+        isOffer: formData.isOffer,
+        en_stock: formData.en_stock
       }
       delete productData.category
       
@@ -589,12 +591,13 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
                 <input
                   type="checkbox"
                   id="isOffer"
-                  checked={formData.isOffer}
+                  checked={formData.isOffer && formData.en_stock !== false}
                   onChange={(e) => setFormData({...formData, isOffer: e.target.checked})}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  disabled={formData.en_stock === false}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded disabled:opacity-50"
                 />
                 <label htmlFor="isOffer" className="ml-2 block text-sm text-gray-900">
-                  Producto en oferta
+                  Producto en oferta {formData.en_stock === false && <span className="text-red-500">(No disponible sin stock)</span>}
                 </label>
               </div>
               
@@ -603,7 +606,15 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
                   type="checkbox"
                   id="en_stock"
                   checked={formData.en_stock !== false}
-                  onChange={(e) => setFormData({...formData, en_stock: e.target.checked})}
+                  onChange={(e) => {
+                    const newStockValue = e.target.checked
+                    setFormData({
+                      ...formData, 
+                      en_stock: newStockValue,
+                      // Si se desmarca el stock, también desmarcar oferta
+                      isOffer: newStockValue ? formData.isOffer : false
+                    })
+                  }}
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
                 <label htmlFor="en_stock" className="ml-2 block text-sm text-gray-900">

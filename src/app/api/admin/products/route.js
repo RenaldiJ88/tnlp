@@ -138,13 +138,17 @@ export async function POST(request) {
     const newProduct = await request.json()
     
     // Preparar datos para inserción
+    const isInStock = newProduct.en_stock !== false
+    const isOffer = (newProduct.isOffer === true || newProduct.isOffer === 'true' || newProduct.isOffer === 1) && isInStock
+    
     const productData = {
       title: newProduct.title,
       description: newProduct.description,
-      price: parseFloat(newProduct.price) || 0,
+      price: newProduct.price, // Mantener como string para preservar formato
       image: newProduct.image,
       categoria: newProduct.categoria,
-      is_offer: (newProduct.isOffer === true || newProduct.isOffer === 'true' || newProduct.isOffer === 1) ? 1 : 0
+      is_offer: isOffer ? 1 : 0, // Solo puede estar en oferta si tiene stock
+      en_stock: isInStock // Si no se especifica, asumir que está en stock
     }
     
     const { data, error } = await supabaseAdmin
@@ -208,8 +212,16 @@ export async function PUT(request) {
     if (updatedProduct.price !== undefined) productData.price = updatedProduct.price
     if (updatedProduct.image !== undefined) productData.image = updatedProduct.image
     if (updatedProduct.categoria !== undefined) productData.categoria = updatedProduct.categoria
-    if (updatedProduct.isOffer !== undefined) productData.is_offer = (updatedProduct.isOffer === true || updatedProduct.isOffer === 'true' || updatedProduct.isOffer === 1) ? 1 : 0
-    if (updatedProduct.en_stock !== undefined) productData.en_stock = updatedProduct.en_stock
+    
+    // Manejar stock y oferta con lógica de negocio
+    if (updatedProduct.en_stock !== undefined) {
+      productData.en_stock = updatedProduct.en_stock
+    }
+    if (updatedProduct.isOffer !== undefined) {
+      const isInStock = updatedProduct.en_stock !== undefined ? updatedProduct.en_stock : true
+      const isOffer = (updatedProduct.isOffer === true || updatedProduct.isOffer === 'true' || updatedProduct.isOffer === 1) && isInStock
+      productData.is_offer = isOffer ? 1 : 0
+    }
     
     const { data, error } = await supabaseAdmin
       .from('productos')
