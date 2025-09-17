@@ -18,6 +18,24 @@ export default function ProductDetailPage() {
     const [loading, setLoading] = useState(true);
     const [relatedProducts, setRelatedProducts] = useState([]);
 
+    // Función para obtener la URL correcta de la imagen
+    const getImageUrl = (imageUrl) => {
+        if (!imageUrl) return ''
+        
+        // Si es una URL de Cloudinary, usarla directamente
+        if (imageUrl.includes('cloudinary.com')) {
+            return imageUrl
+        }
+        
+        // Si es una ruta local, construir la URL completa
+        if (imageUrl.startsWith('/')) {
+            return imageUrl
+        }
+        
+        // Si no tiene / al inicio, agregarlo
+        return `/${imageUrl}`
+    }
+
     // Cargar datos del producto
     useEffect(() => {
         const loadProduct = async () => {
@@ -161,7 +179,7 @@ export default function ProductDetailPage() {
                         <div className="relative">
                             <div className="relative w-full h-80 bg-black rounded-xl overflow-hidden flex items-center justify-center">
                                 <Image
-                                    src={product.image.startsWith('/') ? product.image : `/${product.image}`}
+                                    src={getImageUrl(product.image)}
                                     alt={product.title}
                                     width={400}
                                     height={300}
@@ -279,7 +297,7 @@ export default function ProductDetailPage() {
                                     >
                                         <div className="relative h-48 bg-black flex items-center justify-center p-4">
                                             <Image
-                                                src={relatedProduct.image.startsWith('/') ? relatedProduct.image : `/${relatedProduct.image}`}
+                                                src={getImageUrl(relatedProduct.image)}
                                                 alt={relatedProduct.title}
                                                 width={200}
                                                 height={150}
