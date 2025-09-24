@@ -15,15 +15,11 @@ function checkEnvironmentVariables() {
   }
   
   const envContent = fs.readFileSync(envFile, 'utf8')
-  console.log('📄 Contenido del archivo .env.local:')
-  console.log(envContent)
+
   
   const cloudName = envContent.match(/NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=(.+)/)
   const uploadPreset = envContent.match(/NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=(.+)/)
   
-  console.log('\n🔍 Variables extraídas:')
-  console.log(`Cloud Name: ${cloudName ? cloudName[1] : 'NO ENCONTRADO'}`)
-  console.log(`Upload Preset: ${uploadPreset ? uploadPreset[1] : 'NO ENCONTRADO'}`)
   
   if (!cloudName || !uploadPreset) {
     console.log('❌ Variables de entorno faltantes o mal configuradas')
@@ -49,11 +45,6 @@ function checkUploadFunction() {
     const hasFetch = cloudinaryContent.includes('fetch')
     const hasErrorHandling = cloudinaryContent.includes('try')
     
-    console.log('\n🔍 Estructura de la función:')
-    console.log(`${hasExport ? '✅' : '❌'} Export de función`)
-    console.log(`${hasFormData ? '✅' : '❌'} Uso de FormData`)
-    console.log(`${hasFetch ? '✅' : '❌'} Llamada fetch`)
-    console.log(`${hasErrorHandling ? '✅' : '❌'} Manejo de errores`)
     
     return hasExport && hasFormData && hasFetch && hasErrorHandling
   } catch (error) {
@@ -64,12 +55,11 @@ function checkUploadFunction() {
 
 // Función para verificar el componente ImageUpload
 function checkImageUploadComponent() {
-  console.log('\n🖼️ VERIFICANDO COMPONENTE IMAGEUPLOAD:')
+  
   
   try {
     const imageUploadContent = fs.readFileSync('src/components/ImageUpload.jsx', 'utf8')
-    console.log('📄 Contenido de ImageUpload.jsx:')
-    console.log(imageUploadContent)
+    
     
     // Verificar props y funcionalidad
     const hasOnImageUpload = imageUploadContent.includes('onImageUpload')
@@ -77,11 +67,7 @@ function checkImageUploadComponent() {
     const hasUploading = imageUploadContent.includes('uploading')
     const hasDragDrop = imageUploadContent.includes('onDrop')
     
-    console.log('\n🔍 Props y funcionalidad:')
-    console.log(`${hasOnImageUpload ? '✅' : '❌'} Prop onImageUpload`)
-    console.log(`${hasCurrentImage ? '✅' : '❌'} Prop currentImage`)
-    console.log(`${hasUploading ? '✅' : '❌'} Prop uploading`)
-    console.log(`${hasDragDrop ? '✅' : '❌'} Funcionalidad drag & drop`)
+    
     
     return hasOnImageUpload && hasCurrentImage && hasUploading && hasDragDrop
   } catch (error) {

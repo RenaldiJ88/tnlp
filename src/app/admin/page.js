@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useAuthenticatedFetch } from '../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../lib/supabase'
+import OrdersModal from '../../components/admin/OrdersModal'
 
 export default function AdminDashboard() {
   const { authenticatedFetch } = useAuthenticatedFetch()
@@ -26,6 +27,9 @@ export default function AdminDashboard() {
   const [serviceStats, setServiceStats] = useState([])
   const [monthlyStats, setMonthlyStats] = useState([])
   const [autoRefresh, setAutoRefresh] = useState(false)
+  const [showOrdersModal, setShowOrdersModal] = useState(false)
+  const [selectedClient, setSelectedClient] = useState(null)
+  const [selectedClientOrders, setSelectedClientOrders] = useState([])
 
   const loadDashboardData = useCallback(async (showLoading = true) => {
     try {
@@ -95,17 +99,18 @@ export default function AdminDashboard() {
 
       // Órdenes recientes (últimas 5)
       const recientes = orders
-        .sort((a, b) => new Date(b.fechaCreacion || b.fecha) - new Date(a.fechaCreacion || a.fecha))
+        .sort((a, b) => new Date(b.date_added || b.fecha) - new Date(a.date_added || a.fecha))
         .slice(0, 5)
         .map(order => {
-          const cliente = clients.find(c => c.id === order.clienteId)
+          const cliente = clients.find(c => c.id === order.cliente_id)
           return {
             id: order.id,
+            clienteId: order.cliente_id,
             cliente: cliente?.nombre || 'Cliente desconocido',
-            equipo: order.detalles?.descripcionEquipo || 'Equipo no especificado',
+            equipo: order.equipo_tipo || 'Equipo no especificado',
             estado: order.estado,
             total: order.total,
-            fecha: order.fecha
+            fecha: order.date_added ? new Date(order.date_added).toLocaleDateString() : 'Fecha no disponible'
           }
         })
       setRecentOrders(recientes)
@@ -175,6 +180,43 @@ export default function AdminDashboard() {
 
     return () => clearInterval(interval)
   }, [autoRefresh, loadDashboardData])
+
+  // Función para manejar click en una orden
+  const handleOrderClick = async (order) => {
+    if (!order.clienteId) {
+      console.log('No hay cliente asociado a esta orden')
+      return
+    }
+
+    try {
+      // Cargar información del cliente
+      const clientsResponse = await authenticatedFetch('/api/admin/clients')
+      if (!clientsResponse.ok) {
+        throw new Error('Error al cargar clientes')
+      }
+      const clients = await clientsResponse.json()
+      const client = clients.find(c => c.id === order.clienteId)
+
+      if (!client) {
+        console.log('Cliente no encontrado')
+        return
+      }
+
+      // Cargar todas las órdenes del cliente
+      const ordersResponse = await authenticatedFetch('/api/admin/service-orders')
+      if (!ordersResponse.ok) {
+        throw new Error('Error al cargar órdenes')
+      }
+      const allOrders = await ordersResponse.json()
+      const clientOrders = allOrders.filter(o => o.cliente_id === order.clienteId)
+
+      setSelectedClient(client)
+      setSelectedClientOrders(clientOrders)
+      setShowOrdersModal(true)
+    } catch (error) {
+      console.error('Error cargando detalles del cliente:', error)
+    }
+  }
 
   const StatCard = ({ title, value, icon, color = "blue" }) => (
     <motion.div
@@ -436,7 +478,13 @@ export default function AdminDashboard() {
           {recentOrders.length > 0 ? (
             <div className="space-y-4">
               {recentOrders.map((order, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <motion.div 
+                  key={index} 
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                  onClick={() => handleOrderClick(order)}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                >
                   <div className="flex items-center space-x-4">
                     <div className={`w-3 h-3 rounded-full ${
                       order.estado === 'Completado' ? 'bg-green-500' :
@@ -454,7 +502,7 @@ export default function AdminDashboard() {
                     <p className="text-sm font-medium text-green-600">${order.total?.toLocaleString()}</p>
                     <p className="text-xs text-gray-500">{order.fecha}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           ) : (
@@ -511,6 +559,22 @@ export default function AdminDashboard() {
           </motion.button>
         </div>
       </div>
+
+      {/* Modal de órdenes del cliente */}
+      {showOrdersModal && selectedClient && (
+        <OrdersModal
+          client={selectedClient}
+          orders={selectedClientOrders}
+          onClose={() => {
+            setShowOrdersModal(false)
+            setSelectedClient(null)
+            setSelectedClientOrders([])
+          }}
+          onOrderDeleted={() => {
+            loadDashboardData(false)
+          }}
+        />
+      )}
     </div>
   )
 }
