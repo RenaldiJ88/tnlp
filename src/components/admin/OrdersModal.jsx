@@ -97,7 +97,7 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                         {order.estado}
                       </span>
                       <p className="text-xs text-gray-500 mt-1">
-                        {order.fecha_ingreso}
+                        {order.date_added ? new Date(order.date_added).toLocaleDateString() : 'Fecha no disponible'}
                       </p>
                     </div>
                   </div>
@@ -120,26 +120,28 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                     </div>
                   </div>
 
-                  <div className="mb-3">
-                    <h5 className="font-medium text-gray-900 mb-2">Servicios seleccionados:</h5>
-                    <div className="space-y-1">
-                      {order.servicios_seleccionados.map((servicio, index) => (
-                        <div key={index} className="flex justify-between items-center text-sm">
-                          <span className="text-gray-700">
-                            {servicio.categoria} → {servicio.subcategoria} → {servicio.opcion}
-                          </span>
-                          <span className="font-medium text-green-600">
-                            ${servicio.precio.toLocaleString()}
-                          </span>
-                        </div>
-                      ))}
+                  {order.servicios_seleccionados && order.servicios_seleccionados.length > 0 && (
+                    <div className="mb-3">
+                      <h5 className="font-medium text-gray-900 mb-2">Servicios seleccionados:</h5>
+                      <div className="space-y-1">
+                        {order.servicios_seleccionados.map((servicio, index) => (
+                          <div key={index} className="flex justify-between items-center text-sm">
+                            <span className="text-gray-700">
+                              {servicio.categoria} → {servicio.subcategoria || servicio.opcion}
+                            </span>
+                            <span className="font-medium text-green-600">
+                              ${servicio.precio?.toLocaleString() || 'N/A'}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200">
                     <div>
                       <span className="text-lg font-bold text-gray-900">
-                        Total: ${order.total.toLocaleString()}
+                        Total: ${order.total?.toLocaleString() || '0'}
                       </span>
                     </div>
                     <div className="flex space-x-2">
