@@ -52,21 +52,48 @@ export default function AdminDashboard() {
       }
       const orders = await ordersResponse.json()
 
+      // Cargar ventas
+      const ventasResponse = await authenticatedFetch('/api/admin/ventas')
+      if (!ventasResponse.ok) {
+        throw new Error('Error al cargar ventas')
+      }
+      const ventas = await ventasResponse.json()
+
       // Calcular estadísticas
       const totalOrdenes = orders.length
       const ordenesPendientes = orders.filter(o => o.estado === 'Recibido' || o.estado === 'En proceso').length
       const ordenesCompletadas = orders.filter(o => o.estado === 'Completado').length
-      const ingresosTotales = orders.reduce((sum, order) => sum + (order.total || 0), 0)
+      const ingresosOrdenesTotales = orders.reduce((sum, order) => sum + (order.total || 0), 0)
+      const ingresosVentasTotales = ventas.reduce((sum, venta) => sum + (venta.precio_venta || 0), 0)
+      const ingresosTotales = ingresosOrdenesTotales + ingresosVentasTotales
       
-      // Ingresos del mes actual
+      // Estadísticas de ventas
+      const totalVentas = ventas.length
+      const gananciaTotalVentas = ventas.reduce((sum, venta) => sum + (venta.ganancia || 0), 0)
+      const ventasEsteMes = ventas.filter(venta => {
+        const ventaDate = new Date(venta.fecha_venta)
+        return ventaDate.getMonth() === currentMonth && ventaDate.getFullYear() === currentYear
+      }).length
+      
+      // Ingresos del mes actual (órdenes + ventas)
       const currentMonth = new Date().getMonth()
       const currentYear = new Date().getFullYear()
-      const ingresosMes = orders
+      
+      const ingresosOrdenesMes = orders
         .filter(order => {
           const orderDate = new Date(order.fecha)
           return orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear
         })
         .reduce((sum, order) => sum + (order.total || 0), 0)
+
+      const ingresosVentasMes = ventas
+        .filter(venta => {
+          const ventaDate = new Date(venta.fecha_venta)
+          return ventaDate.getMonth() === currentMonth && ventaDate.getFullYear() === currentYear
+        })
+        .reduce((sum, venta) => sum + (venta.precio_venta || 0), 0)
+
+      const ingresosMes = ingresosOrdenesMes + ingresosVentasMes
 
       // Servicio más popular
       const serviceCounts = {}
@@ -94,7 +121,12 @@ export default function AdminDashboard() {
         ingresosTotales,
         ingresosMes,
         servicioPopular: servicioPopular || 'N/A',
-        urgenciaPromedio: urgenciaPromedio || 'N/A'
+        urgenciaPromedio: urgenciaPromedio || 'N/A',
+        // Nuevas estadísticas de ventas
+        totalVentas,
+        ventasEsteMes,
+        gananciaTotalVentas,
+        ingresosVentasTotales
       })
 
       // Órdenes recientes (últimas 5)
@@ -340,8 +372,8 @@ export default function AdminDashboard() {
         />
       </div>
 
-      {/* Métricas financieras */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      {/* Métricas financieras y de ventas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <StatCard
           title="Ingresos Totales"
           value={`$${stats.ingresosTotales.toLocaleString()}`}
@@ -355,10 +387,38 @@ export default function AdminDashboard() {
           color="emerald"
         />
         <StatCard
-          title="Promedio por Orden"
-          value={stats.totalOrdenes > 0 ? `$${Math.round(stats.ingresosTotales / stats.totalOrdenes).toLocaleString()}` : '$0'}
+          title="Total Ventas"
+          value={stats.totalVentas || 0}
+          icon="🛒"
+          color="orange"
+        />
+        <StatCard
+          title="Ganancia Ventas"
+          value={`$${stats.gananciaTotalVentas?.toLocaleString() || '0'}`}
           icon="💵"
           color="teal"
+        />
+      </div>
+
+      {/* Métricas adicionales de ventas */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <StatCard
+          title="Ventas Este Mes"
+          value={stats.ventasEsteMes || 0}
+          icon="📦"
+          color="cyan"
+        />
+        <StatCard
+          title="Ingresos por Ventas"
+          value={`$${stats.ingresosVentasTotales?.toLocaleString() || '0'}`}
+          icon="🏪"
+          color="amber"
+        />
+        <StatCard
+          title="Promedio por Venta"
+          value={stats.totalVentas > 0 ? `$${Math.round(stats.ingresosVentasTotales / stats.totalVentas).toLocaleString()}` : '$0'}
+          icon="📊"
+          color="pink"
         />
       </div>
 

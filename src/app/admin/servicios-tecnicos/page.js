@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ServiceCategoryCard from '../../../components/admin/ServiceCategoryCard'
 import OrdersModal from '../../../components/admin/OrdersModal'
 import EditOrderModal from '../../../components/admin/EditOrderModal'
+import VentasModal from '../../../components/admin/VentasModal'
+import ProveedoresList from '../../../components/admin/ProveedoresList'
 import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../../lib/supabase'
 
@@ -17,9 +19,11 @@ export default function ServiciosTecnicosAdmin() {
   const [showServiceModal, setShowServiceModal] = useState(false)
   const [showOrdersModal, setShowOrdersModal] = useState(false)
   const [showEditOrderModal, setShowEditOrderModal] = useState(false)
+  const [showVentasModal, setShowVentasModal] = useState(false)
   const [selectedClient, setSelectedClient] = useState(null)
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [clientVentas, setClientVentas] = useState({})
 
   // Configuración de servicios y opciones - ahora cargados dinámicamente
   const [serviceOptions, setServiceOptions] = useState({})
@@ -193,6 +197,37 @@ export default function ServiciosTecnicosAdmin() {
     setShowEditOrderModal(true)
   }
 
+  // Función para cargar ventas de un cliente
+  const loadClientVentas = async (clientId) => {
+    try {
+      const response = await authenticatedFetch(`/api/admin/ventas?cliente_id=${clientId}`)
+      if (response.ok) {
+        const ventas = await response.json()
+        setClientVentas(prev => ({
+          ...prev,
+          [clientId]: ventas
+        }))
+      }
+    } catch (error) {
+      console.error('Error loading client ventas:', error)
+    }
+  }
+
+  // Función para abrir modal de ventas
+  const handleRegisterVenta = (client) => {
+    setSelectedClient(client)
+    setShowVentasModal(true)
+  }
+
+  // Función para manejar cuando se guarda una venta
+  const handleVentaSaved = (newVenta) => {
+    const clientId = newVenta.cliente_id
+    setClientVentas(prev => ({
+      ...prev,
+      [clientId]: [newVenta, ...(prev[clientId] || [])]
+    }))
+  }
+
   // Filtrar clientes
   const filteredClients = clients.filter(client => 
     client.nombre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -231,22 +266,30 @@ export default function ServiciosTecnicosAdmin() {
         </button>
       </div>
 
-      {/* Búsqueda */}
-      <div className="bg-white rounded-lg shadow-sm p-4">
-        <div className="max-w-md">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Buscar cliente
-          </label>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar por nombre, teléfono o documento..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+      {/* Búsqueda y Lista de Proveedores */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="max-w-md">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Buscar cliente
+              </label>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar por nombre, teléfono o documento..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="mt-2 text-sm text-gray-600">
+              Mostrando {filteredClients.length} de {clients.length} clientes
+            </div>
+          </div>
         </div>
-        <div className="mt-2 text-sm text-gray-600">
-          Mostrando {filteredClients.length} de {clients.length} clientes
+        
+        <div className="lg:col-span-1">
+          <ProveedoresList className="h-fit" />
         </div>
       </div>
 
@@ -254,15 +297,18 @@ export default function ServiciosTecnicosAdmin() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <AnimatePresence>
           {filteredClients.map(client => (
-            <ClientCard 
-              key={client.id} 
-              client={client} 
-              orders={getClientOrders(client.id)}
-              onDelete={handleDeleteClient}
-              onCreateOrder={handleCreateServiceOrder}
-              onEdit={handleEditClient}
-              onViewOrders={handleViewOrders}
-            />
+          <ClientCard
+            key={client.id}
+            client={client}
+            orders={getClientOrders(client.id)}
+            ventas={clientVentas[client.id] || []}
+            onDelete={handleDeleteClient}
+            onCreateOrder={handleCreateServiceOrder}
+            onEdit={handleEditClient}
+            onViewOrders={handleViewOrders}
+            onRegisterVenta={handleRegisterVenta}
+            onLoadVentas={loadClientVentas}
+          />
           ))}
         </AnimatePresence>
       </div>
@@ -333,6 +379,17 @@ export default function ServiciosTecnicosAdmin() {
         />
       )}
 
+      {showVentasModal && selectedClient && (
+        <VentasModal
+          client={selectedClient}
+          onClose={() => {
+            setShowVentasModal(false)
+            setSelectedClient(null)
+          }}
+          onSave={handleVentaSaved}
+        />
+      )}
+
       {showEditOrderModal && selectedOrder && (
         <EditOrderModal
           order={selectedOrder}
@@ -355,7 +412,7 @@ export default function ServiciosTecnicosAdmin() {
 }
 
 // Componente de tarjeta de cliente
-function ClientCard({ client, orders, onDelete, onCreateOrder, onEdit, onViewOrders }) {
+function ClientCard({ client, orders, ventas = [], onDelete, onCreateOrder, onEdit, onViewOrders, onRegisterVenta, onLoadVentas }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -372,11 +429,18 @@ function ClientCard({ client, orders, onDelete, onCreateOrder, onEdit, onViewOrd
           <span className="text-xs text-gray-500 block">
             {client.fechaRegistro}
           </span>
-          {orders.length > 0 && (
-            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-1 inline-block">
-              {orders.length} orden{orders.length !== 1 ? 'es' : ''}
-            </span>
-          )}
+          <div className="flex space-x-1">
+            {orders.length > 0 && (
+              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                {orders.length} orden{orders.length !== 1 ? 'es' : ''}
+              </span>
+            )}
+            {ventas.length > 0 && (
+              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                {ventas.length} venta{ventas.length !== 1 ? 's' : ''}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -401,6 +465,17 @@ function ClientCard({ client, orders, onDelete, onCreateOrder, onEdit, onViewOrd
           className="w-full bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
         >
           🔧 Nueva Orden
+        </button>
+        <button
+          onClick={() => {
+            if (ventas.length === 0) {
+              onLoadVentas(client.id)
+            }
+            onRegisterVenta(client)
+          }}
+          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          💰 Registrar Venta
         </button>
         <button
           onClick={() => onViewOrders(client)}

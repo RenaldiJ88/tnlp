@@ -56,14 +56,29 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
         className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
       >
         <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">Órdenes de Trabajo</h2>
-              <p className="text-gray-600">Cliente: {client?.nombre} - #{client?.id}</p>
+          <div className="flex justify-between items-start mb-6">
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Órdenes de Trabajo</h2>
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <h3 className="font-semibold text-blue-900 mb-2">👤 Información del Cliente</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  <p><span className="font-medium text-gray-700">Nombre:</span> {client?.nombre || 'N/A'}</p>
+                  <p><span className="font-medium text-gray-700">ID Cliente:</span> #{client?.id || 'N/A'}</p>
+                  {client?.telefono && (
+                    <p><span className="font-medium text-gray-700">Teléfono:</span> {client.telefono}</p>
+                  )}
+                  {client?.email && (
+                    <p><span className="font-medium text-gray-700">Email:</span> {client.email}</p>
+                  )}
+                  {client?.direccion && (
+                    <p className="md:col-span-2"><span className="font-medium text-gray-700">Dirección:</span> {client.direccion}</p>
+                  )}
+                </div>
+              </div>
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 text-xl"
+              className="text-gray-400 hover:text-gray-600 text-2xl ml-4 p-2"
             >
               ✕
             </button>
@@ -120,23 +135,61 @@ export default function OrdersModal({ client, orders, onClose, onOrderDeleted, o
                     </div>
                   </div>
 
-                  {order.servicios_seleccionados && order.servicios_seleccionados.length > 0 && (
-                    <div className="mb-3">
-                      <h5 className="font-medium text-gray-900 mb-2">Servicios seleccionados:</h5>
-                      <div className="space-y-1">
-                        {order.servicios_seleccionados.map((servicio, index) => (
-                          <div key={index} className="flex justify-between items-center text-sm">
-                            <span className="text-gray-700">
-                              {servicio.categoria} → {servicio.subcategoria || servicio.opcion}
-                            </span>
-                            <span className="font-medium text-green-600">
-                              ${servicio.precio?.toLocaleString() || 'N/A'}
-                            </span>
-                          </div>
-                        ))}
+                  <div className="mb-3">
+                    <h5 className="font-medium text-gray-900 mb-2">🔧 Servicios seleccionados:</h5>
+                    {order.servicios_seleccionados && order.servicios_seleccionados.length > 0 ? (
+                      <div className="space-y-2">
+                        {order.servicios_seleccionados.map((servicio, index) => {
+                          // Construir el nombre del servicio de manera más robusta
+                          let servicioNombre = ''
+                          
+                          if (servicio.categoria) {
+                            servicioNombre = servicio.categoria
+                          }
+                          
+                          if (servicio.subcategoria && servicio.subcategoria !== 'null' && servicio.subcategoria !== null) {
+                            servicioNombre += ` → ${servicio.subcategoria}`
+                          }
+                          
+                          if (servicio.opcion && servicio.opcion !== 'null' && servicio.opcion !== null) {
+                            servicioNombre += ` → ${servicio.opcion}`
+                          }
+                          
+                          // Si no hay nombre construido, usar campos alternativos
+                          if (!servicioNombre && servicio.nombre) {
+                            servicioNombre = servicio.nombre
+                          }
+                          
+                          // Fallback si no hay nada
+                          if (!servicioNombre) {
+                            servicioNombre = 'Servicio sin especificar'
+                          }
+
+                          return (
+                            <div key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded-lg border-l-3 border-blue-500">
+                              <div className="flex-1">
+                                <span className="text-sm font-medium text-gray-800">
+                                  {servicioNombre}
+                                </span>
+                                {servicio.id && (
+                                  <p className="text-xs text-gray-500 mt-1">ID: {servicio.id}</p>
+                                )}
+                              </div>
+                              <div className="text-right">
+                                <span className="text-lg font-bold text-green-600">
+                                  ${servicio.precio?.toLocaleString() || '0'}
+                                </span>
+                              </div>
+                            </div>
+                          )
+                        })}
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 text-center">
+                        <p className="text-gray-600 text-sm">No hay servicios seleccionados para esta orden</p>
+                      </div>
+                    )}
+                  </div>
 
                   <div className="flex justify-between items-center pt-3 border-t border-gray-200">
                     <div>
