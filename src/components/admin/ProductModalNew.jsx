@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ImageUpload from '../ImageUpload';
-import ProductConfigManagerNotebooks from './ProductConfigManager-Notebooks';
+import ProductConfigManagerSimple from './ProductConfigManager-Simple';
 import ProductImageManager from './ProductImageManager';
 import { uploadToCloudinary } from '../../utils/cloudinary';
 
@@ -274,7 +274,7 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
 
             {activeTab === 'configs' && product?.id && (
               <div>
-                <ProductConfigManagerNotebooks 
+                <ProductConfigManagerSimple 
                   productId={product.id}
                   onConfigurationsChange={(configs) => console.log('Configs updated:', configs.length)}
                 />

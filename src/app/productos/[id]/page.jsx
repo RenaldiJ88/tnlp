@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import ProductGallery from '../../../components/ProductGallery';
-import ProductConfiguratorNotebooks from '../../../components/ProductConfigurator-Notebooks';
+import ProductConfiguratorSimple from '../../../components/ProductConfigurator-Simple';
 import { useAnalytics } from '../../../hooks/useAnalytics';
 import { supabase } from '../../../lib/supabase';
 
@@ -143,7 +143,7 @@ export default function ProductDetailPage() {
         let message = `¡Hola! Me interesa el producto: ${product.title}`;
         
         if (selectedConfiguration) {
-            message += ` - ${selectedConfiguration.nombre} (US$${selectedConfiguration.precio})`;
+            message += ` - ${selectedConfiguration.capacidad} - ${selectedConfiguration.color} (US$${selectedConfiguration.precio})`;
         } else {
             message += ` - ${product.price}`;
         }
@@ -157,21 +157,21 @@ export default function ProductDetailPage() {
         trackEvent('whatsapp_product_inquiry', {
             product_id: product.id,
             product_name: product.title,
-            configuration: selectedConfiguration?.nombre || 'default',
+            configuration: selectedConfiguration?.capacidad || 'default',
             source: 'product_detail'
         });
         
         window.open(whatsappUrl, '_blank');
     };
 
-    const handleConfigurationChange = (configuration) => {
+    const handleConfigurationSelect = (configuration) => {
         setSelectedConfiguration(configuration);
         
         // Track configuration selection
         trackEvent('configure_product', {
             product_id: product.id,
             product_name: product.title,
-            configuration: configuration.nombre,
+            configuration: configuration.capacidad,
             price: configuration.precio
         });
     };
@@ -299,13 +299,10 @@ export default function ProductDetailPage() {
                             </div>
 
                             {/* Configuraciones (si existen) */}
-                            {productConfigurations.length > 0 && (
-                                <ProductConfiguratorNotebooks 
-                                    configuraciones={productConfigurations}
-                                    onConfigurationChange={handleConfigurationChange}
-                                    productTitle={product.title}
-                                />
-                            )}
+                            <ProductConfiguratorSimple 
+                                productId={product.id}
+                                onConfigurationSelect={handleConfigurationSelect}
+                            />
 
                             {/* Descripción */}
                             <div className="bg-black rounded-xl p-6 border border-gray-700">
