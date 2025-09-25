@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import ProductGallery from '../../../components/ProductGallery';
+import ProductConfiguratorNotebooks from '../../../components/ProductConfigurator-Notebooks';
 import { useAnalytics } from '../../../hooks/useAnalytics';
 import { supabase } from '../../../lib/supabase';
 
@@ -17,6 +19,9 @@ export default function ProductDetailPage() {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [relatedProducts, setRelatedProducts] = useState([]);
+    const [productImages, setProductImages] = useState([]);
+    const [productConfigurations, setProductConfigurations] = useState([]);
+    const [selectedConfiguration, setSelectedConfiguration] = useState(null);
 
     // Función para obtener la URL correcta de la imagen
     const getImageUrl = (imageUrl) => {
@@ -62,6 +67,39 @@ export default function ProductDetailPage() {
                 
                 setProduct(foundProduct);
                 
+                // Cargar imágenes del producto (si existen)
+                const { data: imagesData, error: imagesError } = await supabase
+                    .from('producto_imagenes')
+                    .select('*')
+                    .eq('producto_id', foundProduct.id)
+                    .order('orden', { ascending: true });
+                
+                if (!imagesError && imagesData && imagesData.length > 0) {
+                    setProductImages(imagesData);
+                } else {
+                    // Si no hay imágenes en la nueva tabla, usar la imagen original como fallback
+                    if (foundProduct.image) {
+                        setProductImages([{
+                            id: 'fallback',
+                            imagen_url: getImageUrl(foundProduct.image),
+                            descripcion: 'Imagen principal',
+                            es_principal: true
+                        }]);
+                    }
+                }
+                
+                // Cargar configuraciones del producto (si existen)
+                const { data: configurationsData, error: configurationsError } = await supabase
+                    .from('producto_configuraciones')
+                    .select('*')
+                    .eq('producto_id', foundProduct.id)
+                    .eq('activo', true)
+                    .order('precio', { ascending: true });
+                
+                if (!configurationsError && configurationsData) {
+                    setProductConfigurations(configurationsData);
+                }
+                
                 // Buscar productos relacionados (misma categoría)
                 const { data: relatedData, error: relatedError } = await supabase
                     .from('productos')
@@ -102,7 +140,16 @@ export default function ProductDetailPage() {
 
     const handleWhatsAppContact = () => {
         const whatsappNumber = "5492216767615";
-        const message = `¡Hola! Me interesa el producto: ${product.title} - ${product.price}. ¿Podrías darme más información?`;
+        let message = `¡Hola! Me interesa el producto: ${product.title}`;
+        
+        if (selectedConfiguration) {
+            message += ` - ${selectedConfiguration.nombre} (US$${selectedConfiguration.precio})`;
+        } else {
+            message += ` - ${product.price}`;
+        }
+        
+        message += ". ¿Podrías darme más información?";
+        
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
         
@@ -110,10 +157,23 @@ export default function ProductDetailPage() {
         trackEvent('whatsapp_product_inquiry', {
             product_id: product.id,
             product_name: product.title,
+            configuration: selectedConfiguration?.nombre || 'default',
             source: 'product_detail'
         });
         
         window.open(whatsappUrl, '_blank');
+    };
+
+    const handleConfigurationChange = (configuration) => {
+        setSelectedConfiguration(configuration);
+        
+        // Track configuration selection
+        trackEvent('configure_product', {
+            product_id: product.id,
+            product_name: product.title,
+            configuration: configuration.nombre,
+            price: configuration.precio
+        });
     };
 
     const handleRelatedProductClick = (relatedProduct) => {
@@ -175,23 +235,16 @@ export default function ProductDetailPage() {
                     transition={{ duration: 0.5 }}
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
-                        {/* Imagen del producto */}
+                        {/* Galería de imágenes */}
                         <div className="relative">
-                            <div className="relative w-full h-80 bg-black rounded-xl overflow-hidden flex items-center justify-center">
-                                <Image
-                                    src={getImageUrl(product.image)}
-                                    alt={product.title}
-                                    width={400}
-                                    height={300}
-                                    className="object-contain max-w-[350px] max-h-[250px]"
-                                    quality={90}
-                                    priority
-                                />
-                            </div>
+                            <ProductGallery 
+                                images={productImages} 
+                                productTitle={product.title}
+                            />
                             
                             {/* Badge de oferta */}
                             {product.isOffer === 1 && (
-                                <div className="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-bold">
+                                <div className="absolute top-4 left-4 z-20 bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-bold">
                                     OFERTA
                                 </div>
                             )}
@@ -204,17 +257,55 @@ export default function ProductDetailPage() {
                                     {product.title}
                                 </h1>
                                 
+                                {/* Precio - dinámico según configuración seleccionada */}
                                 <div className="flex items-center space-x-4 mb-6">
-                                    <span className="text-4xl font-orbitron font-bold text-[#dd40d5]">
-                                        {product.price}
-                                    </span>
+                                    {selectedConfiguration ? (
+                                        <div>
+                                            <span className="text-4xl font-orbitron font-bold text-[#dd40d5]">
+                                                US${selectedConfiguration.precio.toLocaleString()}
+                                            </span>
+                                            {selectedConfiguration.precio_original && selectedConfiguration.precio_original > selectedConfiguration.precio && (
+                                                <span className="text-lg text-gray-400 line-through ml-2">
+                                                    US${selectedConfiguration.precio_original.toLocaleString()}
+                                                </span>
+                                            )}
+                                        </div>
+                                    ) : productConfigurations.length > 0 ? (
+                                        <span className="text-4xl font-orbitron font-bold text-[#dd40d5]">
+                                            Desde US${Math.min(...productConfigurations.map(c => c.precio)).toLocaleString()}
+                                        </span>
+                                    ) : (
+                                        <span className="text-4xl font-orbitron font-bold text-[#dd40d5]">
+                                            {product.price}
+                                        </span>
+                                    )}
+                                    
                                     {product.isOffer === 1 && (
                                         <span className="bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-bold">
                                             Precio especial
                                         </span>
                                     )}
                                 </div>
+
+                                {/* Stock status */}
+                                {selectedConfiguration && (
+                                    <div className={`text-sm mb-4 ${selectedConfiguration.stock > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                        {selectedConfiguration.stock > 0 
+                                            ? `✅ En stock (${selectedConfiguration.stock} disponibles)`
+                                            : '❌ Sin stock'
+                                        }
+                                    </div>
+                                )}
                             </div>
+
+                            {/* Configuraciones (si existen) */}
+                            {productConfigurations.length > 0 && (
+                                <ProductConfiguratorNotebooks 
+                                    configuraciones={productConfigurations}
+                                    onConfigurationChange={handleConfigurationChange}
+                                    productTitle={product.title}
+                                />
+                            )}
 
                             {/* Descripción */}
                             <div className="bg-black rounded-xl p-6 border border-gray-700">
@@ -255,12 +346,22 @@ export default function ProductDetailPage() {
                             <div className="space-y-4 pt-6">
                                 <motion.button
                                     onClick={handleWhatsAppContact}
-                                    className="w-full bg-[#dd40d5] hover:bg-white hover:text-[#dd40d5] text-white font-orbitron font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    disabled={selectedConfiguration && selectedConfiguration.stock <= 0}
+                                    className={`w-full font-orbitron font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 ${
+                                        selectedConfiguration && selectedConfiguration.stock <= 0
+                                            ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                                            : 'bg-[#dd40d5] hover:bg-white hover:text-[#dd40d5] text-white'
+                                    }`}
+                                    whileHover={!(selectedConfiguration && selectedConfiguration.stock <= 0) ? { scale: 1.02 } : {}}
+                                    whileTap={!(selectedConfiguration && selectedConfiguration.stock <= 0) ? { scale: 0.98 } : {}}
                                 >
                                     <span className="text-lg">📱</span>
-                                    <span>Consultar por WhatsApp</span>
+                                    <span>
+                                        {selectedConfiguration && selectedConfiguration.stock <= 0 
+                                            ? 'Sin stock' 
+                                            : 'Consultar por WhatsApp'
+                                        }
+                                    </span>
                                 </motion.button>
                                 
                                 <div className="flex justify-center">

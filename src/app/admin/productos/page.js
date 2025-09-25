@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../../lib/supabase'
 import ImageUpload from '../../../components/ImageUpload'
+import ProductConfigManager from '../../../components/admin/ProductConfigManager'
+import ProductImageManager from '../../../components/admin/ProductImageManager'
+import ProductModalNew from '../../../components/admin/ProductModalNew'
 import { uploadToCloudinary } from '../../../utils/cloudinary'
 
 export default function ProductosAdmin() {
@@ -403,7 +406,7 @@ export default function ProductosAdmin() {
 
       {/* Modal para crear/editar producto */}
       {showModal && (
-        <ProductModal
+        <ProductModalNew
           product={editingProduct}
           authenticatedFetch={authenticatedFetch}
           onClose={() => {
@@ -439,6 +442,7 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
   })
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [activeTab, setActiveTab] = useState('basic')
 
   const handleImageUpload = async (file) => {
     if (!file) {
@@ -498,25 +502,61 @@ function ProductModal({ product, authenticatedFetch, onClose, onSave }) {
     }
   }
 
+  const tabs = [
+    { id: 'basic', name: 'Información Básica', icon: '📝' },
+    { id: 'images', name: 'Galería', icon: '🖼️', disabled: !product?.id },
+    { id: 'configs', name: 'Configuraciones', icon: '⚙️', disabled: !product?.id }
+  ]
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-[#1a1a1a] rounded-xl border border-gray-800 max-w-6xl w-full max-h-[95vh] overflow-hidden"
       >
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">
+        <div className="p-6 h-full flex flex-col">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-orbitron font-bold text-white">
               {product ? 'Editar Producto' : 'Nuevo Producto'}
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              ✕
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
           </div>
+
+          {/* Pestañas */}
+          <div className="flex space-x-1 mb-6 border-b border-gray-700">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => !tab.disabled && setActiveTab(tab.id)}
+                disabled={tab.disabled}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-t-lg font-medium transition-colors ${
+                  activeTab === tab.id
+                    ? 'bg-[#dd40d5] text-white'
+                    : tab.disabled
+                    ? 'text-gray-500 cursor-not-allowed'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.name}</span>
+                {tab.disabled && (
+                  <span className="text-xs text-gray-500">(Guarda primero)</span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Contenido de pestañas */}
+          <div className="flex-1 overflow-y-auto">
+            {activeTab === 'basic' && (
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
