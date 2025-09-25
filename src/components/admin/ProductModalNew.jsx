@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ImageUpload from '../ImageUpload';
+import MultiImageUpload from './MultiImageUpload';
 import ProductConfigManagerSimple from './ProductConfigManager-Simple';
 import ProductImageManager from './ProductImageManager';
 import { uploadToCloudinary } from '../../utils/cloudinary';
@@ -26,11 +27,13 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [activeTab, setActiveTab] = useState('basic');
+  const [productImages, setProductImages] = useState([]);
+  const [tempProductId, setTempProductId] = useState(null);
 
   const tabs = [
     { id: 'basic', name: 'Información Básica', icon: '📝' },
-    { id: 'images', name: 'Galería', icon: '🖼️', disabled: !product?.id },
-    { id: 'configs', name: 'Configuraciones', icon: '⚙️', disabled: !product?.id }
+    { id: 'images', name: 'Galería', icon: '🖼️', disabled: false }, // Permitir siempre
+    { id: 'configs', name: 'Configuraciones', icon: '⚙️', disabled: !product?.id && !tempProductId }
   ];
 
   const handleImageUpload = async (file) => {
@@ -47,6 +50,25 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
       alert('Error al subir la imagen');
     } finally {
       setUploading(false);
+    }
+  };
+
+  // Función para guardar múltiples imágenes en la base de datos
+  const saveProductImages = async (productId) => {
+    try {
+      for (const image of productImages) {
+        await authenticatedFetch('/api/admin/product-images', {
+          method: 'POST',
+          body: JSON.stringify({
+            producto_id: productId,
+            imagen_url: image.url,
+            is_primary: image.is_primary,
+            orden: image.orden
+          })
+        });
+      }
+    } catch (error) {
+      console.error('Error saving product images:', error);
     }
   };
 
@@ -73,11 +95,18 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
 
       if (response.ok) {
         const updatedProduct = await response.json();
+        
+        // Si es un producto nuevo y hay imágenes, guardarlas
+        if (!product && updatedProduct.id && productImages.length > 0) {
+          setTempProductId(updatedProduct.id);
+          await saveProductImages(updatedProduct.id);
+        }
+        
         onSave(updatedProduct);
         
-        // Si es un producto nuevo, cambiar a la pestaña de imágenes
+        // Si es un producto nuevo, cambiar a la pestaña de configuraciones
         if (!product && updatedProduct.id) {
-          setActiveTab('images');
+          setActiveTab('configs');
         }
       } else {
         const errorData = await response.text();
@@ -263,19 +292,31 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
               </form>
             )}
 
-            {activeTab === 'images' && product?.id && (
+            {activeTab === 'images' && (
               <div>
-                <ProductImageManager 
-                  productId={product.id}
-                  onImagesChange={(images) => console.log('Images updated:', images.length)}
-                />
+                {(product?.id || tempProductId) ? (
+                  <ProductImageManager 
+                    productId={product?.id || tempProductId}
+                    onImagesChange={(images) => console.log('Images updated:', images.length)}
+                  />
+                ) : (
+                  <div>
+                    <MultiImageUpload 
+                      images={productImages}
+                      onImagesChange={setProductImages}
+                    />
+                    <div className="mt-4 p-4 bg-yellow-900 bg-opacity-20 border border-yellow-500 rounded-lg text-yellow-200 text-sm">
+                      <strong>💡 Tip:</strong> Puedes cargar múltiples imágenes aquí. Se guardarán automáticamente cuando crees el producto.
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
-            {activeTab === 'configs' && product?.id && (
+            {activeTab === 'configs' && (product?.id || tempProductId) && (
               <div>
                 <ProductConfigManagerSimple 
-                  productId={product.id}
+                  productId={product?.id || tempProductId}
                   onConfigurationsChange={(configs) => console.log('Configs updated:', configs.length)}
                 />
               </div>
