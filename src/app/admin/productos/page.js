@@ -4,11 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthenticatedFetch } from '../../../hooks/useAuthenticatedFetch'
 import { supabase } from '../../../lib/supabase'
-import ImageUpload from '../../../components/ImageUpload'
-import ProductConfigManager from '../../../components/admin/ProductConfigManager'
-import ProductImageManager from '../../../components/admin/ProductImageManager'
 import ProductModalNew from '../../../components/admin/ProductModalNew'
-import { uploadToCloudinary } from '../../../utils/cloudinary'
 
 export default function ProductosAdmin() {
   const { authenticatedFetch } = useAuthenticatedFetch()
