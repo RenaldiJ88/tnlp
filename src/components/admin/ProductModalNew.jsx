@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import ImageUpload from '../ImageUpload';
 import MultiImageUpload from './MultiImageUpload';
 import ProductConfigManagerSimple from './ProductConfigManager-Simple';
 import ProductImageManager from './ProductImageManager';
@@ -36,22 +35,7 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
     { id: 'configs', name: 'Configuraciones', icon: '⚙️', disabled: !product?.id && !tempProductId }
   ];
 
-  const handleImageUpload = async (file) => {
-    if (!file) {
-      setFormData({...formData, image: ''});
-      return;
-    }
-    
-    setUploading(true);
-    try {
-      const imageUrl = await uploadToCloudinary(file);
-      setFormData({...formData, image: imageUrl});
-    } catch (error) {
-      alert('Error al subir la imagen');
-    } finally {
-      setUploading(false);
-    }
-  };
+  // Función removida: ahora todas las imágenes se manejan en la galería
 
   // Función para guardar múltiples imágenes en la base de datos
   const saveProductImages = async (productId) => {
@@ -85,7 +69,9 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
         ...formData,
         id: product?.id,
         categoria: formData.category,
-        is_offer: formData.isOffer ? 1 : 0
+        is_offer: formData.isOffer ? 1 : 0,
+        // Usar la primera imagen de la galería como imagen principal
+        image: productImages.length > 0 ? productImages.find(img => img.is_primary)?.url || productImages[0]?.url : formData.image
       };
 
       const response = await authenticatedFetch(url, {
@@ -231,18 +217,22 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">
-                    Imagen principal (legacy)
-                  </label>
-                  <div className="text-xs text-gray-400 mb-2">
-                    Usa la pestaña "Galería" para manejar múltiples imágenes
+                {/* Info: Las imágenes se manejan en la pestaña Galería */}
+                <div className="p-4 bg-blue-900 bg-opacity-20 border border-blue-500 rounded-lg">
+                  <div className="flex items-center space-x-2 text-blue-300 mb-2">
+                    <span className="text-lg">🖼️</span>
+                    <span className="font-medium">Imágenes del Producto</span>
                   </div>
-                  <ImageUpload
-                    onImageUpload={handleImageUpload}
-                    currentImage={formData.image}
-                    uploading={uploading}
-                  />
+                  <p className="text-sm text-blue-200">
+                    Ve a la pestaña <strong>"Galería"</strong> para cargar múltiples imágenes de tu producto. 
+                    La primera imagen será la principal automáticamente.
+                  </p>
+                  {productImages.length > 0 && (
+                    <div className="mt-3 flex items-center space-x-2 text-green-300">
+                      <span>✅</span>
+                      <span className="text-sm">{productImages.length} imagen{productImages.length !== 1 ? 'es' : ''} lista{productImages.length !== 1 ? 's' : ''} para subir</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -274,6 +264,14 @@ export default function ProductModalNew({ product, authenticatedFetch, onClose, 
                 </div>
 
                 <div className="flex justify-end space-x-3 pt-6 border-t border-gray-700">
+                  {/* Info de imágenes listas */}
+                  {productImages.length > 0 && (
+                    <div className="mb-4 flex items-center space-x-2 text-green-400 text-sm">
+                      <span>✅</span>
+                      <span>{productImages.length} imagen{productImages.length !== 1 ? 'es' : ''} lista{productImages.length !== 1 ? 's' : ''} para guardar</span>
+                    </div>
+                  )}
+                  
                   <button
                     type="button"
                     onClick={onClose}
